@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFrameworks>net35;net40;net452;net462;net472;net48;net481;netstandard2.0;netstandard2.1;net5.0;net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
+		<LangVersion>preview</LangVersion>
+		<Version>1.0.0</Version>
+		<RootNamespace>MakeKits.Workshop.Abstractions</RootNamespace>
+		<AssemblyName>MakeKits.Workshop.Abstractions</AssemblyName>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Nullable>enable</Nullable>
+		<Platforms>AnyCPU</Platforms>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<ProjectGuid>{0D4566F1-A836-46E7-B79C-1303B30FC768}</ProjectGuid>
+		<Authors>emako</Authors>
+		<Company>emako</Company>
+		<Description>This repository holds the common library of QuickLook. The library is shared among all QuickLook projects.</Description>
+		<PackageProjectUrl>https://github.com/emako/MakeKits</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/emako/MakeKits</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>MakeKits</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>Logo.png</PackageIcon>
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<IncludeSymbols>true</IncludeSymbols>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\..\branding\Logo.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+</Project>

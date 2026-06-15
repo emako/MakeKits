@@ -1,0 +1,11 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+        <Platform Name="x64" />
+    </Configurations>
+    <Folder Name="/sample/" />
+    <Folder Name="/src/">
+        <Project Path="src/MakeKits.CLI/MakeKits.CLI.csproj" Id="398113d0-f9fe-4803-b745-e6ae2b1a8e00" />
+        <Project Path="src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj" />
+    </Folder>
+</Solution>

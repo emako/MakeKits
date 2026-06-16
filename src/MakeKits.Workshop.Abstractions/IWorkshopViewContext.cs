@@ -33,6 +33,11 @@ public interface IWorkshopViewContext : INotifyPropertyChanged
     public bool IsBusy { get; set; }
 
     /// <summary>
+    /// Gets or sets whether the view should be displayed in immersive mode.
+    /// </summary>
+    public bool IsImmersiveMode { get; set; }
+
+    /// <summary>
     /// Gets or sets the preferred initial size of the view.
     /// </summary>
     public Size PreferredSize { get; set; }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Drawing;
 
 namespace MakeKits.Workshop;
 
@@ -38,9 +37,14 @@ public interface IWorkshopViewContext : INotifyPropertyChanged
     public bool IsImmersiveMode { get; set; }
 
     /// <summary>
-    /// Gets or sets the preferred initial size of the view.
+    /// Gets or sets the preferred initial width of the view.
     /// </summary>
-    public Size PreferredSize { get; set; }
+    public int PreferredWidth { get; set; }
+
+    /// <summary>
+    /// Gets or sets the preferred initial height of the view.
+    /// </summary>
+    public int PreferredHeight { get; set; }
 
     /// <summary>
     /// Gets or sets whether the user can resize the view.

@@ -75,16 +75,16 @@ public class WebpagePanel : UserControl
         Content = _webView;
     }
 
-    protected virtual void Webview_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+    protected virtual void Webview_NavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
     {
     }
 
-    protected virtual void WebView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+    protected virtual void WebView_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         _webView.DefaultBackgroundColor = System.Drawing.Color.White; // Reset to white after page load to match expected default behavior
     }
 
-    protected virtual void WebView_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+    protected virtual void WebView_CoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
         if (e.IsSuccess)
         {
@@ -93,7 +93,7 @@ public class WebpagePanel : UserControl
         }
     }
 
-    protected virtual void WebView_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs args)
+    protected virtual void WebView_WebResourceRequested(object? sender, CoreWebView2WebResourceRequestedEventArgs args)
     {
     }
 }

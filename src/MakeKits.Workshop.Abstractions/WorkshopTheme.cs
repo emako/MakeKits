@@ -11,6 +11,11 @@ public enum WorkshopTheme
     None,
 
     /// <summary>
+    /// Following to system theme.
+    /// </summary>
+    System,
+
+    /// <summary>
     /// A dark visual theme.
     /// </summary>
     Dark,

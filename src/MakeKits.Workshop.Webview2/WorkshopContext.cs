@@ -2,13 +2,13 @@
 
 namespace MakeKits.Workshop.Webview2;
 
-public class WorkshopContext : ObservableObject, IWorkshopContext
+public abstract class WorkshopContext : ObservableObject, IWorkshopContext
 {
-    public IWorkshopDescriptor Descriptor { get; set; } = new WorkshopDescriptor();
+    public virtual IWorkshopDescriptor Descriptor { get; set; } = null!;
 
-    public IWorkshopLogger? Logger { get; set; } = new WorkshopLogger();
+    public virtual IWorkshopLogger? Logger { get; set; } = null!;
 
-    public IWorkshopViewContext? ViewContext { get; set; } = new WorkshopViewContext();
+    public virtual IWorkshopViewContext? ViewContext { get; set; } = null!;
 
-    public IDictionary<string, object?>? Properties { get; set; } = new Dictionary<string, object?>();
+    public virtual IDictionary<string, object?>? Properties { get; set; } = new Dictionary<string, object?>();
 }

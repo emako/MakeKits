@@ -1,24 +1,16 @@
 ﻿namespace MakeKits.Workshop.Webview2;
 
-public class Workshop : IWorkshop
+public abstract class Workshop : IWorkshop
 {
-    public IWorkshopContext Context { get; set; } = new WorkshopContext();
+    public virtual IWorkshopContext Context { get; set; } = null!;
 
-    public IWorkshopDescriptor Descriptor => Context.Descriptor;
+    public virtual IWorkshopDescriptor Descriptor => Context.Descriptor;
 
-    public void Cleanup()
-    {
-    }
+    public abstract void Cleanup();
 
-    public void Init()
-    {
-    }
+    public abstract void Init();
 
-    public void Prepare(IWorkshopContext context)
-    {
-    }
+    public abstract void Prepare(IWorkshopContext context);
 
-    public void View(IWorkshopContext context)
-    {
-    }
+    public abstract void View(IWorkshopContext context);
 }

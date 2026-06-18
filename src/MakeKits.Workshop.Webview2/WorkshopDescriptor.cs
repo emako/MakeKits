@@ -2,9 +2,9 @@
 
 namespace MakeKits.Workshop.Webview2;
 
-public class WorkshopDescriptor : ObservableObject, IWorkshopDescriptor
+public abstract class WorkshopDescriptor : ObservableObject, IWorkshopDescriptor
 {
-    public string Name => "Workshop Webview2";
+    public virtual string Name => "Workshop Webview2";
 
-    public string? Description => "Support for Webview2 integration";
+    public virtual string? Description => "Support for Webview2 integration";
 }

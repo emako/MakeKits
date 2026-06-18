@@ -2,7 +2,7 @@
 
 namespace MakeKits.Workshop.Webview2;
 
-internal static class WebView2Helper
+public static class WebView2Helper
 {
     public static bool IsWebView2Available()
     {

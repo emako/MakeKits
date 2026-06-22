@@ -4,7 +4,8 @@
         <TargetFramework>net48</TargetFramework>
         <RootNamespace>MakeKits.Workshop.Webview2.HelloWorld</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Webview2.HelloWorld</AssemblyName>
-        <LangVersion>preview</LangVersion>
+		<LangVersion>preview</LangVersion>
+        <Version>0.0.1.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>

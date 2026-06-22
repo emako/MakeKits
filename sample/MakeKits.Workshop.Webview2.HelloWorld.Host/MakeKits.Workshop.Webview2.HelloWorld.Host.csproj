@@ -6,6 +6,7 @@
         <RootNamespace>MakeKits.Workshop.Webview2.HelloWorld.Host</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Webview2.HelloWorld.Host</AssemblyName>
         <LangVersion>preview</LangVersion>
+        <Version>0.0.1.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>

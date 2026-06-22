@@ -17,6 +17,11 @@ public interface IWorkshopDescriptor : INotifyPropertyChanged
     public string Name { get; }
 
     /// <summary>
+    /// Gets the author of the workshop.
+    /// </summary>
+    public string? Author { get; }
+
+    /// <summary>
     /// Gets an optional longer description of the workshop.
     /// </summary>
     public string? Description { get; }

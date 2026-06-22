@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net462;net48;net8.0-windows;net10.0-windows</TargetFrameworks>
+        <LangVersion>preview</LangVersion>
+        <Version>0.0.1.0</Version>
+        <UseWPF>true</UseWPF>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>MakeKits.Workshop.Webview</RootNamespace>
+        <AssemblyName>MakeKits.Workshop.Webview</AssemblyName>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <Nullable>enable</Nullable>
+        <Platforms>AnyCPU</Platforms>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <ProjectGuid>{80C991A7-4A24-4946-967F-14C4930DE112}</ProjectGuid>
+        <Authors>emako</Authors>
+        <Company>emako</Company>
+        <Description>This repository holds the abstractions library of MakeKits. The library is shared among all MakeKits projects.</Description>
+        <PackageProjectUrl>https://github.com/emako/MakeKits</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/emako/MakeKits</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>MakeKits</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>Logo.png</PackageIcon>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
+        <None Include="..\..\branding\Logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Web.Webview2" Version="1.0.4022.49">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'net48'">
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="WindowsBase" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
+            <Project>{0D4566F1-A836-46E7-B79C-1303B30FC768}</Project>
+            <Name>MakeKits.Workshop.Abstractions</Name>
+            <Private>False</Private>
+        </ProjectReference>
+    </ItemGroup>
+
+</Project>

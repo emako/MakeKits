@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
 
-namespace MakeKits.Workshop.Webview2;
+namespace MakeKits.Workshop.Webview;
 
 public abstract class WorkshopContext : ObservableObject, IWorkshopContext
 {

@@ -4,12 +4,12 @@
         <Platform Name="x64" />
     </Configurations>
     <Folder Name="/sample/">
-        <Project Path="sample/MakeKits.Workshop.Webview2.HelloWorld/MakeKits.Workshop.Webview2.HelloWorld.csproj" Id="242906e4-8e7d-49ed-9254-c09f4b644cb9" />
-        <Project Path="sample/MakeKits.Workshop.Webview2.HelloWorld.Host/MakeKits.Workshop.Webview2.HelloWorld.Host.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890" />
+        <Project Path="sample/MakeKits.Workshop.Webview.HelloWorld/MakeKits.Workshop.Webview.HelloWorld.csproj" Id="242906e4-8e7d-49ed-9254-c09f4b644cb9" />
+        <Project Path="sample/MakeKits.Workshop.Webview.HelloWorld.Host/MakeKits.Workshop.Webview.HelloWorld.Host.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890" />
     </Folder>
     <Folder Name="/src/">
         <Project Path="src/MakeKits.CLI/MakeKits.CLI.csproj" Id="398113d0-f9fe-4803-b745-e6ae2b1a8e00" />
-        <Project Path="src/MakeKits.Workshop.Webview2/MakeKits.Workshop.Webview2.csproj" Id="e24af173-5399-4018-8a95-9f734d7417ba" />
+        <Project Path="src/MakeKits.Workshop.Webview/MakeKits.Workshop.Webview.csproj" Id="e24af173-5399-4018-8a95-9f734d7417ba" />
         <Project Path="src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj" />
     </Folder>
 </Solution>

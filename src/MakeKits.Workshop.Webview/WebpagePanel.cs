@@ -1,11 +1,12 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MakeKits.Workshop.Webview2;
+namespace MakeKits.Workshop.Webview;
 
 public class WebpagePanel : UserControl, IDisposable
 {
@@ -16,12 +17,12 @@ public class WebpagePanel : UserControl, IDisposable
 
     public virtual string UserDataFolder { get; set; } = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-        @"MakeKits.Workshop\WebView2_Data\"
+        @"MakeKits.Workshop\Webview_Data\"
     );
 
     public WebpagePanel()
     {
-        if (!WebView2Helper.IsWebView2Available())
+        if (!WebviewHelper.IsWebviewAvailable())
             Content = CreateDownloadButton();
         else
             InitializeComponent();
@@ -31,6 +32,7 @@ public class WebpagePanel : UserControl, IDisposable
     {
         _webView?.Dispose();
         _webView = null!;
+        GC.SuppressFinalize(this);
     }
 
     public void NavigateToUri(Uri uri)
@@ -52,7 +54,7 @@ public class WebpagePanel : UserControl, IDisposable
     {
         Button button = new()
         {
-            Content = "Viewing this file requires Microsoft Edge WebView2 to be installed.\nClick here to download it.",
+            Content = "Viewing this file requires Microsoft Edge Webview to be installed.\nClick here to download it.",
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
             Padding = new Thickness(20, 6, 20, 6),
@@ -74,7 +76,7 @@ public class WebpagePanel : UserControl, IDisposable
                 (creationProperties.AdditionalBrowserArguments ?? string.Empty) + " --enable-features=WebContentsForceDark";
         }
 
-        _webView = new WebView2
+        _webView = new WebView2()
         {
             CreationProperties = creationProperties,
         };

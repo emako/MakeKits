@@ -10,7 +10,8 @@ Write-Host @"
 "@
 
 $projects = @(
-    "..\src\MakeKits.Workshop.Abstractions"
+    "..\src\MakeKits.Workshop.Abstractions",
+    "..\src\MakeKits.Workshop.Webview"
 )
 
 foreach ($proj in $projects) {

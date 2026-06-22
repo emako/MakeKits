@@ -1,4 +1,4 @@
-namespace MakeKits.Workshop.Webview2;
+namespace MakeKits.Workshop.Webview;
 
 public static class MimeTypes
 {

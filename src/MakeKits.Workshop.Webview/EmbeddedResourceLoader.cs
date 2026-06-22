@@ -1,7 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace MakeKits.Workshop.Webview2;
+namespace MakeKits.Workshop.Webview;
 
 public static class EmbeddedResourceLoader
 {

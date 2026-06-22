@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace MakeKits.Workshop.Webview2.HelloWorld.Host;
+namespace MakeKits.Workshop.Webview.HelloWorld.Host;
 
 public partial class MainWindow : Window
 {

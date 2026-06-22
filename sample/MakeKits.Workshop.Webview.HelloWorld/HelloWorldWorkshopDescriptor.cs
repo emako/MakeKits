@@ -1,4 +1,4 @@
-namespace MakeKits.Workshop.Webview2.HelloWorld;
+namespace MakeKits.Workshop.Webview.HelloWorld;
 
 public sealed class HelloWorldWorkshopDescriptor : WorkshopDescriptor
 {
@@ -6,5 +6,5 @@ public sealed class HelloWorldWorkshopDescriptor : WorkshopDescriptor
 
     public override string? Author => "MakeKits";
 
-    public override string? Description => "Embedded WebView2 hello world demo.";
+    public override string? Description => "Embedded Webview hello world demo.";
 }

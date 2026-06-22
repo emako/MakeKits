@@ -28,6 +28,15 @@ jobs:
       - name: Pack
         run: dotnet pack src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj -c Release --no-build -o out
 
+      - name: Install dependencies
+        run: dotnet restore src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.csproj
+
+      - name: Build
+        run: dotnet build src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.csproj --configuration Release --no-restore
+
+      - name: Pack
+        run: dotnet pack src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.csproj -c Release --no-build -o out
+
       - name: Push NuGet package
         # run:  dotnet nuget push "out\*.nupkg" -k ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
         uses: actions/upload-artifact@v4

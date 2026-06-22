@@ -1,10 +1,11 @@
 ﻿using Microsoft.Web.WebView2.Core;
+using System;
 
-namespace MakeKits.Workshop.Webview2;
+namespace MakeKits.Workshop.Webview;
 
-public static class WebView2Helper
+public static class WebviewHelper
 {
-    public static bool IsWebView2Available()
+    public static bool IsWebviewAvailable()
     {
         try
         {

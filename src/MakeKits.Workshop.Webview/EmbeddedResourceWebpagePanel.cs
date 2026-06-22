@@ -1,8 +1,10 @@
 using Microsoft.Web.WebView2.Core;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace MakeKits.Workshop.Webview2;
+namespace MakeKits.Workshop.Webview;
 
 public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
 {

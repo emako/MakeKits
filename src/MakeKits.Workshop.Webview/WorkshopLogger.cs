@@ -1,4 +1,6 @@
-﻿namespace MakeKits.Workshop.Webview2;
+﻿using System;
+
+namespace MakeKits.Workshop.Webview;
 
 public abstract class WorkshopLogger : IWorkshopLogger
 {

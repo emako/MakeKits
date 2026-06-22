@@ -1,4 +1,4 @@
-namespace MakeKits.Workshop.Webview2.HelloWorld;
+namespace MakeKits.Workshop.Webview.HelloWorld;
 
 public sealed class HelloWorldWorkshop : WebviewWorkshop
 {

@@ -55,7 +55,6 @@
     <ItemGroup>
         <ProjectReference Include="..\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
             <Project>{0D4566F1-A836-46E7-B79C-1303B30FC768}</Project>
-            <Name>MakeKits.Workshop.Abstractions</Name>
             <Private>False</Private>
         </ProjectReference>
     </ItemGroup>

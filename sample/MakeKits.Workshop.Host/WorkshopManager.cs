@@ -34,7 +34,7 @@ public sealed class WorkshopManager
             return;
         }
 
-        List<IWorkshopItem> workshops = [];
+        List<IWorkshopItem> workshops = [.. LoadedWorkshops];
         string[] libraries = [.. Directory.GetFiles(folder, "*Workshop.*.dll", SearchOption.AllDirectories)
             .Where(file => !file.EndsWith("MakeKits.Workshop.Abstractions.dll")
                 && !file.EndsWith("MakeKits.Workshop.Webview.dll")
@@ -42,6 +42,10 @@ public sealed class WorkshopManager
 
         foreach (string library in libraries)
         {
+            // Skip already-loaded paths to avoid duplicates.
+            if (workshops.Any(w => string.Equals(w.FilePath, library, StringComparison.OrdinalIgnoreCase)))
+                continue;
+
             IWorkshopItem? workshop = CreateWorkshopInfo(library);
 
             if (workshop != null)

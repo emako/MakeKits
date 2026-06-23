@@ -61,16 +61,7 @@ public sealed class WorkshopManager
     {
         try
         {
-            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(lib);
-            string fileName = Path.GetFileName(lib);
-            string name = versionInfo.ProductName;
-            string version = versionInfo.ProductVersion;
-            string author = versionInfo.CompanyName;
-
             AssemblyName assemblyName = AssemblyName.GetAssemblyName(lib);
-            name = string.IsNullOrWhiteSpace(name) ? assemblyName.Name : name;
-            version = string.IsNullOrWhiteSpace(version) ? assemblyName.Version?.ToString()! : version;
-
             IWorkshop workshop = Assembly.LoadFrom(lib)
                 .GetExportedTypes()
                 .Where(t => !t.IsInterface && !t.IsAbstract
@@ -78,11 +69,18 @@ public sealed class WorkshopManager
                 .Select(t => t.CreateInstance<IWorkshop>())
                 .FirstOrDefault();
 
+            string fileName = Path.GetFileName(lib);
+            string version = $"v{assemblyName.Version}";
+            string name = workshop.Descriptor?.Name!;
+            string author = workshop.Descriptor?.Author!;
+            string description = workshop.Descriptor?.Description!;
+
             return new WorkshopItem()
             {
-                Name = string.IsNullOrWhiteSpace(name) ? Path.GetFileNameWithoutExtension(fileName) : name,
-                Author = string.IsNullOrWhiteSpace(author) ? "-" : author,
-                Version = string.IsNullOrWhiteSpace(version) ? "-" : version,
+                Name = name,
+                Author = author,
+                Description = description,
+                Version = version,
                 FileName = fileName,
                 FilePath = lib,
                 Workshop = workshop,

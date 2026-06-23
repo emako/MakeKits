@@ -84,7 +84,7 @@
         -->
         <Grid x:Name="ListPage" Visibility="Visible">
             <Grid.RowDefinitions>
-                <RowDefinition Height="56" />
+                <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -150,7 +150,7 @@
                                             Margin="0,6,0,0"
                                             FontSize="12"
                                             Foreground="#666677"
-                                            Text="{Binding Workshop.Descriptor.Description}"
+                                            Text="{Binding Description}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="Wrap" />
 
@@ -213,7 +213,7 @@
         -->
         <Grid x:Name="WorkshopPage" Visibility="Collapsed">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48" />
+                <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -222,7 +222,7 @@
                 <DockPanel LastChildFill="True">
                     <Button
                         Click="OnBackClicked"
-                        Content="← Go Back"
+                        Content="&lt;"
                         DockPanel.Dock="Left"
                         Style="{StaticResource BackButtonStyle}" />
                     <Separator

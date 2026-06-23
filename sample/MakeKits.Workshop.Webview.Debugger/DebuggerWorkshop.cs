@@ -1,16 +1,16 @@
-namespace MakeKits.Workshop.Webview.HelloWorld;
+namespace MakeKits.Workshop.Webview.Debugger;
 
 /// <inheritdoc/>
-public sealed class HelloWorldWorkshop : WebviewWorkshop
+public sealed class DebuggerWorkshop : WebviewWorkshop
 {
     /// <inheritdoc/>
-    public override IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();
+    public override IWorkshopContext Context { get; set; } = new DebuggerWorkshopContext();
 
     /// <inheritdoc/>
     protected override WebpagePanel CreatePanel(IWorkshopContext context)
     {
-        HelloWorldWorkshopViewContext? viewContext = context.ViewContext as HelloWorldWorkshopViewContext;
-        return new HelloWorldWebpagePanel
+        DebuggerWorkshopViewContext? viewContext = context.ViewContext as DebuggerWorkshopViewContext;
+        return new DebuggerWebpagePanel
         {
             Theme = viewContext?.Theme ?? WorkshopTheme.System,
         };
@@ -25,7 +25,7 @@ public sealed class HelloWorldWorkshop : WebviewWorkshop
     /// <inheritdoc/>
     protected override void NavigatePanel(WebpagePanel panel, IWorkshopContext context)
     {
-        if (panel is HelloWorldWebpagePanel helloWorldPanel)
-            helloWorldPanel.NavigateToHomePage();
+        if (panel is DebuggerWebpagePanel debuggerPanel)
+            debuggerPanel.NavigateToHomePage();
     }
 }

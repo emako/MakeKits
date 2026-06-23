@@ -16,6 +16,11 @@ public interface IWorkshopItem
     public string Author { get; set; }
 
     /// <summary>
+    /// Gets or sets an optional longer description of the workshop.
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// Gets or sets the version of the workshop item.
     /// </summary>
     public string Version { get; set; }

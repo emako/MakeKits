@@ -83,9 +83,6 @@ public partial class MainWindow : Window
         _activeItem = item;
         _activeContext = workshop.Context;
 
-        // Populate the title bar immediately with the item name as a placeholder.
-        WorkshopTitleText.Text = item.Name;
-
         // Show busy overlay while the workshop initialises.
         ShowBusy(true);
         WorkshopContentControl.Content = null;

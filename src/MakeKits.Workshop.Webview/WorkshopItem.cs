@@ -13,6 +13,9 @@ public class WorkshopItem : IWorkshopItem
     public virtual string Author { get; set; } = null!;
 
     /// <inheritdoc/>
+    public virtual string Description { get; set; } = null!;
+
+    /// <inheritdoc/>
     public virtual string Version { get; set; } = null!;
 
     /// <inheritdoc/>

@@ -105,32 +105,19 @@ public partial class MainWindow : Window
             }
         }
 
-        // Run Prepare + View on a background thread to avoid blocking the UI.
-        // Results (ViewerContent) are marshalled back via PropertyChanged → Dispatcher.
-        System.Threading.ThreadPool.QueueUserWorkItem(_ =>
+        // Both Prepare() and View() must run on the UI (STA) thread.
+        try
         {
-            try
-            {
-                workshop.Prepare(_activeContext!);
-
-                // After Prepare, ViewContext.IsBusy may have been changed by the plugin.
-                // We respect that; if not set, we keep our own busy state.
-
-                workshop.View(_activeContext!);
-
-                // View() is synchronous and, upon return, ViewerContent is already set.
-                // The PropertyChanged handler will update the UI on the dispatcher.
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[MainWindow] Workshop lifecycle error: {ex}");
-                Dispatcher.Invoke(() =>
-                {
-                    ShowBusy(false);
-                    WorkshopContent.Content = CreateErrorPanel(ex.Message);
-                });
-            }
-        });
+            workshop.Prepare(_activeContext!);
+            workshop.View(_activeContext!);
+            // ViewerContent is now set; PropertyChanged handler pushes it into WorkshopContent.
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MainWindow] Workshop lifecycle error: {ex}");
+            ShowBusy(false);
+            WorkshopContent.Content = CreateErrorPanel(ex.Message);
+        }
     }
 
     private void OnBackClicked(object sender, RoutedEventArgs e)

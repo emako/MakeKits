@@ -22,9 +22,23 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.csproj" />
     </ItemGroup>
+
+    <Target Name="ReduceReleasePackaging" AfterTargets="Build">
+        <Delete Files="$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll')" />
+        <Delete Files="$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll')" />
+        <Delete Files="$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll')" />
+        <RemoveDir Directories="$(OutputPath)\runtimes\" Condition="Exists('$(OutputPath)\runtimes\')" />
+    </Target>
 
     <ItemGroup>
         <EmbeddedResource Include="Resources\**\*" />

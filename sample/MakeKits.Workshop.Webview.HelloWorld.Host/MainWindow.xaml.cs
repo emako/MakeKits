@@ -13,7 +13,6 @@ public partial class MainWindow : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        WorkshopManager.LoadWorkshops();
     }
 
     private void OnClosed(object? sender, EventArgs e)

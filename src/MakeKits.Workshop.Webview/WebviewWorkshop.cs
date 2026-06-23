@@ -20,20 +20,21 @@ public abstract class WebviewWorkshop : Workshop
     protected virtual void NavigatePanel(WebpagePanel panel, IWorkshopContext context)
     {
         context?.ViewContext?.ViewerContent = panel;
-
-        // TODO: load into web panel
     }
 
+    /// <inheritdoc/>
     public override void Init()
     {
     }
 
+    /// <inheritdoc/>
     public override void Prepare(IWorkshopContext context)
     {
         Context = context;
         ConfigureViewContext(context);
     }
 
+    /// <inheritdoc/>
     public override void View(IWorkshopContext context)
     {
         Panel = CreatePanel(context);
@@ -46,6 +47,7 @@ public abstract class WebviewWorkshop : Workshop
         }
     }
 
+    /// <inheritdoc/>
     public override void Cleanup()
     {
         Panel?.Dispose();

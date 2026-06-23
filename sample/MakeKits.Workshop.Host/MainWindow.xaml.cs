@@ -88,7 +88,7 @@ public partial class MainWindow : Window
 
         // Show busy overlay while the workshop initialises.
         ShowBusy(true);
-        WorkshopContent.Content = null;
+        WorkshopContentControl.Content = null;
 
         // Navigate to the workshop page.
         ListPage.Visibility = Visibility.Collapsed;
@@ -122,7 +122,7 @@ public partial class MainWindow : Window
         {
             Debug.WriteLine($"[MainWindow] Workshop lifecycle error: {ex}");
             ShowBusy(false);
-            WorkshopContent.Content = CreateErrorPanel(ex.Message);
+            WorkshopContentControl.Content = CreateErrorPanel(ex.Message);
         }
     }
 
@@ -151,7 +151,7 @@ public partial class MainWindow : Window
         _activeContext = null;
         _activeItem = null;
 
-        WorkshopContent.Content = null;
+        WorkshopContentControl.Content = null;
         ShowBusy(false);
         WorkshopTitleText.Text = string.Empty;
     }
@@ -188,7 +188,7 @@ public partial class MainWindow : Window
             switch (e.PropertyName)
             {
                 case nameof(IWorkshopViewContext.ViewerContent):
-                    WorkshopContent.Content = vc.ViewerContent;
+                    WorkshopContentControl.Content = vc.ViewerContent;
                     // Once content arrives, hide the busy overlay (unless the plugin wants it on).
                     if (!vc.IsBusy)
                         ShowBusy(false);
@@ -221,7 +221,7 @@ public partial class MainWindow : Window
             WorkshopTitleText.Text = vc.Title;
 
         ShowBusy(vc.IsBusy);
-        WorkshopContent.Content = vc.ViewerContent;
+        WorkshopContentControl.Content = vc.ViewerContent;
         ApplyPreferredSize(vc);
     }
 

@@ -258,7 +258,7 @@
                 </Border>
 
                 <!--  Actual workshop content  -->
-                <ContentControl x:Name="WorkshopContent" />
+                <ContentControl x:Name="WorkshopContentControl" />
             </Grid>
         </Grid>
 

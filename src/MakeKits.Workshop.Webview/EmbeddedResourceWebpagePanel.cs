@@ -8,20 +8,20 @@ namespace MakeKits.Workshop.Webview;
 
 public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
 {
-    protected readonly Dictionary<string, byte[]> EmbeddedResources;
-    protected readonly byte[] HomePage;
-
-    protected EmbeddedResourceWebpagePanel()
-    {
-        EmbeddedResources = EmbeddedResourceLoader.LoadResources(GetType().Assembly, ResourcePrefix);
-        HomePage = EmbeddedResourceLoader.ReadResource(EmbeddedResources, HomePageResourcePath) ?? [];
-    }
+    protected internal readonly Dictionary<string, byte[]> _resources;
+    protected readonly byte[] _homePage;
 
     protected abstract string ResourcePrefix { get; }
 
     protected virtual string VirtualHost => "http://makekits.local/";
 
     protected virtual string HomePageResourcePath => "/index.html";
+
+    protected EmbeddedResourceWebpagePanel()
+    {
+        _resources = EmbeddedResourceLoader.LoadResources(GetType().Assembly, ResourcePrefix);
+        _homePage = EmbeddedResourceLoader.ReadResource(_resources, HomePageResourcePath) ?? [];
+    }
 
     public virtual void NavigateToHomePage()
     {
@@ -41,39 +41,37 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
             string absolutePath = Uri.UnescapeDataString(requestedUri.AbsolutePath);
             if (absolutePath == "/")
             {
-                args.Response = _webView.CoreWebView2.Environment.CreateWebResourceResponse(
-                    new MemoryStream(HomePage),
-                    200,
-                    "OK",
-                    MimeTypes.GetContentType(".html"));
-                return;
+                if (requestedUri.Authority.Equals("makekits.local", StringComparison.OrdinalIgnoreCase))
+                {
+                    args.Response = _webView.CoreWebView2.Environment.CreateWebResourceResponse(
+                        new MemoryStream(_homePage), 200, "OK", MimeTypes.GetContentType(".html"));
+                }
+                else
+                {
+                    base.WebView_WebResourceRequested(sender, args);
+                }
             }
-
-            if (TryCreateEmbeddedResourceResponse(absolutePath, out CoreWebView2WebResourceResponse? response))
-                args.Response = response;
+            else
+            {
+                if (TryCreateEmbeddedResourceResponse(absolutePath, out CoreWebView2WebResourceResponse? response))
+                    args.Response = response;
+            }
         }
         catch (Exception exception)
         {
             Debug.WriteLine(exception);
         }
-
-        base.WebView_WebResourceRequested(sender, args);
     }
 
-    protected virtual bool TryCreateEmbeddedResourceResponse(
-        string absolutePath,
-        out CoreWebView2WebResourceResponse? response)
+    protected virtual bool TryCreateEmbeddedResourceResponse(string absolutePath, out CoreWebView2WebResourceResponse? response)
     {
         response = null;
 
-        if (!EmbeddedResources.TryGetValue(absolutePath, out byte[]? content))
+        if (!_resources.TryGetValue(absolutePath, out byte[]? content))
             return false;
 
         response = _webView.CoreWebView2.Environment.CreateWebResourceResponse(
-            new MemoryStream(content),
-            200,
-            "OK",
-            MimeTypes.GetContentType(Path.GetExtension(absolutePath)));
+            new MemoryStream(content), 200, "OK", MimeTypes.GetContentType(Path.GetExtension(absolutePath)));
 
         return true;
     }

@@ -16,17 +16,14 @@ public static class EmbeddedResourceLoader
             if (!resourceName.StartsWith(resourcePrefix, StringComparison.Ordinal))
                 continue;
 
-            string relativePath = resourceName.Substring(resourcePrefix.Length).Replace('\\', '/');
-            if (string.IsNullOrEmpty(relativePath))
-                continue;
+            string relativePath = resourceName.Substring(resourcePrefix.Length);
+            if (relativePath.Equals("resources", StringComparison.OrdinalIgnoreCase)) continue;
 
-            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream == null)
-                continue;
-
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null) continue;
             using MemoryStream memoryStream = new();
             stream.CopyTo(memoryStream);
-            resources[$"/{relativePath}"] = memoryStream.ToArray();
+            resources[$"/{relativePath.Replace('\\', '/')}"] = memoryStream.ToArray();
         }
 
         return resources;

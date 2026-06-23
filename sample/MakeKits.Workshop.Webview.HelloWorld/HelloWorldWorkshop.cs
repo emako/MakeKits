@@ -2,6 +2,8 @@ namespace MakeKits.Workshop.Webview.HelloWorld;
 
 public sealed class HelloWorldWorkshop : WebviewWorkshop
 {
+    public override IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();
+
     protected override WebpagePanel CreatePanel(IWorkshopContext context)
     {
         HelloWorldWorkshopViewContext? viewContext = context.ViewContext as HelloWorldWorkshopViewContext;

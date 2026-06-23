@@ -111,7 +111,12 @@ public partial class MainWindow : Window
         {
             workshop.Prepare(_activeContext!);
             workshop.View(_activeContext!);
-            // ViewerContent is now set; PropertyChanged handler pushes it into WorkshopContent.
+
+            // View() sets ViewerContent synchronously; apply it directly because
+            // PropertyChanged only fires on *changes*, not on the initial assignment
+            // made before we subscribed.
+            if (_activeContext?.ViewContext != null)
+                ApplyViewContext(_activeContext.ViewContext);
         }
         catch (Exception ex)
         {

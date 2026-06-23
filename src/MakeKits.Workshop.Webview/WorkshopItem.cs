@@ -1,12 +1,10 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-
 namespace MakeKits.Workshop.Webview;
 
 /// <summary>
 /// Represents an abstract base implementation of <see cref="IWorkshopItem"/>
 /// that provides observable properties for workshop item metadata.
 /// </summary>
-public class WorkshopItem : ObservableObject, IWorkshopItem
+public class WorkshopItem : IWorkshopItem
 {
     /// <inheritdoc/>
     public virtual string Name { get; set; } = null!;

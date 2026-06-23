@@ -1,9 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace MakeKits.Workshop.Webview;
+﻿namespace MakeKits.Workshop.Webview;
 
 /// <inheritdoc/>
-public abstract class WorkshopDescriptor : ObservableObject, IWorkshopDescriptor
+public abstract class WorkshopDescriptor : IWorkshopDescriptor
 {
     /// <inheritdoc/>
     public virtual string Name => "Workshop Webview";

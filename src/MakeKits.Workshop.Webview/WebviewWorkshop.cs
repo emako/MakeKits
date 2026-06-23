@@ -19,6 +19,9 @@ public abstract class WebviewWorkshop : Workshop
 
     protected virtual void NavigatePanel(WebpagePanel panel, IWorkshopContext context)
     {
+        context?.ViewContext?.ViewerContent = panel;
+
+        // TODO: load into web panel
     }
 
     public override void Init()
@@ -33,7 +36,6 @@ public abstract class WebviewWorkshop : Workshop
 
     public override void View(IWorkshopContext context)
     {
-        Context = context;
         Panel = CreatePanel(context);
         NavigatePanel(Panel, context);
 

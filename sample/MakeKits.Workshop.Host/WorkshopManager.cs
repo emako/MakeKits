@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using MakeKits.Workshop.Webview;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace MakeKits.Workshop.Webview.HelloWorld.Host;
+namespace MakeKits.Workshop.Host;
 
 public sealed class WorkshopManager
 {

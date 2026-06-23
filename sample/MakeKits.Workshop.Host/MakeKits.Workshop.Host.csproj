@@ -3,8 +3,8 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net48</TargetFramework>
-        <RootNamespace>MakeKits.Workshop.Webview.HelloWorld.Host</RootNamespace>
-        <AssemblyName>MakeKits.Workshop.Webview.HelloWorld.Host</AssemblyName>
+        <RootNamespace>MakeKits.Workshop.Host</RootNamespace>
+        <AssemblyName>MakeKits.Workshop.Host</AssemblyName>
         <LangVersion>preview</LangVersion>
         <Version>0.0.1.0</Version>
         <UseWPF>true</UseWPF>

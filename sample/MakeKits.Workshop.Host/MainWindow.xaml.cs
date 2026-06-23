@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +21,9 @@ public partial class MainWindow : Window
         Closed += OnClosed;
     }
 
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
     //  Lifecycle
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -35,9 +36,9 @@ public partial class MainWindow : Window
         CleanupActiveWorkshop();
     }
 
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
     //  List page
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
 
     private void PopulateWorkshopList()
     {
@@ -63,9 +64,9 @@ public partial class MainWindow : Window
             OpenWorkshop(item);
     }
 
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
     //  Open / close workshop
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
 
     private void OpenWorkshop(IWorkshopItem item)
     {
@@ -150,11 +151,11 @@ public partial class MainWindow : Window
         WorkshopTitleText.Text = string.Empty;
     }
 
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
     //  Context change handlers
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
 
-    private void OnContextPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void OnContextPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(IWorkshopContext.ViewContext))
         {
@@ -172,7 +173,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnViewContextPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void OnViewContextPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (sender is not IWorkshopViewContext vc) return;
 
@@ -227,9 +228,9 @@ public partial class MainWindow : Window
             Height = vc.PreferredHeight;
     }
 
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
     //  Helpers
-    // ─────────────────────────────────────────────────────────────────
+    // -----------------------------------------------------------------
 
     private void ShowBusy(bool isBusy)
     {

@@ -1,4 +1,3 @@
-using MakeKits.Workshop.Webview;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,7 +53,7 @@ public partial class MainWindow : Window
         else
         {
             EmptyStatePanel.Visibility = Visibility.Collapsed;
-            WorkshopCountText.Text = $"({items.Count} 个插件)";
+            WorkshopCountText.Text = $"({items.Count} plugin(s))";
         }
     }
 
@@ -76,7 +75,7 @@ public partial class MainWindow : Window
         IWorkshop? workshop = item.Workshop;
         if (workshop == null)
         {
-            MessageBox.Show($"工坊{item.Name}未正确加载。", "无法打开", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show($"Workshop {item.Name} was not loaded correctly.", "Cannot be opened", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
 
@@ -254,7 +253,7 @@ public partial class MainWindow : Window
     {
         return new TextBlock
         {
-            Text = $"⚠️ 工坊加载失败\n\n{message}",
+            Text = $"⚠️ Workshop loading failed\n\n{message}",
             Margin = new Thickness(24),
             FontSize = 14,
             Foreground = System.Windows.Media.Brushes.OrangeRed,

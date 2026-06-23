@@ -9,7 +9,7 @@
 
     <Window.Resources>
 
-        <!-- Card button: removes default Button chrome, adds rounded hover/press states -->
+        <!--  Card button: removes default Button chrome, adds rounded hover/press states  -->
         <Style x:Key="CardButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="#E2E2EC" />
@@ -41,7 +41,7 @@
             </Setter>
         </Style>
 
-        <!-- Back button: transparent, white text -->
+        <!--  Back button: transparent, white text  -->
         <Style x:Key="BackButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -77,16 +77,18 @@
 
     <Grid>
 
-        <!-- ═══════════════════════════════════════════════
-             Page 1 — Workshop card list
-             ═══════════════════════════════════════════════ -->
+        <!--
+            ═══════════════════════════════════════════════
+            Page 1 — Workshop card list
+            ═══════════════════════════════════════════════
+        -->
         <Grid x:Name="ListPage" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="56" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Header bar -->
+            <!--  Header bar  -->
             <Border Grid.Row="0" Background="#1A1A2E">
                 <StackPanel
                     Margin="24,0,0,0"
@@ -96,7 +98,7 @@
                         FontSize="20"
                         FontWeight="SemiBold"
                         Foreground="White"
-                        Text="创意工坊" />
+                        Text="Creative Workshop" />
                     <TextBlock
                         x:Name="WorkshopCountText"
                         Margin="10,0,0,0"
@@ -107,13 +109,11 @@
                 </StackPanel>
             </Border>
 
-            <!-- Card list -->
+            <!--  Card list  -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <Grid>
-                    <!-- Cards -->
-                    <ItemsControl
-                        x:Name="WorkshopList"
-                        Margin="16,12,16,16">
+                    <!--  Cards  -->
+                    <ItemsControl x:Name="WorkshopList" Margin="16,12,16,16">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" />
@@ -135,7 +135,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <!-- Name -->
+                                        <!--  Name  -->
                                         <TextBlock
                                             Grid.Row="0"
                                             FontSize="15"
@@ -144,7 +144,7 @@
                                             Text="{Binding Name}"
                                             TextTrimming="CharacterEllipsis" />
 
-                                        <!-- Description -->
+                                        <!--  Description  -->
                                         <TextBlock
                                             Grid.Row="1"
                                             Margin="0,6,0,0"
@@ -154,7 +154,7 @@
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="Wrap" />
 
-                                        <!-- Author / Version -->
+                                        <!--  Author / Version  -->
                                         <StackPanel
                                             Grid.Row="2"
                                             Margin="0,8,0,0"
@@ -178,7 +178,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!-- Empty state -->
+                    <!--  Empty state  -->
                     <StackPanel
                         x:Name="EmptyStatePanel"
                         HorizontalAlignment="Center"
@@ -194,40 +194,42 @@
                             HorizontalAlignment="Center"
                             FontSize="16"
                             Foreground="#9999AA"
-                            Text="暂无可用的工坊插件" />
+                            Text="No Workshop available" />
                         <TextBlock
                             Margin="0,6,0,0"
                             HorizontalAlignment="Center"
                             FontSize="12"
                             Foreground="#BBBBCC"
-                            Text="请将插件 DLL 放置到 workshops 目录后重启应用" />
+                            Text="Please place the plugin DLL into the workshops directory and restart the application." />
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
         </Grid>
 
-        <!-- ═══════════════════════════════════════════════
-             Page 2 — Workshop view
-             ═══════════════════════════════════════════════ -->
+        <!--
+            ═══════════════════════════════════════════════
+            Page 2 — Workshop view
+            ═══════════════════════════════════════════════
+        -->
         <Grid x:Name="WorkshopPage" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Title bar -->
+            <!--  Title bar  -->
             <Border Grid.Row="0" Background="#1A1A2E">
                 <DockPanel LastChildFill="True">
                     <Button
-                        DockPanel.Dock="Left"
                         Click="OnBackClicked"
-                        Content="← 返回"
+                        Content="← Go Back"
+                        DockPanel.Dock="Left"
                         Style="{StaticResource BackButtonStyle}" />
                     <Separator
                         Width="1"
-                        DockPanel.Dock="Left"
+                        VerticalAlignment="Stretch"
                         Background="#33334A"
-                        VerticalAlignment="Stretch" />
+                        DockPanel.Dock="Left" />
                     <TextBlock
                         x:Name="WorkshopTitleText"
                         Margin="16,0,0,0"
@@ -238,24 +240,24 @@
                 </DockPanel>
             </Border>
 
-            <!-- Workshop content area -->
+            <!--  Workshop content area  -->
             <Grid Grid.Row="1">
-                <!-- Busy indicator (shown while IsBusy = true) -->
+                <!--  Busy indicator (shown while IsBusy = true)  -->
                 <Border
                     x:Name="BusyOverlay"
-                    Background="#80FFFFFF"
                     Panel.ZIndex="10"
+                    Background="#80FFFFFF"
                     Visibility="Collapsed">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="14"
                             Foreground="#555566"
-                            Text="正在加载…" />
+                            Text="Loading..." />
                     </StackPanel>
                 </Border>
 
-                <!-- Actual workshop content -->
+                <!--  Actual workshop content  -->
                 <ContentControl x:Name="WorkshopContent" />
             </Grid>
         </Grid>

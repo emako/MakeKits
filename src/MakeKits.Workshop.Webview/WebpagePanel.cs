@@ -20,6 +20,8 @@ public class WebpagePanel : UserControl, IDisposable
         @"MakeKits\Workshop\Webview2_Data\"
     );
 
+    protected virtual string WebResourceRequestedFilter => "*";
+
     public WebpagePanel()
     {
         if (!WebviewHelper.IsWebviewAvailable())
@@ -152,7 +154,7 @@ public class WebpagePanel : UserControl, IDisposable
     {
         if (e.IsSuccess)
         {
-            _webView.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
+            _webView.CoreWebView2.AddWebResourceRequestedFilter(WebResourceRequestedFilter, CoreWebView2WebResourceContext.All);
             _webView.CoreWebView2.WebResourceRequested += WebView_WebResourceRequested;
         }
     }

@@ -12,7 +12,9 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
 
     protected virtual byte[] HomePage { get; set; } = null!;
 
-    protected virtual string VirtualHost => "http://makekits.local/";
+    protected virtual string VirtualHost => "https://makekits.invalid/";
+
+    protected override string WebResourceRequestedFilter => $"{VirtualHost.TrimEnd('/')}/*";
 
     protected virtual string HomePageResourcePath => "/index.html";
 

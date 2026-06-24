@@ -1,7 +1,7 @@
 ﻿namespace MakeKits.Workshop.Webview;
 
 /// <inheritdoc/>
-public abstract class WorkshopViewContext : ObservableObject, IWorkshopViewContext
+public abstract class WorkshopViewContext : WorkshopObject, IWorkshopViewContext
 {
     private object _source = null!;
     private string _title = null!;

@@ -11,7 +11,7 @@ namespace MakeKits.Workshop.Webview;
 /// This is a lightweight implementation of the observable pattern,
 /// providing <see cref="SetProperty{T}"/> and <see cref="OnPropertyChanged"/> helpers.
 /// </remarks>
-public abstract class ObservableObject : INotifyPropertyChanged
+public abstract class WorkshopObject : INotifyPropertyChanged
 {
     /// <summary>
     /// Occurs when a property value changes.

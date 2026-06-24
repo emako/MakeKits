@@ -3,7 +3,7 @@
 namespace MakeKits.Workshop.Webview;
 
 /// <inheritdoc/>
-public abstract class WorkshopContext : ObservableObject, IWorkshopContext
+public abstract class WorkshopContext : WorkshopObject, IWorkshopContext
 {
     private IWorkshopDescriptor _descriptor = null!;
     private IWorkshopLogger? _logger;

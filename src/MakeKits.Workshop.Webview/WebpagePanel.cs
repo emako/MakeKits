@@ -17,7 +17,7 @@ public class WebpagePanel : UserControl, IDisposable
 
     public virtual string UserDataFolder { get; set; } = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-        @"MakeKits.Workshop\Webview_Data\"
+        @"MakeKits\Workshop\Webview2_Data\"
     );
 
     public WebpagePanel()

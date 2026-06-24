@@ -34,10 +34,10 @@
     </ItemGroup>
 
     <Target Name="ReduceReleasePackaging" AfterTargets="Build">
-        <Delete Files="$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll')" />
-        <Delete Files="$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll')" />
-        <Delete Files="$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll')" />
-        <RemoveDir Directories="$(OutputPath)\runtimes\" Condition="Exists('$(OutputPath)\runtimes\')" />
+        <Delete Files="$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll')" ContinueOnError="true" />
+        <Delete Files="$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll')" ContinueOnError="true" />
+        <Delete Files="$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll')" ContinueOnError="true" />
+        <RemoveDir Directories="$(OutputPath)\runtimes\" Condition="Exists('$(OutputPath)\runtimes\')" ContinueOnError="true" />
     </Target>
 
     <ItemGroup>

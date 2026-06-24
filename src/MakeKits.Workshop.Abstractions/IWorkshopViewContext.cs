@@ -27,11 +27,6 @@ public interface IWorkshopViewContext : INotifyPropertyChanged
     public object ViewerContent { get; set; }
 
     /// <summary>
-    /// Gets or sets whether the host should display a busy indicator.
-    /// </summary>
-    public bool IsBusy { get; set; }
-
-    /// <summary>
     /// Gets or sets whether the view should be displayed in immersive mode.
     /// </summary>
     public bool IsImmersiveMode { get; set; }

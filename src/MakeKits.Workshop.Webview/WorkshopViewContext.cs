@@ -19,10 +19,6 @@ public abstract partial class WorkshopViewContext : ObservableObject, IWorkshopV
 
     /// <inheritdoc/>
     [ObservableProperty]
-    public virtual partial bool IsBusy { get; set; } = false;
-
-    /// <inheritdoc/>
-    [ObservableProperty]
     public virtual partial bool IsImmersiveMode { get; set; } = false;
 
     /// <inheritdoc/>

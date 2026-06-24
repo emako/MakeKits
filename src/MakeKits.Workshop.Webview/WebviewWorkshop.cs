@@ -40,11 +40,7 @@ public abstract class WebviewWorkshop : Workshop
         Panel = CreatePanel(context);
         NavigatePanel(Panel, context);
 
-        if (context.ViewContext != null)
-        {
-            context.ViewContext.ViewerContent = Panel;
-            context.ViewContext.IsBusy = false;
-        }
+        context.ViewContext?.ViewerContent = Panel;
     }
 
     /// <inheritdoc/>

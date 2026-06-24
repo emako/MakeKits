@@ -242,21 +242,6 @@
 
             <!--  Workshop content area  -->
             <Grid Grid.Row="1">
-                <!--  Busy indicator (shown while IsBusy = true)  -->
-                <Border
-                    x:Name="BusyOverlay"
-                    Panel.ZIndex="10"
-                    Background="#80FFFFFF"
-                    Visibility="Collapsed">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#555566"
-                            Text="Loading..." />
-                    </StackPanel>
-                </Border>
-
                 <!--  Actual workshop content  -->
                 <ContentControl x:Name="WorkshopContentControl" />
             </Grid>

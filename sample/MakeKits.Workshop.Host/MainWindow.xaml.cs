@@ -84,7 +84,6 @@ public partial class MainWindow : Window
         _activeContext = workshop.Context;
 
         // Show busy overlay while the workshop initialises.
-        ShowBusy(true);
         WorkshopContentControl.Content = null;
 
         // Navigate to the workshop page.
@@ -118,7 +117,6 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             Debug.WriteLine($"[MainWindow] Workshop lifecycle error: {ex}");
-            ShowBusy(false);
             WorkshopContentControl.Content = CreateErrorPanel(ex.Message);
         }
     }
@@ -149,7 +147,6 @@ public partial class MainWindow : Window
         _activeItem = null;
 
         WorkshopContentControl.Content = null;
-        ShowBusy(false);
         WorkshopTitleText.Text = string.Empty;
     }
 
@@ -186,13 +183,6 @@ public partial class MainWindow : Window
             {
                 case nameof(IWorkshopViewContext.ViewerContent):
                     WorkshopContentControl.Content = vc.ViewerContent;
-                    // Once content arrives, hide the busy overlay (unless the plugin wants it on).
-                    if (!vc.IsBusy)
-                        ShowBusy(false);
-                    break;
-
-                case nameof(IWorkshopViewContext.IsBusy):
-                    ShowBusy(vc.IsBusy);
                     break;
 
                 case nameof(IWorkshopViewContext.Title):
@@ -217,7 +207,6 @@ public partial class MainWindow : Window
         if (!string.IsNullOrWhiteSpace(vc.Title))
             WorkshopTitleText.Text = vc.Title;
 
-        ShowBusy(vc.IsBusy);
         WorkshopContentControl.Content = vc.ViewerContent;
         ApplyPreferredSize(vc);
     }
@@ -233,11 +222,6 @@ public partial class MainWindow : Window
     // -----------------------------------------------------------------
     //  Helpers
     // -----------------------------------------------------------------
-
-    private void ShowBusy(bool isBusy)
-    {
-        BusyOverlay.Visibility = isBusy ? Visibility.Visible : Visibility.Collapsed;
-    }
 
     private static UIElement CreateErrorPanel(string message)
     {

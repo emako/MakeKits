@@ -1,39 +1,70 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace MakeKits.Workshop.Webview;
+﻿namespace MakeKits.Workshop.Webview;
 
 /// <inheritdoc/>
-public abstract partial class WorkshopViewContext : ObservableObject, IWorkshopViewContext
+public abstract class WorkshopViewContext : ObservableObject, IWorkshopViewContext
 {
-    /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial object Source { get; set; } = null!;
+    private object _source = null!;
+    private string _title = null!;
+    private object _viewerContent = null!;
+    private bool _isImmersiveMode = false;
+    private int _preferredWidth = 800;
+    private int _preferredHeight = 600;
+    private bool _canResize = true;
+    private WorkshopTheme _theme = WorkshopTheme.None;
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial string Title { get; set; } = null!;
+    public virtual object Source
+    {
+        get => _source;
+        set => SetProperty(ref _source, value);
+    }
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial object ViewerContent { get; set; } = null!;
+    public virtual string Title
+    {
+        get => _title;
+        set => SetProperty(ref _title, value);
+    }
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial bool IsImmersiveMode { get; set; } = false;
+    public virtual object ViewerContent
+    {
+        get => _viewerContent;
+        set => SetProperty(ref _viewerContent, value);
+    }
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial int PreferredWidth { get; set; } = 800;
+    public virtual bool IsImmersiveMode
+    {
+        get => _isImmersiveMode;
+        set => SetProperty(ref _isImmersiveMode, value);
+    }
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial int PreferredHeight { get; set; } = 600;
+    public virtual int PreferredWidth
+    {
+        get => _preferredWidth;
+        set => SetProperty(ref _preferredWidth, value);
+    }
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial bool CanResize { get; set; } = true;
+    public virtual int PreferredHeight
+    {
+        get => _preferredHeight;
+        set => SetProperty(ref _preferredHeight, value);
+    }
 
     /// <inheritdoc/>
-    [ObservableProperty]
-    public virtual partial WorkshopTheme Theme { get; set; } = WorkshopTheme.None;
+    public virtual bool CanResize
+    {
+        get => _canResize;
+        set => SetProperty(ref _canResize, value);
+    }
+
+    /// <inheritdoc/>
+    public virtual WorkshopTheme Theme
+    {
+        get => _theme;
+        set => SetProperty(ref _theme, value);
+    }
 }

@@ -5,6 +5,6 @@ public sealed class DefaultWorkshopViewContext : WorkshopViewContext
     public DefaultWorkshopViewContext()
     {
         Title = "Default Webview";
-        Theme = WorkshopTheme.System;
+        Theme = WorkshopTheme.Light;
     }
 }

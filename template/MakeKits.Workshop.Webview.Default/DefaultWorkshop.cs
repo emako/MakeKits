@@ -12,7 +12,7 @@ public sealed class DefaultWorkshop : WebviewWorkshop
         DefaultWorkshopViewContext? viewContext = context.ViewContext as DefaultWorkshopViewContext;
         return new DefaultWebpagePanel()
         {
-            Theme = viewContext?.Theme ?? WorkshopTheme.System,
+            Theme = viewContext?.Theme ?? WorkshopTheme.Light,
         };
     }
 

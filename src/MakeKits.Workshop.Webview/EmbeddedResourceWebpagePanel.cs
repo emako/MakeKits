@@ -8,8 +8,9 @@ namespace MakeKits.Workshop.Webview;
 
 public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
 {
-    protected internal readonly Dictionary<string, byte[]> _resources;
-    protected readonly byte[] _homePage;
+    protected virtual Dictionary<string, byte[]> ResourcesDictionary { get; set; } = null!;
+
+    protected virtual byte[] HomePage { get; set; } = null!;
 
     protected virtual string VirtualHost => "http://makekits.local/";
 
@@ -17,8 +18,13 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
 
     protected EmbeddedResourceWebpagePanel()
     {
-        _resources = EmbeddedResourceLoader.LoadResources(GetType().Assembly);
-        _homePage = _resources[HomePageResourcePath];
+        InitializeResources();
+    }
+
+    public virtual void InitializeResources()
+    {
+        ResourcesDictionary = EmbeddedResourceLoader.LoadResources(GetType().Assembly);
+        HomePage = ResourcesDictionary[HomePageResourcePath];
     }
 
     public virtual void NavigateToHomePage()
@@ -49,7 +55,8 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
             if (absolutePath == "/" && requestedUri.Authority.Equals(new Uri(VirtualHost).Host, StringComparison.OrdinalIgnoreCase))
             {
                 args.Response = _webView.CoreWebView2.Environment.CreateWebResourceResponse(
-                    new MemoryStream(_homePage), 200, "OK", MimeTypes.GetContentType(".html"));
+                    new MemoryStream(HomePage), 200, "OK", MimeTypes.GetContentType(".html"));
+                return;
             }
 
             if (TryCreateEmbeddedResourceResponse(absolutePath, out CoreWebView2WebResourceResponse? response))
@@ -65,7 +72,7 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
     {
         response = null;
 
-        if (!_resources.TryGetValue(absolutePath, out byte[]? content))
+        if (!ResourcesDictionary.TryGetValue(absolutePath, out byte[]? content))
             return false;
 
         response = _webView.CoreWebView2.Environment.CreateWebResourceResponse(

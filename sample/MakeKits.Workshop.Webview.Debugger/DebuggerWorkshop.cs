@@ -10,7 +10,7 @@ public sealed class DebuggerWorkshop : WebviewWorkshop
     protected override WebpagePanel CreatePanel(IWorkshopContext context)
     {
         DebuggerWorkshopViewContext? viewContext = context.ViewContext as DebuggerWorkshopViewContext;
-        return new DebuggerWebpagePanel
+        return new LocalHostWebpagePanel()
         {
             Theme = viewContext?.Theme ?? WorkshopTheme.System,
         };
@@ -25,7 +25,7 @@ public sealed class DebuggerWorkshop : WebviewWorkshop
     /// <inheritdoc/>
     protected override void NavigatePanel(WebpagePanel panel, IWorkshopContext context)
     {
-        if (panel is DebuggerWebpagePanel debuggerPanel)
+        if (panel is LocalHostWebpagePanel debuggerPanel)
             debuggerPanel.NavigateToHomePage();
     }
 }

@@ -11,15 +11,13 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
     protected internal readonly Dictionary<string, byte[]> _resources;
     protected readonly byte[] _homePage;
 
-    protected abstract string ResourcePrefix { get; }
-
     protected virtual string VirtualHost => "http://makekits.local/";
 
     protected virtual string HomePageResourcePath => "/index.html";
 
     protected EmbeddedResourceWebpagePanel()
     {
-        _resources = EmbeddedResourceLoader.LoadResources(GetType().Assembly, ResourcePrefix);
+        _resources = EmbeddedResourceLoader.LoadResources(GetType().Assembly);
         _homePage = _resources[HomePageResourcePath];
     }
 

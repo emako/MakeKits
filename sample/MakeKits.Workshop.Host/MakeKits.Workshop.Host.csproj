@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-		<ProjectReference Include="..\MakeKits.Workshop.Webview.HelloWorld\MakeKits.Workshop.Webview.HelloWorld.csproj" />
+        <ProjectReference Include="..\MakeKits.Workshop.Webview.HelloWorld\MakeKits.Workshop.Webview.HelloWorld.csproj" />
         <ProjectReference Include="..\MakeKits.Workshop.Webview.Debugger\MakeKits.Workshop.Webview.Debugger.csproj" />
     </ItemGroup>
 

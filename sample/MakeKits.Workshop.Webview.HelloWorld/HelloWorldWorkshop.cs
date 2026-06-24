@@ -10,7 +10,7 @@ public sealed class HelloWorldWorkshop : WebviewWorkshop
     protected override WebpagePanel CreatePanel(IWorkshopContext context)
     {
         HelloWorldWorkshopViewContext? viewContext = context.ViewContext as HelloWorldWorkshopViewContext;
-        return new HelloWorldWebpagePanel
+        return new HelloWorldWebpagePanel()
         {
             Theme = viewContext?.Theme ?? WorkshopTheme.System,
         };
@@ -25,7 +25,7 @@ public sealed class HelloWorldWorkshop : WebviewWorkshop
     /// <inheritdoc/>
     protected override void NavigatePanel(WebpagePanel panel, IWorkshopContext context)
     {
-        if (panel is HelloWorldWebpagePanel helloWorldPanel)
-            helloWorldPanel.NavigateToHomePage();
+        if (panel is EmbeddedResourceWebpagePanel panel2)
+            panel2.NavigateToHomePage();
     }
 }

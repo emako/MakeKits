@@ -7,23 +7,19 @@ namespace MakeKits.Workshop.Webview;
 
 public static class EmbeddedResourceLoader
 {
-    public static Dictionary<string, byte[]> LoadResources(Assembly assembly, string resourcePrefix)
+    public static Dictionary<string, byte[]> LoadResources(Assembly assembly)
     {
         Dictionary<string, byte[]> resources = [];
 
         foreach (string resourceName in assembly.GetManifestResourceNames())
         {
-            if (!resourceName.StartsWith(resourcePrefix, StringComparison.Ordinal))
-                continue;
-
-            string relativePath = resourceName.Substring(resourcePrefix.Length);
-            if (relativePath.Equals("resources", StringComparison.OrdinalIgnoreCase)) continue;
+            if (resourceName.Equals("resources", StringComparison.OrdinalIgnoreCase)) continue;
 
             using var stream = assembly.GetManifestResourceStream(resourceName);
             if (stream == null) continue;
             using MemoryStream memoryStream = new();
             stream.CopyTo(memoryStream);
-            resources[$"/{relativePath.Replace('\\', '/')}"] = memoryStream.ToArray();
+            resources[$"{resourceName.Replace('\\', '/')}"] = memoryStream.ToArray();
         }
 
         return resources;

@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Webview.Debugger</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Webview.Debugger</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.2.0</Version>
+        <Version>0.0.3.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>

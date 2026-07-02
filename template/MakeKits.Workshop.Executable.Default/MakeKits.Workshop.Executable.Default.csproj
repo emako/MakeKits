@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
-        <RootNamespace>MakeKits.Workshop.Webview.Default</RootNamespace>
-        <AssemblyName>MakeKits.Workshop.Webview.Default</AssemblyName>
+        <RootNamespace>MakeKits.Workshop.Executable.Default</RootNamespace>
+        <AssemblyName>MakeKits.Workshop.Executable.Default</AssemblyName>
         <LangVersion>preview</LangVersion>
         <Version>0.0.5.0</Version>
         <UseWPF>true</UseWPF>
@@ -20,6 +20,8 @@
         <OutputPath>..\..\sample\MakeKits.Workshop.Host\bin\Debug\workshops\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
+        <UsePowerShell>true</UsePowerShell>
+        <NoWarn>${NoWarn};NU1903;NU1902</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,22 +29,16 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="System.Management.Automation" Version="6.1.2" Condition=" '$(UsePowerShell)' == 'true'" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <ProjectReference Include="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.csproj" />
+        <ProjectReference Include="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Webview" Version="0.0.5.0" />
+        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.5.0" />
     </ItemGroup>
-
-    <Target Name="ReduceReleasePackaging" AfterTargets="Build">
-        <Delete Files="$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll')" ContinueOnError="true" />
-        <Delete Files="$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll')" ContinueOnError="true" />
-        <Delete Files="$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll')" ContinueOnError="true" />
-        <RemoveDir Directories="$(OutputPath)\runtimes\" Condition="Exists('$(OutputPath)\runtimes\')" ContinueOnError="true" />
-    </Target>
 
     <ItemGroup>
         <EmbeddedResource Include="Resources\**\*">

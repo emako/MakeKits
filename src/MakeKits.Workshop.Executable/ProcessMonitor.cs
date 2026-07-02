@@ -7,12 +7,19 @@ using System.Text;
 
 namespace MakeKits.Workshop.Executable;
 
+/// <summary>
+/// Windows process introspection helpers backed by kernel32, ntdll, and user32 P/Invoke.
+/// </summary>
 [SuppressMessage("Usage", "CA2263:Prefer generic overload when type is known")]
 [SuppressMessage("Globalization", "CA2101:Specify marshalling for P/Invoke string arguments")]
 [SuppressMessage("Interoperability", "CA1401:P/Invokes should not be visible")]
 public static class ProcessMonitor
 {
-    public static int? GetParentProcessId(int pid)
+    /// <summary>
+    /// Returns the parent process ID for <paramref name="pid"/>, or <see langword="null"/> when the
+    /// process cannot be opened or <c>NtQueryInformationProcess</c> fails.
+    /// </summary>
+    public static unsafe int? GetParentProcessId(int pid)
     {
         using Kernel32.SafeHPROCESS hProcess = Kernel32.OpenProcess(ACCESS_MASK.GENERIC_READ, false, (uint)pid);
 
@@ -34,6 +41,10 @@ public static class ProcessMonitor
         }
     }
 
+    /// <summary>
+    /// Returns the title of the first top-level window owned by <paramref name="pid"/>,
+    /// or <see langword="null"/> when no matching window is found.
+    /// </summary>
     public static string? GetWindowTextByProcessId(int pid)
     {
         string? windowTitle = null;
@@ -47,6 +58,7 @@ public static class ProcessMonitor
                 StringBuilder title = new(256);
                 _ = User32.GetWindowText(hWnd, title, title.Capacity);
                 windowTitle = title.ToString();
+                // Stop enumeration after the first matching window.
                 return false;
             }
             return true;
@@ -55,6 +67,10 @@ public static class ProcessMonitor
         return windowTitle;
     }
 
+    /// <summary>
+    /// Looks up a running process by executable file name (for example, <c>notepad.exe</c>).
+    /// Returns <c>0</c> when no match is found.
+    /// </summary>
     public static uint GetProcessIdByName(string processName)
     {
         uint pid = 0;
@@ -81,6 +97,10 @@ public static class ProcessMonitor
         return pid;
     }
 
+    /// <summary>
+    /// Returns the full executable path for <paramref name="pid"/>, or <see langword="null"/>
+    /// when the process cannot be queried.
+    /// </summary>
     public static string? GetExeNameByProcessId(uint pid)
     {
         using Kernel32.SafeHPROCESS hProcess = Kernel32.OpenProcess(new ACCESS_MASK(Kernel32.ProcessAccess.PROCESS_QUERY_INFORMATION), false, pid);
@@ -102,6 +122,9 @@ public static class ProcessMonitor
         return null;
     }
 
+    /// <summary>
+    /// Converts a Win32 error code into a localized system message.
+    /// </summary>
     public static string GetLastErrorAsString(Win32Error errorCode)
     {
         StringBuilder messageBuffer = new(256);
@@ -115,6 +138,7 @@ public static class ProcessMonitor
             IntPtr.Zero
         );
 
+        // FormatMessage returns 0 on failure, which coincides with STATUS_SUCCESS.
         if (formatResult == (int)NTStatus.STATUS_SUCCESS)
         {
             return $"Unknown error (Code {errorCode})";
@@ -123,6 +147,7 @@ public static class ProcessMonitor
         return messageBuffer.ToString().Trim();
     }
 
+    /// <summary>kernel32.dll P/Invoke declarations used by <see cref="ProcessMonitor"/>.</summary>
     public static class Kernel32
     {
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -238,6 +263,7 @@ public static class ProcessMonitor
         }
     }
 
+    /// <summary>ntdll.dll P/Invoke declarations used by <see cref="ProcessMonitor"/>.</summary>
     public static class NtDll
     {
         [DllImport("ntdll.dll")]
@@ -260,10 +286,13 @@ public static class ProcessMonitor
             public nint PebBaseAddress;
             public nint AffinityMask;
             public nint BasePriority;
+
+            /// <summary>Parent process ID.</summary>
             public nuint InheritedFromUniqueProcessId;
         }
     }
 
+    /// <summary>user32.dll P/Invoke declarations used by <see cref="ProcessMonitor"/>.</summary>
     public static class User32
     {
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
@@ -279,6 +308,7 @@ public static class ProcessMonitor
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
     }
 
+    /// <summary>Win32 access-right mask passed to <see cref="Kernel32.OpenProcess"/>.</summary>
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct ACCESS_MASK
     {
@@ -293,11 +323,13 @@ public static class ProcessMonitor
         public static implicit operator uint(ACCESS_MASK mask) => mask.value;
     }
 
+    /// <summary>NTSTATUS values returned by ntdll entry points.</summary>
     public enum NTStatus : uint
     {
         STATUS_SUCCESS = 0,
     }
 
+    /// <summary>Strongly typed wrapper for Win32 error codes.</summary>
     public readonly struct Win32Error(uint value)
     {
         private readonly uint value = value;

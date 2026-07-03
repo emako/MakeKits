@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms.Integration;
 
 namespace MakeKits.Workshop.Executable.Default;
 
@@ -57,7 +56,7 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
     }
 
     /// <inheritdoc/>
-    protected override DisposablePanel CreatePanel(IWorkshopContext context)
+    protected override WindowHostPanel CreatePanel(IWorkshopContext context)
     {
         if (!File.Exists(ProgramPath))
         {
@@ -80,7 +79,7 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
             string[] exePaths = [.. Directory.EnumerateFiles(ProgramDirectory, "*.exe", SearchOption.AllDirectories)];
             DefaultHostPanel panel = new();
 
-            ProcessWindowPolling.PollProcessWindow(exePaths, windowHandle =>
+            PWP.PollProcessWindow(exePaths, windowHandle =>
             {
                 Debug.WriteLine($"Found window handle: {windowHandle}");
 

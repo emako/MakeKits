@@ -10,7 +10,7 @@ public sealed class HelloWorldWorkshop : ExecutableWorkshop
     public override IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();
 
     /// <inheritdoc/>
-    protected override DisposablePanel CreatePanel(IWorkshopContext context)
+    protected override WindowHostPanel CreatePanel(IWorkshopContext context)
     {
         HelloWorldWorkshopViewContext? viewContext = context.ViewContext as HelloWorldWorkshopViewContext;
         return new HelloWorldExecutablePanel();

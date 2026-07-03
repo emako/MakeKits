@@ -82,30 +82,30 @@ public static class ProcessMonitor
     /// </summary>
     public static nint[] GetWindowHandlesByProcessId(int pid)
     {
-        List<nint> handles = new List<nint>();
+        List<nint> handles = [];
         uint targetPid = (uint)pid;
 
         User32.EnumWindows((hWnd, lParam) =>
         {
-            User32.GetWindowThreadProcessId(hWnd, out uint processId);
+            _ = User32.GetWindowThreadProcessId(hWnd, out uint processId);
             if (processId != targetPid)
                 return true;
 
-            handles.Add((nint)hWnd);
-            CollectChildWindowHandles((nint)hWnd, targetPid, handles);
+            handles.Add(hWnd);
+            CollectChildWindowHandles(hWnd, targetPid, handles);
             return true;
         }, IntPtr.Zero);
 
-        return handles.ToArray();
+        return [.. handles];
     }
 
     private static void CollectChildWindowHandles(nint parentHwnd, uint pid, List<nint> handles)
     {
-        User32.EnumChildWindows((IntPtr)parentHwnd, (hWnd, lParam) =>
+        User32.EnumChildWindows(parentHwnd, (hWnd, lParam) =>
         {
-            User32.GetWindowThreadProcessId(hWnd, out uint processId);
+            _ = User32.GetWindowThreadProcessId(hWnd, out uint processId);
             if (processId == pid)
-                handles.Add((nint)hWnd);
+                handles.Add(hWnd);
 
             return true;
         }, IntPtr.Zero);

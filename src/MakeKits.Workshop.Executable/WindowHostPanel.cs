@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using System.Windows.Media;
 
 namespace MakeKits.Workshop.Executable;
 
 /// <summary>
 /// Abstract base panel interface class, inherit WPF Panel and implement resource release logic
 /// </summary>
-public abstract class DisposablePanel : WindowsFormsHost, IDisposable
+public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
 {
     /// <summary>
     /// WinForms container used as the native parent for embedded external windows.
     /// </summary>
-    protected Panel Container { get; }
+    protected System.Windows.Forms.Panel Container { get; }
 
-    protected DisposablePanel()
+    protected WindowHostPanel()
     {
-        Container = new Panel { Dock = DockStyle.Fill };
+        Container = new System.Windows.Forms.Panel
+        {
+            Dock = System.Windows.Forms.DockStyle.Fill,
+        };
         Child = Container;
-        HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        HorizontalAlignment = HorizontalAlignment.Stretch;
         VerticalAlignment = VerticalAlignment.Stretch;
 
         Container.HandleCreated += (_, _) => OnContainerHandleCreated();
@@ -64,16 +65,8 @@ public abstract class DisposablePanel : WindowsFormsHost, IDisposable
         exStyle &= ~User32.WS_EX_APPWINDOW;
         _ = User32.SetWindowLong(externalHwnd, User32.GWL_EXSTYLE, exStyle);
 
-        int width;
-        int height;
-        ResolveHostPixelSize(hostHwnd, this, out width, out height);
-        User32.SetWindowPos(
-            externalHwnd,
-            User32.HWND_TOP,
-            0,
-            0,
-            width,
-            height,
+        ResolveHostPixelSize(hostHwnd, this, out int width, out int height);
+        _ = User32.SetWindowPos(externalHwnd, User32.HWND_TOP, 0, 0, width, height,
             User32.SWP_SHOWWINDOW | User32.SWP_FRAMECHANGED);
 
         RevealEmbeddedWindow(externalHwnd);
@@ -103,13 +96,7 @@ public abstract class DisposablePanel : WindowsFormsHost, IDisposable
             return;
 
         ResolveHostPixelSize(hostHwnd, layoutSource, out int width, out int height);
-        User32.SetWindowPos(
-            externalHwnd,
-            User32.HWND_TOP,
-            0,
-            0,
-            width,
-            height,
+        _ = User32.SetWindowPos(externalHwnd, User32.HWND_TOP, 0, 0, width, height,
             User32.SWP_SHOWWINDOW);
 
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
@@ -143,11 +130,6 @@ public abstract class DisposablePanel : WindowsFormsHost, IDisposable
         width = Math.Max(1, width);
         height = Math.Max(1, height);
     }
-
-    /// <summary>
-    /// Release all unmanaged / managed resources
-    /// </summary>
-    public abstract void Dispose();
 
     protected internal static class User32
     {

@@ -2,7 +2,7 @@
 
 namespace MakeKits.Workshop.Executable.HelloWorld;
 
-public sealed class HelloWorldExecutablePanel : DisposablePanel
+public sealed class HelloWorldExecutablePanel : WindowHostPanel
 {
     public string Path { get; set; } = null!;
 

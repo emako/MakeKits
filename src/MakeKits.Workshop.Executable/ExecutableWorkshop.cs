@@ -41,9 +41,14 @@ public abstract class ExecutableWorkshop : Workshop
     /// </summary>
     public virtual string ExecName { get; set; } = null!;
 
-    protected DisposablePanel? Panel { get; private set; }
+    /// <summary>
+    /// Gets or sets the process window polling instance.
+    /// </summary>
+    public virtual ProcessWindowPolling PWP { get; set; } = new();
 
-    protected abstract DisposablePanel CreatePanel(IWorkshopContext context);
+    protected WindowHostPanel? Panel { get; private set; }
+
+    protected abstract WindowHostPanel CreatePanel(IWorkshopContext context);
 
     protected virtual void ConfigureViewContext(IWorkshopContext context)
     {
@@ -54,7 +59,7 @@ public abstract class ExecutableWorkshop : Workshop
         context.ViewContext.PreferredHeight = 720;
     }
 
-    protected virtual void NavigatePanel(DisposablePanel panel, IWorkshopContext context)
+    protected virtual void NavigatePanel(WindowHostPanel panel, IWorkshopContext context)
     {
         context?.ViewContext?.ViewerContent = panel;
     }
@@ -108,6 +113,7 @@ public abstract class ExecutableWorkshop : Workshop
     {
         Panel?.Dispose();
         Panel = null;
+        PWP?.IsRunning = false;
         GC.SuppressFinalize(this);
     }
 }

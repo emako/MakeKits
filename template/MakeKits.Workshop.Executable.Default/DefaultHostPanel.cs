@@ -1,9 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 
 namespace MakeKits.Workshop.Executable.Default;
 
-public class DefaultHostPanel : DisposablePanel
+public class DefaultHostPanel : WindowHostPanel
 {
     private nint _externalHwnd;
     private nint _attachedHwnd;
@@ -60,10 +59,5 @@ public class DefaultHostPanel : DisposablePanel
             return;
 
         ResizeEmbeddedWindow(_attachedHwnd, ContainerHwnd, this);
-    }
-
-    /// <inheritdoc/>
-    public override void Dispose()
-    {
     }
 }

@@ -71,9 +71,9 @@ public sealed class WorkshopManager
 
             string fileName = Path.GetFileName(lib);
             string version = $"v{assemblyName.Version}";
-            string name = workshop.Descriptor?.Name!;
-            string author = workshop.Descriptor?.Author!;
-            string description = workshop.Descriptor?.Description!;
+            string name = workshop?.Descriptor?.Name!;
+            string author = workshop?.Descriptor?.Author!;
+            string description = workshop?.Descriptor?.Description!;
 
             return new WorkshopItem()
             {

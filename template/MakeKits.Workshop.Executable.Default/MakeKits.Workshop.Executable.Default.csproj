@@ -21,7 +21,7 @@
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <UsePowerShell>true</UsePowerShell>
-        <NoWarn>${NoWarn};NU1903;NU1902</NoWarn>
+        <NoWarn>$(NoWarn);NU1903;NU1902</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -30,6 +30,7 @@
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Management.Automation" Version="6.1.2" Condition=" '$(UsePowerShell)' == 'true'" />
+        <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">

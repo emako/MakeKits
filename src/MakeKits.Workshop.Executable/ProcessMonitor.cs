@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32.SafeHandles;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -41,6 +42,15 @@ public static class ProcessMonitor
         }
     }
 
+    public static string? GetWindowText(nint hWnd)
+    {
+        StringBuilder title = new(256);
+        _ = User32.GetWindowText(hWnd, title, title.Capacity);
+        string windowTitle = title.ToString();
+
+        return windowTitle;
+    }
+
     /// <summary>
     /// Returns the title of the first top-level window owned by <paramref name="pid"/>,
     /// or <see langword="null"/> when no matching window is found.
@@ -65,6 +75,40 @@ public static class ProcessMonitor
         }, IntPtr.Zero);
 
         return windowTitle;
+    }
+
+    /// <summary>
+    /// Returns all window handles (top-level and child) owned by <paramref name="pid"/>.
+    /// </summary>
+    public static nint[] GetWindowHandlesByProcessId(int pid)
+    {
+        List<nint> handles = new List<nint>();
+        uint targetPid = (uint)pid;
+
+        User32.EnumWindows((hWnd, lParam) =>
+        {
+            User32.GetWindowThreadProcessId(hWnd, out uint processId);
+            if (processId != targetPid)
+                return true;
+
+            handles.Add((nint)hWnd);
+            CollectChildWindowHandles((nint)hWnd, targetPid, handles);
+            return true;
+        }, IntPtr.Zero);
+
+        return handles.ToArray();
+    }
+
+    private static void CollectChildWindowHandles(nint parentHwnd, uint pid, List<nint> handles)
+    {
+        User32.EnumChildWindows((IntPtr)parentHwnd, (hWnd, lParam) =>
+        {
+            User32.GetWindowThreadProcessId(hWnd, out uint processId);
+            if (processId == pid)
+                handles.Add((nint)hWnd);
+
+            return true;
+        }, IntPtr.Zero);
     }
 
     /// <summary>
@@ -300,6 +344,10 @@ public static class ProcessMonitor
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumChildWindows(IntPtr hWndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
         [DllImport("user32.dll")]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);

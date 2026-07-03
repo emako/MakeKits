@@ -54,7 +54,7 @@ public abstract class ExecutableWorkshop : Workshop
         context.ViewContext.PreferredHeight = 720;
     }
 
-    protected virtual void NavigatePanel(Panel panel, IWorkshopContext context)
+    protected virtual void NavigatePanel(DisposablePanel panel, IWorkshopContext context)
     {
         context?.ViewContext?.ViewerContent = panel;
     }

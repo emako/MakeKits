@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace MakeKits.Workshop.Executable;
 
 public static class ProcessWindowPolling
 {
-    public static void PollProcessWindow(string[] processNames, Action<nint> onWindowFound, int pollInterval = 1000)
+    public static void PollProcessWindow(string[] processNames, Action<nint> onWindowFound, int pollInterval = 100)
     {
         Task task = Task.Factory.StartNew(() =>
         {
@@ -17,7 +18,7 @@ public static class ProcessWindowPolling
             {
                 foreach (string processName in processNames)
                 {
-                    string [] dd = [.. Process.GetProcesses().Select(p => ProcessMonitor.GetExeNameByProcessId((uint)p.Id))!];
+                    string[] dd = [.. Process.GetProcesses().Select(p => ProcessMonitor.GetExeNameByProcessId((uint)p.Id))!];
 
                     Process[] processes = Process.GetProcesses();
                     foreach (Process process in processes)
@@ -27,7 +28,9 @@ public static class ProcessWindowPolling
                         if (processNames.Any(name => name == exeName))
                         {
                             nint mainWindowHandle = process.MainWindowHandle;
-                            if (mainWindowHandle != IntPtr.Zero)
+                            string? windowTitle = ProcessMonitor.GetWindowText(mainWindowHandle);
+
+                            if (!string.IsNullOrWhiteSpace(windowTitle) && mainWindowHandle != IntPtr.Zero)
                             {
                                 onWindowFound?.Invoke(mainWindowHandle);
                                 return;

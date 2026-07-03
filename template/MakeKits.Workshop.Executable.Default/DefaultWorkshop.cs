@@ -27,7 +27,7 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
     public override string Alias { get; set; } = "Default";
 
     /// <inheritdoc/>
-    public override string ExecName { get; set; } = "default.exe";
+    public override string ExecName { get; set; } = "start.ps1";
 
     /// <inheritdoc/>
     public override IWorkshopContext Context { get; set; } = new DefaultWorkshopContext();
@@ -66,13 +66,15 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
 
         try
         {
+            string fileName = ProgramPath.EndsWith(".ps1") ? "powershell.exe" : ProgramPath;
+
             ProcessStartInfo processStartInfo = new()
             {
-                FileName = ProgramPath,
+                FileName = fileName,
                 CreateNoWindow = true,
-                UseShellExecute = true,
-                WindowStyle = ProcessWindowStyle.Minimized,
-                Arguments = "-plugin",
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Arguments = ProgramPath.EndsWith(".ps1") ? $"-ExecutionPolicy Bypass -File \"{ProgramPath}\"" : null,
             };
             using Process process = Process.Start(processStartInfo);
             string[] exePaths = [.. Directory.EnumerateFiles(ProgramDirectory, "*.exe", SearchOption.AllDirectories)];
@@ -82,7 +84,7 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
             {
                 Debug.WriteLine($"Found window handle: {windowHandle}");
 
-                panel.SetParent(windowHandle, panel.Host.Handle);
+                panel.Dispatcher.Invoke(() => panel.AttachExternalWindow(windowHandle));
             });
 
             return panel;

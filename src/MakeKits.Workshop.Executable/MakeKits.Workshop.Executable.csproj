@@ -5,6 +5,7 @@
         <LangVersion>preview</LangVersion>
         <Version>0.0.5.0</Version>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>MakeKits.Workshop.Executable</RootNamespace>
@@ -47,6 +48,10 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'net48'">
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="WindowsBase" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
 
     <ItemGroup>

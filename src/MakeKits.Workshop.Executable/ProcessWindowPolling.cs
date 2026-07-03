@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,9 +17,8 @@ public static class ProcessWindowPolling
             {
                 foreach (string processName in processNames)
                 {
-                    string[] dd = [.. Process.GetProcesses().Select(p => ProcessMonitor.GetExeNameByProcessId((uint)p.Id))!];
-
                     Process[] processes = Process.GetProcesses();
+
                     foreach (Process process in processes)
                     {
                         string? exeName = ProcessMonitor.GetExeNameByProcessId((uint)process.Id);
@@ -32,6 +30,7 @@ public static class ProcessWindowPolling
 
                             if (!string.IsNullOrWhiteSpace(windowTitle) && mainWindowHandle != IntPtr.Zero)
                             {
+                                Debug.WriteLine($"[ProcessWindowPolling] Hit Main Window Handle: {windowTitle}");
                                 onWindowFound?.Invoke(mainWindowHandle);
                                 return;
                             }

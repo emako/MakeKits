@@ -7,11 +7,11 @@ namespace MakeKits.Workshop.Executable;
 public static class ZipHelper
 {
     /// <summary>
-    /// 解压 ZIP 到指定目录（兼容 .NET Framework 4.x）。
+    /// Extracts a ZIP archive to the specified directory (compatible with .NET Framework 4.x).
     /// </summary>
-    /// <param name="zipFile">zip 文件路径</param>
-    /// <param name="destinationDirectory">目标目录</param>
-    /// <param name="overwrite">是否覆盖已有文件</param>
+    /// <param name="zipFile">Path to the ZIP file.</param>
+    /// <param name="destinationDirectory">Destination directory.</param>
+    /// <param name="overwrite">Whether to overwrite existing files.</param>
     public static void ExtractZipToDir(string zipFile, string destinationDirectory, bool overwrite = true)
     {
         if (string.IsNullOrWhiteSpace(zipFile))
@@ -25,13 +25,13 @@ public static class ZipHelper
         using ZipArchive archive = ZipFile.OpenRead(zipFile);
         foreach (var entry in archive.Entries)
         {
-            // Zip 内统一使用 '/'
+            // ZIP entries use '/' as the path separator
             var relativePath = entry.FullName.Replace('/', Path.DirectorySeparatorChar);
 
             var fullPath = Path.GetFullPath(
                 Path.Combine(destinationDirectory, relativePath));
 
-            // 防止 Zip Slip 漏洞
+            // Prevent Zip Slip vulnerability
             var root = Path.GetFullPath(destinationDirectory)
                 .TrimEnd(Path.DirectorySeparatorChar)
                 + Path.DirectorySeparatorChar;
@@ -39,15 +39,17 @@ public static class ZipHelper
             if (!fullPath.StartsWith(root, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidDataException("Zip contains invalid entry: " + entry.FullName);
 
-            // 目录
+            // Directory entry
             if (string.IsNullOrEmpty(entry.Name))
             {
                 Directory.CreateDirectory(fullPath);
                 continue;
             }
 
-            // 创建父目录
-            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            // Create parent directory
+            string? directoryName = Path.GetDirectoryName(fullPath);
+            if (!string.IsNullOrEmpty(directoryName))
+                Directory.CreateDirectory(directoryName);
 
             if (overwrite)
             {

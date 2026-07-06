@@ -4,7 +4,7 @@ public sealed class DefaultWorkshopViewContext : WorkshopViewContext
 {
     public DefaultWorkshopViewContext()
     {
-        Title = "Default Webview";
-        Theme = WorkshopTheme.Light;
+        Title = DefaultOption.Title;
+        Theme = Enum.TryParse(DefaultOption.Theme, out WorkshopTheme theme) ? theme : WorkshopTheme.Light;
     }
 }

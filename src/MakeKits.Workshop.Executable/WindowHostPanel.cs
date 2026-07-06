@@ -86,6 +86,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         _ = User32.ShowWindow(externalHwnd, User32.SW_HIDE);
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOWNORMAL);
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
+        _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
         _ = User32.UpdateWindow(externalHwnd);
         _ = User32.InvalidateRect(externalHwnd, IntPtr.Zero, true);
     }
@@ -100,6 +101,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
             User32.SWP_SHOWWINDOW);
 
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
+        _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
     }
 
     private static void ResolveHostPixelSize(nint hostHwnd, FrameworkElement? layoutSource, out int width, out int height)
@@ -175,6 +177,9 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         public const int GWL_EXSTYLE = -20;
         public const int SW_HIDE = 0;
         public const int SW_SHOWNORMAL = 1;
+        public const int SW_SHOWMINIMIZED = 2;
+        public const int SW_MAXIMIZE = 3;
+        public const int SW_SHOWNOACTIVATE = 4;
         public const int SW_SHOW = 5;
         public const uint WS_CHILD = 0x40000000;
         public const uint WS_VISIBLE = 0x10000000;

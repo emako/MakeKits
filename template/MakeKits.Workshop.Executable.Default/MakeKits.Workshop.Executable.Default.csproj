@@ -7,6 +7,7 @@
         <LangVersion>preview</LangVersion>
         <Version>0.0.5.0</Version>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -30,7 +31,6 @@
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Management.Automation" Version="6.1.2" Condition=" '$(UsePowerShell)' == 'true'" />
-        <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
@@ -38,7 +38,8 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.5.0" />
+        <!--<PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.5.0" />-->
+		<ProjectReference Include="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.csproj" />
     </ItemGroup>
 
     <ItemGroup>

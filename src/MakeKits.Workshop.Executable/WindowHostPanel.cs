@@ -20,6 +20,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         Container = new System.Windows.Forms.Panel
         {
             Dock = System.Windows.Forms.DockStyle.Fill,
+            BackColor = System.Drawing.Color.Black,
         };
         Child = Container;
         HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -41,7 +42,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
     /// Native handle of the WinForms container, or zero when not yet created.
     /// </summary>
     protected nint ContainerHwnd =>
-        Container.IsHandleCreated ? (nint)Container.Handle : 0;
+        Container.IsHandleCreated ? Container.Handle : 0;
 
     /// <summary>
     /// Set the parent window of an external window to the host window
@@ -65,22 +66,10 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         exStyle &= ~User32.WS_EX_APPWINDOW;
         _ = User32.SetWindowLong(externalHwnd, User32.GWL_EXSTYLE, exStyle);
 
-        ResolveHostPixelSize(hostHwnd, this, out int width, out int height);
-        _ = User32.SetWindowPos(externalHwnd, User32.HWND_TOP, 0, 0, width, height,
-            User32.SWP_SHOWWINDOW | User32.SWP_FRAMECHANGED);
-
-        RevealEmbeddedWindow(externalHwnd);
-
-        return previousParent;
-    }
-
-    /// <summary>
-    /// Force an embedded window to become visible after it was created or launched hidden.
-    /// </summary>
-    protected static void RevealEmbeddedWindow(nint externalHwnd)
-    {
-        if (externalHwnd == 0)
-            return;
+        ResolveHostPixelSize(hostHwnd, Container, this, out int width, out int height);
+        _ = User32.MoveWindow(externalHwnd, 0, 0, width, height, true);
+        _ = User32.SetWindowPos(externalHwnd, User32.HWND_TOP, 0, 0, 0, 0,
+            User32.SWP_SHOWWINDOW | User32.SWP_FRAMECHANGED | User32.SWP_NOMOVE | User32.SWP_NOSIZE);
 
         // Reset hidden/minimized show state left over from CreateNoWindow / Hidden startup.
         _ = User32.ShowWindow(externalHwnd, User32.SW_HIDE);
@@ -89,29 +78,53 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
         _ = User32.UpdateWindow(externalHwnd);
         _ = User32.InvalidateRect(externalHwnd, IntPtr.Zero, true);
+
+        return previousParent;
     }
 
-    protected internal static void ResizeEmbeddedWindow(nint externalHwnd, nint hostHwnd, FrameworkElement? layoutSource = null)
+    protected internal static void ResizeEmbeddedWindow(
+        nint externalHwnd,
+        nint hostHwnd,
+        System.Windows.Forms.Panel? hostControl = null,
+        FrameworkElement? layoutSource = null)
     {
         if (externalHwnd == 0 || hostHwnd == 0)
             return;
 
-        ResolveHostPixelSize(hostHwnd, layoutSource, out int width, out int height);
-        _ = User32.SetWindowPos(externalHwnd, User32.HWND_TOP, 0, 0, width, height,
-            User32.SWP_SHOWWINDOW);
+        ResolveHostPixelSize(hostHwnd, hostControl, layoutSource, out int width, out int height);
+        _ = User32.MoveWindow(externalHwnd, 0, 0, width, height, true);
 
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
         _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
     }
 
-    private static void ResolveHostPixelSize(nint hostHwnd, FrameworkElement? layoutSource, out int width, out int height)
+    private static void ResolveHostPixelSize(
+        nint hostHwnd,
+        System.Windows.Forms.Control? hostControl,
+        FrameworkElement? layoutSource,
+        out int width,
+        out int height)
     {
-        _ = User32.GetClientRect(hostHwnd, out User32.RECT clientRect);
-        width = clientRect.Width;
-        height = clientRect.Height;
+        width = 0;
+        height = 0;
 
-        if (width > 0 && height > 0)
-            return;
+        // QuickLook.Plugin.SumatraPDFReader resizes embedded windows with MoveWindow(host, 0, 0, Width, Height)
+        // inside the WinForms host control's Resize handler — not GetClientRect/GetWindowRect.
+        if (hostControl != null)
+        {
+            width = hostControl.Width;
+            height = hostControl.Height;
+            if (width > 0 && height > 0)
+                return;
+        }
+
+        if (hostHwnd != 0 && User32.GetClientRect(hostHwnd, out User32.RECT clientRect))
+        {
+            width = clientRect.Width;
+            height = clientRect.Height;
+            if (width > 0 && height > 0)
+                return;
+        }
 
         if (layoutSource != null)
         {
@@ -150,7 +163,14 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         public static extern bool SetWindowPos(nint hWnd, nint insertAfter, int x, int y, int cx, int cy, uint flags);
 
         [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool MoveWindow(nint hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+
+        [DllImport("user32.dll")]
         public static extern bool GetClientRect(nint hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(nint hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(nint hWnd, int nCmdShow);
@@ -193,5 +213,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         public const uint WS_EX_APPWINDOW = 0x00040000;
         public const uint SWP_SHOWWINDOW = 0x0040;
         public const uint SWP_FRAMECHANGED = 0x0020;
+        public const uint SWP_NOMOVE = 0x0002;
+        public const uint SWP_NOSIZE = 0x0001;
     }
 }

@@ -58,6 +58,6 @@ public class DefaultHostPanel : WindowHostPanel
         if (_attachedHwnd == 0 || ContainerHwnd == 0)
             return;
 
-        ResizeEmbeddedWindow(_attachedHwnd, ContainerHwnd, this);
+        ResizeEmbeddedWindow(_attachedHwnd, ContainerHwnd, Container, this);
     }
 }

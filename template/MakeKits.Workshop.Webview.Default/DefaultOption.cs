@@ -1,9 +1,13 @@
-﻿namespace MakeKits.Workshop.Webview.Default;
+﻿using System.Runtime.InteropServices;
+
+[assembly: Guid("00000000-0000-0000-0000-000000000000")]
+
+namespace MakeKits.Workshop.Webview.Default;
 
 /// <summary>
 /// Default options for the workshop builder.
 /// </summary>
-internal static class DefaultOption
+public static partial class DefaultOption
 {
     /// <summary>
     /// Name of the default workshop card.

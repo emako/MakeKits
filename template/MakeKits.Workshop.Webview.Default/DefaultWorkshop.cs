@@ -25,7 +25,6 @@ public sealed class DefaultWorkshop : WebviewWorkshop
     /// <inheritdoc/>
     protected override void NavigatePanel(WebpagePanel panel, IWorkshopContext context)
     {
-        if (panel is EmbeddedResourceWebpagePanel panel2)
-            panel2.NavigateToHomePage();
+        (panel as EmbeddedResourceWebpagePanel)?.NavigateToHomePage();
     }
 }

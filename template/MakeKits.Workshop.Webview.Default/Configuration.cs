@@ -7,7 +7,7 @@ namespace MakeKits.Workshop.Webview.Default;
 /// <summary>
 /// Default options for the workshop builder.
 /// </summary>
-public static partial class DefaultOption
+public static partial class Configuration
 {
     /// <summary>
     /// Name of the default workshop card.

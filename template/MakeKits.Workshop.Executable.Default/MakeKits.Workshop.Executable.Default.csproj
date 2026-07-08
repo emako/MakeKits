@@ -38,8 +38,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <!--<PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.5.0" />-->
-        <ProjectReference Include="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.csproj" />
+        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.5.0" />
     </ItemGroup>
 
     <ItemGroup>

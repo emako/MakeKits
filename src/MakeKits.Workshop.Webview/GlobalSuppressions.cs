@@ -8,3 +8,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0057:Use range operator")]
 [assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
 [assembly: SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize")]
+[assembly: SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
+[assembly: SuppressMessage("Maintainability", "CA1510:Use ArgumentNullException throw helper")]

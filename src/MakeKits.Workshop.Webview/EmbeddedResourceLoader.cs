@@ -9,24 +9,43 @@ public static class EmbeddedResourceLoader
 {
     public static Dictionary<string, byte[]> LoadResources(Assembly assembly)
     {
-        Dictionary<string, byte[]> resources = [];
-
         foreach (string resourceName in assembly.GetManifestResourceNames())
         {
             if (resourceName.Equals("resources", StringComparison.OrdinalIgnoreCase)) continue;
+            if (resourceName != "/Resource.zip") continue;
 
-            using var stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream == null) continue;
-            using MemoryStream memoryStream = new();
-            stream.CopyTo(memoryStream);
-            resources[$"{resourceName.Replace('\\', '/')}"] = memoryStream.ToArray();
+            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
+
+            if (stream == null) return [];
+            return ZipHelper.ExtractZipToMemory(stream);
         }
 
-        return resources;
+        return [];
     }
 
-    public static byte[]? ReadResource(IReadOnlyDictionary<string, byte[]> resources, string key)
+    public static Stream? GetPackage(Assembly assembly)
     {
-        return resources.TryGetValue(key, out byte[]? value) ? value : null;
+        foreach (string resourceName in assembly.GetManifestResourceNames())
+        {
+            if (resourceName.Equals("resources", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            if (resourceName == "/Package.zip")
+                return assembly.GetManifestResourceStream(resourceName);
+        }
+        return null!;
+    }
+
+    public static Stream? GetPackageMD5(Assembly assembly)
+    {
+        foreach (string resourceName in assembly.GetManifestResourceNames())
+        {
+            if (resourceName.Equals("resources", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            if (resourceName == "/Package.md5")
+                return assembly.GetManifestResourceStream(resourceName);
+        }
+        return null!;
     }
 }

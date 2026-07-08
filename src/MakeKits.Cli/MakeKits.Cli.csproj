@@ -23,4 +23,8 @@
         <PackageReference Include="PureSharpCompress" Version="0.38.0" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+
 </Project>

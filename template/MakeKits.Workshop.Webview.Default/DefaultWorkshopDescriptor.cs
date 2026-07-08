@@ -4,11 +4,11 @@ namespace MakeKits.Workshop.Webview.Default;
 public sealed class DefaultWorkshopDescriptor : WorkshopDescriptor
 {
     /// <inheritdoc/>
-    public override string Name => DefaultOption.Name;
+    public override string Name => Configuration.Name;
 
     /// <inheritdoc/>
-    public override string? Author => DefaultOption.Author;
+    public override string? Author => Configuration.Author;
 
     /// <inheritdoc/>
-    public override string? Description => DefaultOption.Description;
+    public override string? Description => Configuration.Description;
 }

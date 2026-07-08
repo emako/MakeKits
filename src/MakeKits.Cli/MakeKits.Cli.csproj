@@ -21,6 +21,7 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="PureSharpCompress" Version="0.38.0" />
+        <PackageReference Include="Flucli" Version="0.3.2" />
     </ItemGroup>
 
     <ItemGroup>

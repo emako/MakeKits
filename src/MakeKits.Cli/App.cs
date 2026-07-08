@@ -20,7 +20,6 @@ internal sealed class App
         // Extract template files.
         {
             string? template = Macro.GetFullPath(config.Template);
-            string? package = Macro.GetFullPath(config.Package);
             string? resource = Macro.GetFullPath(config.Resource);
 
             if (!File.Exists(template))
@@ -60,6 +59,10 @@ internal sealed class App
                 CSharpProject.SetupConfig(file, config);
             }
             CSharpConfig.SetupConfig(@".dist\Configuration.cs", config);
+            CSharpResource.SetupConfig(@".dist\Resources", config);
         }
+
+        // Compile and pack the setup
+        CSharpCompiler.Build(config);
     }
 }

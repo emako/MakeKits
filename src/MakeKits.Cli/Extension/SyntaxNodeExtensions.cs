@@ -65,39 +65,6 @@ internal static class SyntaxNodeExtensions
         return root;
     }
 
-    public static CompilationUnitSyntax ReplaceOptionWithNullableBoolean(this CompilationUnitSyntax root, string optionName, bool? value)
-    {
-        if (value == null)
-        {
-            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression);
-            return root.ReplaceOptionWithAny(optionName, newRight);
-        }
-        else if (value == true)
-        {
-            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression);
-            return root.ReplaceOptionWithAny(optionName, newRight);
-        }
-        else
-        {
-            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression);
-            return root.ReplaceOptionWithAny(optionName, newRight);
-        }
-    }
-
-    public static CompilationUnitSyntax ReplaceOptionWithBoolean(this CompilationUnitSyntax root, string optionName, bool value)
-    {
-        if (value)
-        {
-            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression);
-            return root.ReplaceOptionWithAny(optionName, newRight);
-        }
-        else
-        {
-            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression);
-            return root.ReplaceOptionWithAny(optionName, newRight);
-        }
-    }
-
     [Conditional("DEBUG")]
     public static void PrintSyntaxTree(this SyntaxNode node, int indentLevel = 0)
     {

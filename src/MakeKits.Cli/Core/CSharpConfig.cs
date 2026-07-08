@@ -2,11 +2,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MakeKits.Cli.Core;
 
@@ -38,6 +33,31 @@ internal static class CSharpConfig
         if (!string.IsNullOrWhiteSpace(config.Name))
         {
             root = root.ReplaceOptionWithString("Name", config.Name);
+        }
+
+        if (!string.IsNullOrWhiteSpace(config.Author))
+        {
+            root = root.ReplaceOptionWithString("Author", config.Author);
+        }
+
+        if (!string.IsNullOrWhiteSpace(config.Description))
+        {
+            root = root.ReplaceOptionWithString("Description", config.Description);
+        }
+
+        if (!string.IsNullOrWhiteSpace(config.Title))
+        {
+            root = root.ReplaceOptionWithString("Title", config.Title);
+        }
+
+        if (!string.IsNullOrWhiteSpace(config.Theme))
+        {
+            root = root.ReplaceOptionWithString("Theme", config.Theme);
+        }
+
+        if (!string.IsNullOrWhiteSpace(config.UserDataFolder))
+        {
+            root = root.ReplaceOptionWithString("UserDataFolder", config.UserDataFolder);
         }
 
         File.Delete(csPath);

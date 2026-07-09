@@ -68,7 +68,7 @@ public sealed class Configuration
     /// ???
     /// </summary>
     [Category("Normal")]
-    public string Name { get; set; } = "WorkshopPlugin";
+    public string Name { get; set; } = "MyWorkshop";
 
     /// <summary>
     /// ???
@@ -80,13 +80,13 @@ public sealed class Configuration
     /// ???
     /// </summary>
     [Category("Normal")]
-    public string Description { get; set; } = "I am a perfect human.";
+    public string Description { get; set; } = "I'm a perfect human.";
 
     /// <summary>
     /// ???
     /// </summary>
     [Category("Normal")]
-    public string Title { get; set; } = "Workshop Title";
+    public string Title { get; set; } = "My Title";
 
     /// <summary>
     /// ???

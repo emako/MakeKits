@@ -28,9 +28,10 @@ function Get-NugetPackageFileNameFromUrl {
 
 $packageUrl = "https://www.nuget.org/api/v2/package/MakeKits.Tools/0.0.6"
 $nupkgFileName = Get-NugetPackageFileNameFromUrl $packageUrl
+$packageFileName = [System.IO.Path]::GetFileNameWithoutExtension($nupkgFileName)
 $cacheDir = Join-Path $PSScriptRoot ".cache"
 $nupkgPath = Join-Path $cacheDir $nupkgFileName
-$extractDir = Join-Path $cacheDir [System.IO.Path]::GetFileNameWithoutExtension($nupkgFileName)
+$extractDir = Join-Path $cacheDir $packageFileName
 
 Write-Host "Downloading NuGet package: $packageUrl"
 New-Item -ItemType Directory -Path $cacheDir -Force | Out-Null

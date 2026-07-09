@@ -1,2 +1,5 @@
 *.nupkg
 *.snupkg
+!bin
+template
+makekits.exe

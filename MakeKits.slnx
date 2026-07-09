@@ -3,6 +3,9 @@
         <Platform Name="Any CPU" />
         <Platform Name="x64" />
     </Configurations>
+    <Folder Name="/build/">
+        <File Path="build/nuget.nuspec" />
+    </Folder>
     <Folder Name="/sample/">
         <Project Path="sample/MakeKits.Workshop.Executable.HelloWorld/MakeKits.Workshop.Executable.HelloWorld.csproj" />
         <Project Path="sample/MakeKits.Workshop.Host/MakeKits.Workshop.Host.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890" />
@@ -10,7 +13,7 @@
         <Project Path="sample/MakeKits.Workshop.Webview.HelloWorld/MakeKits.Workshop.Webview.HelloWorld.csproj" Id="242906e4-8e7d-49ed-9254-c09f4b644cb9" />
     </Folder>
     <Folder Name="/src/">
-        <Project Path="src/MakeKits.Cli/MakeKits.Cli.csproj" Id="398113d0-f9fe-4803-b745-e6ae2b1a8e00" DisplayName="MakeKits.Cli" />
+        <Project Path="src/MakeKits.Cli/MakeKits.Cli.csproj" Id="398113d0-f9fe-4803-b745-e6ae2b1a8e00" />
         <Project Path="src/MakeKits.Workshop.Abstractions/MakeKits.Workshop.Abstractions.csproj" />
         <Project Path="src/MakeKits.Workshop.Executable/MakeKits.Workshop.Executable.csproj" Id="80c991a7-4a24-4946-967f-14c4930de112" />
         <Project Path="src/MakeKits.Workshop.Webview/MakeKits.Workshop.Webview.csproj" Id="e24af173-5399-4018-8a95-9f734d7417ba" />

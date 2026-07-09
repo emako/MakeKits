@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MakeKits.Tools</id>
+    <version>0.0.5.0</version>
+    <authors>emako</authors>
+    <owners>emako</owners>
+    <icon>logo.png</icon>
+    <license type="expression">MIT</license>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/emako/MakeKits</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MakeKits is a .NET solution for building and loading Workshop modules. It includes the core abstraction layer, a Webview runtime, a CLI entry point, and runnable sample hosts and workshops.</description>
+    <releaseNotes>https://github.com/emako/MakeKits/releases</releaseNotes>
+    <copyright>Copyright (c) 2026 MakeKits Contributors</copyright>
+    <tags>makefile makekits workshop plugin wpf avalonia winui winui3</tags>
+  </metadata>
+  <files>
+    <file src="..\branding\Logo.png" target="logo.png" />
+    <file src="..\README.md" target="README.md" />
+    <file src=".\bin\7z.dll" target="build\bin\7z.dll" />
+    <file src=".\bin\7z.exe" target="build\bin\7z.exe" />
+    <file src=".\bin\nuget.exe" target="build\bin\nuget.exe" />
+    <file src=".\template\webview.7z" target="build\template\webview.7z" />
+    <file src=".\template\executable.7z" target="build\template\executable.7z" />
+    <file src=".\makekits.exe" target="build\makekits.exe" />
+  </files> 
+</package>

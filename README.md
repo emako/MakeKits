@@ -18,6 +18,12 @@ MakeKits is a .NET solution for building and loading `Workshop` modules. It incl
 - Provides Webview2-based page rendering.
 - Includes samples to help you get started quickly.
 
+## Install
+
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb https://example.com/install.ps1 | iex"
+```
+
 ## Build
 
 ```bash

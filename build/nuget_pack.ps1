@@ -48,15 +48,24 @@ Rename-Item -Force ".\MakeKits.Cli.exe" "makekits.exe"
 
 ## Prepare templates
 
+$templateGitIgnore = @"
+*
+!.gitignore
+"@
+
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Default\obj" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Default\bin" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Default\Resources" -ErrorAction SilentlyContinue
+$templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Webview.Default\.gitignore"
 & ".\bin\7z.exe" a ".\template\webview.7z" "..\template\MakeKits.Workshop.Webview.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Default\.gitignore" -Force
 
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\obj" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\bin" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\Resources" -ErrorAction SilentlyContinue
+$templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Executable.Default\.gitignore"
 & ".\bin\7z.exe" a ".\template\executable.7z" "..\template\MakeKits.Workshop.Executable.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Executable.Default\.gitignore" -Force
 
 ## Pack nuget tools
 

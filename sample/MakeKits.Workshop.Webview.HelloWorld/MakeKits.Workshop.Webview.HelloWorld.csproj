@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Webview.HelloWorld</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Webview.HelloWorld</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.5.0</Version>
+        <Version>0.0.6.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>

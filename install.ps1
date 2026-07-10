@@ -10,44 +10,21 @@ Write-Host @"
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝
 "@
 
-function Get-NugetPackageFileNameFromUrl {
-    param([string]$Url)
+$nugetDir = Join-Path $env:TEMP '.nuget'
 
-    $path = ([Uri]$Url).AbsolutePath.TrimEnd('/')
+try {
+    New-Item -ItemType Directory -Path $nugetDir -Force | Out-Null
+    Push-Location $nugetDir
 
-    if ($path -match '\.nupkg$') {
-        return [System.IO.Path]::GetFileName($path)
+    $nugetExe = Join-Path $nugetDir 'nuget.exe'
+    Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' -OutFile $nugetExe
+
+    & $nugetExe install MakeKits.Tools -Source 'https://api.nuget.org/v3/index.json'
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
     }
-
-    if ($path -match '/package/([^/]+)/([^/]+)$') {
-        return "$($Matches[1]).$($Matches[2]).nupkg"
-    }
-
-    throw "Failed to resolve NuGet package file name from URL: $Url"
 }
-
-$packageUrl = "https://www.nuget.org/api/v2/package/MakeKits.Tools/0.0.6"
-$nupkgFileName = Get-NugetPackageFileNameFromUrl $packageUrl
-$packageFileName = [System.IO.Path]::GetFileNameWithoutExtension($nupkgFileName)
-$cacheDir = Join-Path $PSScriptRoot ".cache"
-$nupkgPath = Join-Path $cacheDir $nupkgFileName
-$extractDir = Join-Path $cacheDir $packageFileName
-
-Write-Host "Downloading NuGet package: $packageUrl"
-New-Item -ItemType Directory -Path $cacheDir -Force | Out-Null
-@"
-*
-!.gitignore
-"@ | Set-Content -LiteralPath (Join-Path $cacheDir ".gitignore") -Encoding UTF8
-Invoke-WebRequest -Uri $packageUrl -OutFile $nupkgPath -UseBasicParsing
-
-Write-Host "Extracting to: $extractDir"
-if (Test-Path $extractDir) {
-    Remove-Item -LiteralPath $extractDir -Recurse -Force
+finally {
+    Pop-Location
+    Remove-Item -LiteralPath $nugetDir -Recurse -Force -ErrorAction SilentlyContinue
 }
-New-Item -ItemType Directory -Path $extractDir -Force | Out-Null
-
-Add-Type -AssemblyName System.IO.Compression.FileSystem
-[System.IO.Compression.ZipFile]::ExtractToDirectory($nupkgPath, $extractDir)
-
-Write-Host "Done. Output directory: $extractDir"

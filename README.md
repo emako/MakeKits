@@ -20,8 +20,16 @@ MakeKits is a .NET solution for building and loading `Workshop` modules. It incl
 
 ## Install
 
+By Batch:
+
 ```bash
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb https://example.com/install.ps1 | iex"
+mkdir "%TEMP%\.nuget" 2>nul && cd /d "%TEMP%\.nuget" && curl -o nuget.exe "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" && nuget install MakeKits.Tools -Source "https://api.nuget.org/v3/index.json" & cd .. & rmdir /s /q "%TEMP%\.nuget"
+```
+
+By PowerShell:
+
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb https://raw.githubusercontent.com/emako/MakeKits/refs/heads/master/install.ps1?token=GHSAT0AAAAAADHMG34RHWAXVCLAZVA2KZQC2SQXL2A | iex"
 ```
 
 ## Build

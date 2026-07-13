@@ -29,7 +29,7 @@ mkdir "%TEMP%\.nuget" 2>nul && cd /d "%TEMP%\.nuget" && curl -o nuget.exe "https
 By PowerShell:
 
 ```bash
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb https://raw.githubusercontent.com/emako/MakeKits/refs/heads/master/install.ps1?token=GHSAT0AAAAAADHMG34RHWAXVCLAZVA2KZQC2SQXL2A | iex"
+iwr -useb https://raw.githubusercontent.com/emako/MakeKits/refs/heads/master/install.ps1 | iex
 ```
 
 ## Build

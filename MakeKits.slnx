@@ -17,6 +17,7 @@
         <Project Path="src/MakeKits.Workshop.Abstractions/MakeKits.Workshop.Abstractions.csproj" />
         <Project Path="src/MakeKits.Workshop.Executable/MakeKits.Workshop.Executable.csproj" Id="80c991a7-4a24-4946-967f-14c4930de112" />
         <Project Path="src/MakeKits.Workshop.Webview/MakeKits.Workshop.Webview.csproj" Id="e24af173-5399-4018-8a95-9f734d7417ba" />
+        <Project Path="src/MakeKits.Workshop.WPF/MakeKits.Workshop.WPF.csproj" />
     </Folder>
     <Folder Name="/template/">
         <Project Path="template/MakeKits.Workshop.Executable.Default/MakeKits.Workshop.Executable.Default.csproj" />

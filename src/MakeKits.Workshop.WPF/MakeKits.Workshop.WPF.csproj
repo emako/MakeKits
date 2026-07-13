@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net462;net48;net8.0-windows;net10.0-windows</TargetFrameworks>
+        <LangVersion>preview</LangVersion>
+        <Version>0.0.6.0</Version>
+        <UseWPF>true</UseWPF>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>MakeKits.Workshop.WPF</RootNamespace>
+        <AssemblyName>MakeKits.Workshop.WPF</AssemblyName>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <Nullable>enable</Nullable>
+        <Platforms>AnyCPU</Platforms>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <ProjectGuid>{3FDB33DE-B711-48C6-A3CD-4B059FC2512E}</ProjectGuid>
+        <Authors>emako</Authors>
+        <Company>emako</Company>
+        <Description>This repository holds the WPF library of MakeKits. The library is shared among all MakeKits projects.</Description>
+        <PackageProjectUrl>https://github.com/emako/MakeKits</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/emako/MakeKits</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>MakeKits</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>Logo.png</PackageIcon>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
+        <None Include="..\..\branding\Logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
+            <Project>{0D4566F1-A836-46E7-B79C-1303B30FC768}</Project>
+            <Private>False</Private>
+        </ProjectReference>
+    </ItemGroup>
+
+</Project>

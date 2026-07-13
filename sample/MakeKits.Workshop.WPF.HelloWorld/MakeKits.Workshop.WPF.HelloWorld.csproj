@@ -1,16 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
         <TargetFramework>net48</TargetFramework>
-        <RootNamespace>MakeKits.Workshop.Host</RootNamespace>
-        <AssemblyName>MakeKits.Workshop.Host</AssemblyName>
+        <RootNamespace>MakeKits.Workshop.WPF.HelloWorld</RootNamespace>
+        <AssemblyName>MakeKits.Workshop.WPF.HelloWorld</AssemblyName>
         <LangVersion>preview</LangVersion>
         <Version>0.0.6.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>..\MakeKits.Workshop.Host\bin\Debug\workshops\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,10 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!--<ProjectReference Include="..\MakeKits.Workshop.Executable.HelloWorld\MakeKits.Workshop.Executable.HelloWorld.csproj" />-->
-        <ProjectReference Include="..\MakeKits.Workshop.Webview.HelloWorld\MakeKits.Workshop.Webview.HelloWorld.csproj" />
-        <ProjectReference Include="..\MakeKits.Workshop.WPF.HelloWorld\MakeKits.Workshop.WPF.HelloWorld.csproj" />
-        <ProjectReference Include="..\MakeKits.Workshop.Webview.Debugger\MakeKits.Workshop.Webview.Debugger.csproj" />
+        <ProjectReference Include="..\..\src\MakeKits.Workshop.WPF\MakeKits.Workshop.WPF.csproj" />
     </ItemGroup>
 
 </Project>

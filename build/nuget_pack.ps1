@@ -14,7 +14,8 @@ Write-Host @"
 $projects = @(
     "..\src\MakeKits.Workshop.Abstractions",
     "..\src\MakeKits.Workshop.Executable",
-    "..\src\MakeKits.Workshop.Webview"
+    "..\src\MakeKits.Workshop.Webview",
+    "..\src\MakeKits.Workshop.WPF"
 )
 
 foreach ($proj in $projects) {

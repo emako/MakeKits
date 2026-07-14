@@ -14,11 +14,15 @@ internal static class Cli
             if (!File.Exists("makekits.json"))
             {
                 Console.WriteLine("Usage: makekits build \"path/to/makekits.json\"");
-                Environment.Exit(-1);
-            }
 
-            // Notice: makekits eq. makekits build makekits.json
-            args = ["build", "makekits.json"];
+                // Notice: makekits eq. makekits init web
+                args = ["init", "web"];
+            }
+            else
+            {
+                // Notice: makekits eq. makekits build makekits.json
+                args = ["build", "makekits.json"];
+            }
         }
 
         if (args.Length >= 1)

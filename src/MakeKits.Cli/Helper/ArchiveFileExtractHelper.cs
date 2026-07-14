@@ -8,7 +8,7 @@ using PureSharpCompress.Readers;
 
 namespace MakeKits.Cli.Helper;
 
-internal static class ArchiveFileHelper
+internal static class ArchiveFileExtractHelper
 {
     public static void ExtractAll(string destinationDirectory, string filePath, ReaderOptions? readerOptions = null!, ExtractionOptions? options = null)
     {

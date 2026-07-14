@@ -28,11 +28,25 @@ public sealed class Configuration
     public string Package { get; set; } = "./package.zip";
 
     /// <summary>
+    /// The package directory.
+    /// Support only zip file.
+    /// </summary>
+    [Category("Normal")]
+    public string PackageDirectory { get; set; } = "./build";
+
+    /// <summary>
     /// The resource file location.
     /// Support 7z/zip file.
     /// </summary>
     [Category("Webview")]
     public string Resource { get; set; } = "./resource.zip";
+
+    /// <summary>
+    /// The resource directory.
+    /// Support 7z/zip file.
+    /// </summary>
+    [Category("Webview")]
+    public string ResourceDirectory { get; set; } = "./dist";
 
     /// <summary>
     /// ???

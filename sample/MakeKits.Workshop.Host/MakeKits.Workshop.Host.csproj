@@ -6,7 +6,7 @@
         <RootNamespace>MakeKits.Workshop.Host</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Host</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.6.0</Version>
+        <Version>0.0.7.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>

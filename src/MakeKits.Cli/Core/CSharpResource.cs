@@ -1,4 +1,7 @@
-﻿namespace MakeKits.Cli.Core;
+﻿using MakeKits.Cli.Helper;
+using PureSharpCompress.Compressors.Deflate;
+
+namespace MakeKits.Cli.Core;
 
 internal static class CSharpResource
 {
@@ -7,14 +10,39 @@ internal static class CSharpResource
         if (!Directory.Exists(resourceDir))
             _ = Directory.CreateDirectory(resourceDir);
 
-        if (File.Exists(config.Resource))
+        string targetResource = Path.Combine(resourceDir, "Resource.zip");
+        string targetPackage = Path.Combine(resourceDir, "Package.zip");
+
+        if (Directory.Exists(config.ResourceDirectory))
         {
-            File.Copy(config.Resource, Path.Combine(resourceDir, "Resource.7z"), true);
+            if (File.Exists(targetResource))
+            {
+                File.Delete(targetResource);
+            }
+            ArchiveFileCompressHelper.CreateZip(targetResource, config.ResourceDirectory, CompressionLevel.BestCompression);
+        }
+        else
+        {
+            if (File.Exists(config.Resource))
+            {
+                File.Copy(config.Resource, targetResource, true);
+            }
         }
 
-        if (File.Exists(config.Package))
+        if (Directory.Exists(config.PackageDirectory))
         {
-            File.Copy(config.Package, Path.Combine(resourceDir, "Package.zip"), true);
+            if (File.Exists(targetPackage))
+            {
+                File.Delete(targetPackage);
+            }
+            ArchiveFileCompressHelper.CreateZip(targetPackage, config.PackageDirectory, CompressionLevel.BestCompression);
+        }
+        else
+        {
+            if (File.Exists(config.Package))
+            {
+                File.Copy(config.Package, targetPackage, true);
+            }
         }
     }
 }

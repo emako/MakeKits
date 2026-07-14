@@ -43,7 +43,7 @@ internal sealed class App
             }
             _ = Directory.CreateDirectory(".dist");
 
-            ArchiveFileHelper.ExtractAll(".dist", template, options: new ExtractionOptions()
+            ArchiveFileExtractHelper.ExtractAll(".dist", template, options: new ExtractionOptions()
             {
                 ExtractFullPath = true,
                 Overwrite = true,

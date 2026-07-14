@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Webview.Default</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Webview.Default</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.7.0</Version>
+        <Version>0.0.8.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Webview" Version="0.0.7.0" />
+        <PackageReference Include="MakeKits.Workshop.Webview" Version="0.0.8.0" />
     </ItemGroup>
 
     <Target Name="ReduceReleasePackaging" AfterTargets="Build">

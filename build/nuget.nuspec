@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MakeKits.Tools</id>
-    <version>0.0.7.0</version>
+    <version>0.0.8.0</version>
     <authors>emako</authors>
     <owners>emako</owners>
     <icon>logo.png</icon>

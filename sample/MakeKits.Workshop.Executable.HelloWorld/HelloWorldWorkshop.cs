@@ -1,26 +1,27 @@
 using MakeKits.Workshop;
 
-[assembly: Workshop("ExecutableHelloWorld")]
-
 namespace MakeKits.Workshop.Executable.HelloWorld;
 
-/// <inheritdoc/>
 public sealed class HelloWorldWorkshop : ExecutableWorkshop
 {
-    /// <inheritdoc/>
-    public override LaunchType LaunchType { get; } = LaunchType.Process;
+    public override LaunchType LaunchType
+    {
+        get
+        {
+            if (Enum.TryParse(Configuration.LaunchType, out LaunchType launchType))
+                return launchType;
+            return LaunchType.Process;
+        }
+    }
 
-    /// <inheritdoc/>
     public override IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();
 
-    /// <inheritdoc/>
     protected override WindowHostPanel CreatePanel(IWorkshopContext context)
     {
         HelloWorldWorkshopViewContext? viewContext = context.ViewContext as HelloWorldWorkshopViewContext;
         return new HelloWorldExecutablePanel();
     }
 
-    /// <inheritdoc/>
     protected override void ConfigureViewContext(IWorkshopContext context)
     {
         base.ConfigureViewContext(context);

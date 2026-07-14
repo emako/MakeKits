@@ -1,7 +1,5 @@
 using MakeKits.Workshop;
 
-[assembly: Workshop("WebviewHelloWorld")]
-
 namespace MakeKits.Workshop.Webview.HelloWorld;
 
 /// <inheritdoc/>

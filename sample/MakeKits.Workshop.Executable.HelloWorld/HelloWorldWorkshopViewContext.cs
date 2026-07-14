@@ -4,7 +4,7 @@ public sealed class HelloWorldWorkshopViewContext : WorkshopViewContext
 {
     public HelloWorldWorkshopViewContext()
     {
-        Title = "Hello World";
-        Theme = WorkshopTheme.System;
+        Title = Configuration.Title;
+        Theme = Enum.TryParse(Configuration.Theme, out WorkshopTheme theme) ? theme : WorkshopTheme.System;
     }
 }

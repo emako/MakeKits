@@ -83,7 +83,7 @@ public sealed class WorkshopManager
                 Version = version,
                 FileName = fileName,
                 FilePath = lib,
-                Workshop = workshop,
+                Workshop = workshop!,
             };
         }
         catch (Exception ex)

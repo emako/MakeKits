@@ -65,28 +65,54 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
 
         try
         {
-            string fileName = ProgramPath.EndsWith(".ps1") ? "powershell.exe" : ProgramPath;
-
-            ProcessStartInfo processStartInfo = new()
+            if (ProgramPath.EndsWith(".ps1"))
             {
-                FileName = fileName,
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                Arguments = ProgramPath.EndsWith(".ps1") ? $"-ExecutionPolicy Bypass -File \"{ProgramPath}\"" : null,
-            };
-            using Process process = Process.Start(processStartInfo);
-            string[] exePaths = [.. Directory.EnumerateFiles(ProgramDirectory, "*.exe", SearchOption.AllDirectories)];
-            DefaultHostPanel panel = new();
+                ProcessStartInfo processStartInfo = new()
+                {
+                    FileName = "powershell.exe",
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    Arguments = $"-ExecutionPolicy Bypass -File \"{ProgramPath}\"",
+                };
+                using Process process = Process.Start(processStartInfo);
+                string[] exePaths = [.. Directory.EnumerateFiles(ProgramDirectory, "*.exe", SearchOption.AllDirectories)];
+                DefaultHostPanel panel = new();
 
-            PWP.PollProcessWindow(exePaths, windowHandle =>
+                PWP.PollProcessWindow(exePaths, windowHandle =>
+                {
+                    Debug.WriteLine($"[PWP] Found window handle: {windowHandle}");
+
+                    panel.Dispatcher.Invoke(() => panel.AttachExternalWindow(windowHandle));
+                });
+
+                return panel;
+            }
+            else
             {
-                Debug.WriteLine($"Found window handle: {windowHandle}");
+                string fileName = ProgramPath;
 
-                panel.Dispatcher.Invoke(() => panel.AttachExternalWindow(windowHandle));
-            });
+                ProcessStartInfo processStartInfo = new()
+                {
+                    FileName = fileName,
+                    CreateNoWindow = false,
+                    UseShellExecute = true,
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    Arguments = null,
+                };
+                using Process process = Process.Start(processStartInfo);
+                string[] exePaths = [.. Directory.EnumerateFiles(ProgramDirectory, "*.exe", SearchOption.AllDirectories)];
+                DefaultHostPanel panel = new();
 
-            return panel;
+                PWP.PollProcessWindow(exePaths, windowHandle =>
+                {
+                    Debug.WriteLine($"[PWP] Found window handle: {windowHandle}");
+
+                    panel.Dispatcher.Invoke(() => panel.AttachExternalWindow(windowHandle));
+                });
+
+                return panel;
+            }
         }
         catch (Exception e)
         {

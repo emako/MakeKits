@@ -27,6 +27,13 @@ internal static class CSharpProject
                .SetElementValue("AssemblyName", config.AssemblyName);
         }
 
+        if (!string.IsNullOrWhiteSpace(config.Version))
+        {
+            doc.Element("Project")
+               .Element("PropertyGroup")
+               .SetElementValue("Version", config.Version);
+        }
+
         doc.Save(csprojPath);
     }
 }

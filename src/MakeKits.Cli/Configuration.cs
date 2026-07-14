@@ -13,6 +13,12 @@ public sealed class Configuration
     public string? MinimalVersion { get; set; } = null;
 
     /// <summary>
+    /// The version of workshop plugin assembly.
+    /// </summary>
+    [Category("Normal")]
+    public string Version { get; set; } = "1.0.0";
+
+    /// <summary>
     /// The template file location.
     /// When `.dist` dir is empty, extract it to `.dist`.
     /// Support 7z/zip template.

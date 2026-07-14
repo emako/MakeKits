@@ -18,6 +18,12 @@ public class DefaultHostPanel : WindowHostPanel
         };
     }
 
+    protected override void Dispose(bool disposing)
+    {
+        ChildProcessTracer.Default.TerminateChildProcesses();
+        base.Dispose(disposing);
+    }
+
     protected override System.Windows.Size GetResizeOffset()
     {
         return new System.Windows.Size(Configuration.ResizeOffsetWidth, Configuration.ResizeOffsetHeight);

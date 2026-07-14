@@ -26,7 +26,12 @@ public class ChildProcessTracer
         public static extern nint CreateJobObject([In, Optional] SECURITY_ATTRIBUTES lpJobAttributes, [In, Optional] string lpName);
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetInformationJobObject(nint hJob, JOBOBJECTINFOCLASS JobObjectInfoClass, nint lpJobObjectInfo, uint cbJobObjectInfoLength);
+
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool TerminateJobObject([In] nint hJob, [In] uint uExitCode);
 
         [StructLayout(LayoutKind.Sequential)]
         public class SECURITY_ATTRIBUTES
@@ -213,6 +218,22 @@ public class ChildProcessTracer
         if (!Kernel32.AssignProcessToJobObject(hJob, hProcess))
         {
             Debug.WriteLine($"Failed to assign process to job object. Error: {Marshal.GetLastWin32Error()}");
+        }
+    }
+
+    /// <summary>
+    /// Terminates all child processes that were previously added via <see cref="AddChildProcess"/>.
+    /// </summary>
+    public void TerminateChildProcesses()
+    {
+        if (hJob == 0)
+        {
+            return;
+        }
+
+        if (!Kernel32.TerminateJobObject(hJob, 0))
+        {
+            Debug.WriteLine($"Failed to terminate job object. Error: {Marshal.GetLastWin32Error()}");
         }
     }
 }

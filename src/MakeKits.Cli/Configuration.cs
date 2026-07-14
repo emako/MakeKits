@@ -55,13 +55,13 @@ public sealed class Configuration
     public string ResourceDirectory { get; set; } = "./dist";
 
     /// <summary>
-    /// ???
+    /// The unique identifier for the workshop plugin.
     /// </summary>
     [Category("Normal")]
     public string Id { get; set; } = "HelloWorld";
 
     /// <summary>
-    /// ???
+    /// The assembly name of the workshop plugin.
     /// </summary>
     [Category("Normal")]
     public string AssemblyName { get; set; } = "MakeKits.Workshop.${Id}";
@@ -85,37 +85,38 @@ public sealed class Configuration
     public string Guid { get; set; } = "00000000-0000-0000-0000-000000000000";
 
     /// <summary>
-    /// ???
+    /// The display name of the workshop.
     /// </summary>
     [Category("Normal")]
     public string Name { get; set; } = "MyWorkshop";
 
     /// <summary>
-    /// ???
+    /// The author of the workshop.
     /// </summary>
     [Category("Normal")]
     public string Author { get; set; } = "MakeKits";
 
     /// <summary>
-    /// ???
+    /// The description of the workshop.
     /// </summary>
     [Category("Normal")]
     public string Description { get; set; } = "I'm a perfect human.";
 
     /// <summary>
-    /// ???
+    /// The title of the workshop window.
     /// </summary>
     [Category("Normal")]
     public string Title { get; set; } = "My Title";
 
     /// <summary>
-    /// ???
+    /// The UI theme of the workshop (Light or Dark).
     /// </summary>
     [Category("Normal")]
     public string Theme { get; set; } = "Light";
 
     /// <summary>
-    /// ???
+    /// The folder path for persistent user data storage.
+    /// When null, use default location.
     /// </summary>
     [Category("Webview")]
     public string? UserDataFolder { get; set; } = null;

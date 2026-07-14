@@ -21,6 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\template\MakeKits.Workshop.Executable.Default\MakeKits.Workshop.Executable.Default.csproj" />
+        <ProjectReference Include="..\..\template\MakeKits.Workshop.Webview.Default\MakeKits.Workshop.Webview.Default.csproj" />
         <ProjectReference Include="..\MakeKits.Workshop.Executable.HelloWorld\MakeKits.Workshop.Executable.HelloWorld.csproj" />
         <ProjectReference Include="..\MakeKits.Workshop.Webview.HelloWorld\MakeKits.Workshop.Webview.HelloWorld.csproj" />
         <ProjectReference Include="..\MakeKits.Workshop.WPF.HelloWorld\MakeKits.Workshop.WPF.HelloWorld.csproj" />

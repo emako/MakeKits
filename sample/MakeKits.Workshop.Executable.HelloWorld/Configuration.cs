@@ -8,9 +8,9 @@ namespace MakeKits.Workshop.Executable.HelloWorld;
 
 public static partial class Configuration
 {
-    public static string Id { get; set; } = "ExecutableHelloWorld";
+    public static string Id { get; set; } = "HelloWorldExecutable";
 
-    public static string Name { get; set; } = "Hello World Executable";
+    public static string Name { get; set; } = "Hello Executable";
 
     public static string Author { get; set; } = "MakeKits";
 

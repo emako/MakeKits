@@ -8,9 +8,9 @@ namespace MakeKits.Workshop.WPF.HelloWorld;
 
 public static partial class Configuration
 {
-    public static string Id { get; set; } = "WpfHelloWorld";
+    public static string Id { get; set; } = "HelloWorldWPF";
 
-    public static string Name { get; set; } = "Hello World WPF";
+    public static string Name { get; set; } = "Hello WPF";
 
     public static string Author { get; set; } = "MakeKits";
 

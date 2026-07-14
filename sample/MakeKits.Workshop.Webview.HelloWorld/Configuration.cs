@@ -8,9 +8,9 @@ namespace MakeKits.Workshop.Webview.HelloWorld;
 
 public static partial class Configuration
 {
-    public static string Id { get; set; } = "WebviewHelloWorld";
+    public static string Id { get; set; } = "HelloWorldWebview";
 
-    public static string Name { get; set; } = "Hello World Webview";
+    public static string Name { get; set; } = "Hello Webview";
 
     public static string Author { get; set; } = "MakeKits";
 

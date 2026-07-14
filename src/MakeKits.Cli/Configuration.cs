@@ -88,7 +88,7 @@ public sealed class Configuration
     /// The display name of the workshop.
     /// </summary>
     [Category("Normal")]
-    public string Name { get; set; } = "MyWorkshop";
+    public string Name { get; set; } = "My Workshop";
 
     /// <summary>
     /// The author of the workshop.

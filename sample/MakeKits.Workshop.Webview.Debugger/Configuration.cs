@@ -8,7 +8,7 @@ namespace MakeKits.Workshop.Webview.Debugger;
 
 public static partial class Configuration
 {
-    public static string Id { get; set; } = "WebviewDebugger";
+    public static string Id { get; set; } = "DebuggerWebview";
 
     public static string Name { get; set; } = "Debugger Webview";
 

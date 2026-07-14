@@ -10,3 +10,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize")]
 [assembly: SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
 [assembly: SuppressMessage("Maintainability", "CA1510:Use ArgumentNullException throw helper")]
+[assembly: SuppressMessage("Performance", "CA1866:Use char overload")]

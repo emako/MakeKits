@@ -35,6 +35,7 @@ public static class ZipHelper
 
                 // Uniform path separator
                 string path = entry.FullName.Replace('\\', '/');
+                if (!path.StartsWith("/")) path = "/" + path;
 
                 result[path] = ms.ToArray();
             }

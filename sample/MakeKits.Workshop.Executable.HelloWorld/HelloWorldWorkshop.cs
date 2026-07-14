@@ -1,3 +1,7 @@
+using MakeKits.Workshop;
+
+[assembly: Workshop("ExecutableHelloWorld")]
+
 namespace MakeKits.Workshop.Executable.HelloWorld;
 
 /// <inheritdoc/>

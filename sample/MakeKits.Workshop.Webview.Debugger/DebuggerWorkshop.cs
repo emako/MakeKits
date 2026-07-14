@@ -1,3 +1,7 @@
+using MakeKits.Workshop;
+
+[assembly: Workshop("WebviewDebugger")]
+
 namespace MakeKits.Workshop.Webview.Debugger;
 
 /// <inheritdoc/>

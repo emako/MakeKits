@@ -1,5 +1,4 @@
 ﻿using System.Windows.Threading;
-using Size = System.Windows.Size;
 
 namespace MakeKits.Workshop.Executable.Default;
 
@@ -21,7 +20,7 @@ public class DefaultHostPanel : WindowHostPanel
 
     protected override System.Windows.Size GetResizeOffset()
     {
-        return new Size(Configuration.ResizeOffsetWidth, Configuration.ResizeOffsetHeight);
+        return new System.Windows.Size(Configuration.ResizeOffsetWidth, Configuration.ResizeOffsetHeight);
     }
 
     protected override void OnContainerHandleCreated()

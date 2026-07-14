@@ -4,7 +4,7 @@ public sealed class DefaultWorkshopViewContext : WorkshopViewContext
 {
     public DefaultWorkshopViewContext()
     {
-        Title = "Default Executable";
-        Theme = WorkshopTheme.Light;
+        Title = Configuration.Title;
+        Theme = Enum.TryParse(Configuration.Theme, out WorkshopTheme theme) ? theme : WorkshopTheme.System;
     }
 }

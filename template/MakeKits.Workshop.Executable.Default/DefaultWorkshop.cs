@@ -72,6 +72,7 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
             using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
             packageStream?.CopyTo(fileStream);
+            fileStream.Close();
 
             // Extract the package contents to the program directory
             ZipHelper.ExtractZipToDir(PackagePath, ProgramDirectory, true);
@@ -91,6 +92,7 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
                 using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
                 packageStream?.CopyTo(fileStream);
+                fileStream.Close();
 
                 // Extract the package contents to the program directory
                 ZipHelper.ExtractZipToDir(PackagePath, ProgramDirectory, true);

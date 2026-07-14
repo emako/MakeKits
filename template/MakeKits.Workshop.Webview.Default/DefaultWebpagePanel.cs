@@ -51,9 +51,13 @@ public sealed class DefaultWebpagePanel : EmbeddedResourceWebpagePanel
                         }
                     }
 
+                    if (!Directory.Exists(Path.GetDirectoryName(packagePath)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(packagePath));
+
                     // Extract the embedded package to the program directory
                     using FileStream fileStream = new(packagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
                     packageStream?.CopyTo(fileStream);
+                    fileStream.Close();
 
                     // Extract the package contents to the program directory
                     ZipHelper.ExtractZipToDir(packagePath, programDirectory, true);

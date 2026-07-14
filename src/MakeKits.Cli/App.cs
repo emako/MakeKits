@@ -20,21 +20,11 @@ internal sealed class App
         // Extract template files.
         {
             string? template = Macro.GetFullPath(config.Template);
-            string? resource = Macro.GetFullPath(config.Resource);
 
             if (!File.Exists(template))
             {
                 Console.WriteLine($"ERR: Template file '{template}' not found.");
                 return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(resource))
-            {
-                if (!File.Exists(resource))
-                {
-                    Console.WriteLine($"ERR: Resource file '{resource}' not found.");
-                    return;
-                }
             }
 
             if (Directory.Exists(".dist"))

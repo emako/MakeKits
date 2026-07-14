@@ -9,8 +9,4 @@ public sealed class HelloWorldExecutablePanel : WindowHostPanel
     public HelloWorldExecutablePanel()
     {
     }
-
-    public override void Dispose()
-    {
-    }
 }

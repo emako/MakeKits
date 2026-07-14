@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Executable.Default</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Executable.Default</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.8.0</Version>
+        <Version>0.0.9.0</Version>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -38,7 +38,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.8.0" />
+        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.9.0" />
     </ItemGroup>
 
     <ItemGroup>

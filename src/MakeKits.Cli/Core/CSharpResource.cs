@@ -12,6 +12,7 @@ internal static class CSharpResource
 
         string targetResource = Path.Combine(resourceDir, "Resource.zip");
         string targetPackage = Path.Combine(resourceDir, "Package.zip");
+        string targetPackageMd5 = Path.Combine(resourceDir, "Package.md5");
 
         if (Directory.Exists(config.ResourceDirectory))
         {
@@ -36,12 +37,14 @@ internal static class CSharpResource
                 File.Delete(targetPackage);
             }
             ArchiveFileCompressHelper.CreateZip(targetPackage, config.PackageDirectory, CompressionLevel.BestCompression);
+            File.WriteAllText(targetPackageMd5, HashHelper.GetFileMd5(targetPackage));
         }
         else
         {
             if (File.Exists(config.Package))
             {
                 File.Copy(config.Package, targetPackage, true);
+                File.WriteAllText(targetPackageMd5, HashHelper.GetFileMd5(targetPackage));
             }
         }
     }

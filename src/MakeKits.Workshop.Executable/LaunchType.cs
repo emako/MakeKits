@@ -3,7 +3,6 @@
 public enum LaunchType
 {
     None,
-    Native,
     Process,
-    PowerShell,
+    Console,
 }

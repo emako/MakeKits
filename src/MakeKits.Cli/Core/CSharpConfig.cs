@@ -30,6 +30,12 @@ internal static class CSharpConfig
             }
         }
 
+        if (!string.IsNullOrWhiteSpace(config.Id))
+        {
+            root = root.ReplaceAssemblyAttributeWithString("Workshop", config.Id);
+            root = root.ReplaceOptionWithString("Id", config.Id);
+        }
+
         if (!string.IsNullOrWhiteSpace(config.Name))
         {
             root = root.ReplaceOptionWithString("Name", config.Name);

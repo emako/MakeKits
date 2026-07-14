@@ -1,6 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using MakeKits.Workshop;
+using System.Runtime.InteropServices;
 
 [assembly: Guid("00000000-0000-0000-0000-000000000000")]
+[assembly: Workshop("HelloWorld")]
 
 namespace MakeKits.Workshop.Webview.Default;
 
@@ -9,6 +11,11 @@ namespace MakeKits.Workshop.Webview.Default;
 /// </summary>
 public static partial class Configuration
 {
+    /// <summary>
+    /// The unique identifier for the workshop plugin.
+    /// </summary>
+    public static string Id { get; set; } = "HelloWorld";
+
     /// <summary>
     /// Name of the default workshop card.
     /// </summary>

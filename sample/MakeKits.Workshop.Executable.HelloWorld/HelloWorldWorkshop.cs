@@ -4,7 +4,7 @@ namespace MakeKits.Workshop.Executable.HelloWorld;
 public sealed class HelloWorldWorkshop : ExecutableWorkshop
 {
     /// <inheritdoc/>
-    public override LaunchType LaunchType { get; set; } = LaunchType.Process;
+    public override LaunchType LaunchType { get; } = LaunchType.Process;
 
     /// <inheritdoc/>
     public override IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();

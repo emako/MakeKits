@@ -9,7 +9,7 @@ public abstract class ExecutableWorkshop : Workshop
     /// <summary>
     /// Gets or sets the launch type of the workshop.
     /// </summary>
-    public virtual LaunchType LaunchType { get; set; } = LaunchType.None;
+    public virtual LaunchType LaunchType { get; } = LaunchType.None;
 
     /// <summary>
     /// Gets or sets the directory of the program to be executed by the workshop.
@@ -32,14 +32,19 @@ public abstract class ExecutableWorkshop : Workshop
     public virtual string PackagePath { get; set; } = null!;
 
     /// <summary>
+    /// Gets or sets the path of the package MD5 file to be used by the workshop.
+    /// </summary>
+    public virtual string PackageMd5Path { get; set; } = null!;
+
+    /// <summary>
     /// Gets or sets the alias of the workshop.
     /// </summary>
-    public virtual string Alias { get; set; } = "Package.zip";
+    public virtual string Id { get; } = null!;
 
     /// <summary>
     /// Gets or sets the name of the executable file.
     /// </summary>
-    public virtual string ExecName { get; set; } = null!;
+    public virtual string ExecName { get; } = null!;
 
     /// <summary>
     /// Gets or sets the process window polling instance.

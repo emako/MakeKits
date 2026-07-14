@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 
 namespace MakeKits.Workshop.Webview;
 
@@ -27,6 +28,11 @@ public abstract class EmbeddedResourceWebpagePanel : WebpagePanel
     {
         ResourcesDictionary = EmbeddedResourceLoader.LoadResources(GetType().Assembly);
         HomePage = ResourcesDictionary[HomePageResourcePath];
+        Loaded += OnLoaded;
+    }
+
+    protected virtual void OnLoaded(object sender, RoutedEventArgs e)
+    {
     }
 
     public virtual void NavigateToHomePage()

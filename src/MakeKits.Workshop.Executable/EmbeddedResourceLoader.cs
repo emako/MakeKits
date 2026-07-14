@@ -19,7 +19,7 @@ public static class EmbeddedResourceLoader
         return null!;
     }
 
-    public static Stream? GetPackageMD5(Assembly assembly)
+    public static Stream? GetPackageMd5(Assembly assembly)
     {
         foreach (string resourceName in assembly.GetManifestResourceNames())
         {

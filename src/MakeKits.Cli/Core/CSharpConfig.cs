@@ -66,6 +66,19 @@ internal static class CSharpConfig
             root = root.ReplaceOptionWithString("UserDataFolder", config.UserDataFolder);
         }
 
+        if (!string.IsNullOrWhiteSpace(config.LaunchType))
+        {
+            root = root.ReplaceOptionWithString("LaunchType", config.LaunchType);
+        }
+
+        if (!string.IsNullOrWhiteSpace(config.ExecName))
+        {
+            root = root.ReplaceOptionWithString("ExecName", config.ExecName);
+        }
+
+        root = root.ReplaceOptionWithInt32("ResizeOffsetWidth", config.ResizeOffsetWidth);
+        root = root.ReplaceOptionWithInt32("ResizeOffsetHeight", config.ResizeOffsetHeight);
+
         File.Delete(csPath);
         File.WriteAllText(csPath, root.ToString());
     }

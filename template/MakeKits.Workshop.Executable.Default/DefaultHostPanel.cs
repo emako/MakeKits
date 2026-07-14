@@ -1,4 +1,5 @@
 ﻿using System.Windows.Threading;
+using Size = System.Windows.Size;
 
 namespace MakeKits.Workshop.Executable.Default;
 
@@ -16,6 +17,11 @@ public class DefaultHostPanel : WindowHostPanel
             if (_attachedHwnd == 0 && _externalHwnd != 0)
                 TryAttachExternalWindow();
         };
+    }
+
+    protected override System.Windows.Size GetResizeOffset()
+    {
+        return new Size(Configuration.ResizeOffsetWidth, Configuration.ResizeOffsetHeight);
     }
 
     protected override void OnContainerHandleCreated()

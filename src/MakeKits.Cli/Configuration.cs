@@ -120,4 +120,28 @@ public sealed class Configuration
     /// </summary>
     [Category("Webview")]
     public string? UserDataFolder { get; set; } = null;
+
+    /// <summary>
+    /// Launch type for the embedded executable.
+    /// </summary>
+    [Category("Executable")]
+    public string LaunchType { get; set; } = "Process";
+
+    /// <summary>
+    /// File name of the executable to launch.
+    /// </summary>
+    [Category("Executable")]
+    public string ExecName { get; set; } = "start.ps1";
+
+    /// <summary>
+    /// Width offset applied when resizing the embedded window.
+    /// </summary>
+    [Category("Executable")]
+    public int ResizeOffsetWidth { get; set; } = 0;
+
+    /// <summary>
+    /// Height offset applied when resizing the embedded window.
+    /// </summary>
+    [Category("Executable")]
+    public int ResizeOffsetHeight { get; set; } = 0;
 }

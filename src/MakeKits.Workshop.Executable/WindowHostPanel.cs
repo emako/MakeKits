@@ -13,7 +13,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
     /// <summary>
     /// WinForms container used as the native parent for embedded external windows.
     /// </summary>
-    protected System.Windows.Forms.Panel Container { get; }
+    protected virtual System.Windows.Forms.Panel Container { get; }
 
     protected WindowHostPanel()
     {
@@ -41,7 +41,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
     /// <summary>
     /// Native handle of the WinForms container, or zero when not yet created.
     /// </summary>
-    protected nint ContainerHwnd =>
+    protected virtual nint ContainerHwnd =>
         Container.IsHandleCreated ? Container.Handle : 0;
 
     /// <summary>
@@ -82,7 +82,12 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         return previousParent;
     }
 
-    protected internal static void ResizeEmbeddedWindow(
+    protected virtual System.Windows.Size GetResizeOffset()
+    {
+        return default;
+    }
+
+    protected virtual void ResizeEmbeddedWindow(
         nint externalHwnd,
         nint hostHwnd,
         System.Windows.Forms.Panel? hostControl = null,
@@ -92,13 +97,16 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
             return;
 
         ResolveHostPixelSize(hostHwnd, hostControl, layoutSource, out int width, out int height);
-        _ = User32.MoveWindow(externalHwnd, 0, 0, width, height, true);
+
+        System.Windows.Size offset = GetResizeOffset();
+
+        _ = User32.MoveWindow(externalHwnd, 0, 0, width + (int)offset.Width, height + (int)offset.Height, true);
 
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
         _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
     }
 
-    private static void ResolveHostPixelSize(
+    protected virtual void ResolveHostPixelSize(
         nint hostHwnd,
         System.Windows.Forms.Control? hostControl,
         FrameworkElement? layoutSource,
@@ -108,7 +116,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         width = 0;
         height = 0;
 
-        // QuickLook.Plugin.SumatraPDFReader resizes embedded windows with MoveWindow(host, 0, 0, Width, Height)
+        // Resizes embedded windows with MoveWindow(host, 0, 0, Width, Height)
         // inside the WinForms host control's Resize handler — not GetClientRect/GetWindowRect.
         if (hostControl != null)
         {

@@ -45,6 +45,34 @@ internal static class SyntaxNodeExtensions
         }
     }
 
+    public static CompilationUnitSyntax ReplaceOptionWithInt32(this CompilationUnitSyntax root, string optionName, int? value)
+    {
+        if (value == null)
+        {
+            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression);
+            return root.ReplaceOptionWithAny(optionName, newRight);
+        }
+        else
+        {
+            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value.Value));
+            return root.ReplaceOptionWithAny(optionName, newRight);
+        }
+    }
+
+    public static CompilationUnitSyntax ReplaceOptionWithDouble(this CompilationUnitSyntax root, string optionName, double? value)
+    {
+        if (value == null)
+        {
+            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression);
+            return root.ReplaceOptionWithAny(optionName, newRight);
+        }
+        else
+        {
+            var newRight = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value.Value));
+            return root.ReplaceOptionWithAny(optionName, newRight);
+        }
+    }
+
     public static CompilationUnitSyntax ReplaceOptionWithAny(this CompilationUnitSyntax root, string optionName, ExpressionSyntax newRight)
     {
         var propertyNode = root.DescendantNodes()

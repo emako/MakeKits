@@ -23,4 +23,8 @@ public static partial class Configuration
     public static string LaunchType { get; set; } = $"{Executable.LaunchType.Process}";
 
     public static string ExecName { get; set; } = "ModernWinver.exe";
+
+    public static int ResizeOffsetWidth { get; set; } = 0;
+
+    public static int ResizeOffsetHeight { get; set; } = 0;
 }

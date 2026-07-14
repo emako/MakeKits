@@ -42,12 +42,22 @@ public static partial class Configuration
     public static string? Theme { get; set; } = $"{WorkshopTheme.Light}";
 
     /// <summary>
-    /// ???
+    /// Launch type for the embedded executable.
     /// </summary>
     public static string LaunchType { get; set; } = $"{Executable.LaunchType.Process}";
 
     /// <summary>
-    /// ???
+    /// File name of the executable to launch.
     /// </summary>
     public static string ExecName { get; set; } = "start.ps1";
+
+    /// <summary>
+    /// Width offset applied when resizing the embedded window.
+    /// </summary>
+    public static int ResizeOffsetWidth { get; set; } = 0;
+
+    /// <summary>
+    /// Height offset applied when resizing the embedded window.
+    /// </summary>
+    public static int ResizeOffsetHeight { get; set; } = 0;
 }

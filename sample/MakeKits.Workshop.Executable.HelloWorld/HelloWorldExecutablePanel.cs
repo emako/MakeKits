@@ -18,6 +18,11 @@ public class HelloWorldExecutablePanel : WindowHostPanel
         };
     }
 
+    protected override System.Windows.Size GetResizeOffset()
+    {
+        return new System.Windows.Size(Configuration.ResizeOffsetWidth, Configuration.ResizeOffsetHeight);
+    }
+
     protected override void OnContainerHandleCreated()
     {
         TryAttachExternalWindow();

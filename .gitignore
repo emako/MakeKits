@@ -171,7 +171,3 @@ UpgradeLog*.txt
 
 # Backup files when performing XAML Binding debugging
 *.backupid-*.BindingExpression
-
-# Internal
-sample/MakeKits.Workshop.Executable.HelloWorld/Resources/Package.zip
-

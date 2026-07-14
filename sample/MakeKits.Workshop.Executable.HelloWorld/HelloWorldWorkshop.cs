@@ -55,13 +55,21 @@ public sealed class HelloWorldWorkshop : ExecutableWorkshop
 
         if (!File.Exists(PackagePath))
         {
-            using Stream? packageStream = EmbeddedResourceLoader.GetPackage(Assembly.GetExecutingAssembly());
-            using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
+            {
+                using Stream? packageStream = EmbeddedResourceLoader.GetPackage(Assembly.GetExecutingAssembly());
+                using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
-            packageStream?.CopyTo(fileStream);
-            fileStream.Close();
+                packageStream?.CopyTo(fileStream);
+            }
 
             ZipHelper.ExtractZipToDir(PackagePath, ProgramDirectory, true);
+
+            {
+                using Stream? md5Stream = EmbeddedResourceLoader.GetPackageMd5(Assembly.GetExecutingAssembly());
+                using FileStream fileStream = new(PackageMd5Path, FileMode.Create, FileAccess.Write, FileShare.Delete);
+
+                md5Stream?.CopyTo(fileStream);
+            }
         }
         else
         {
@@ -71,16 +79,18 @@ public sealed class HelloWorldWorkshop : ExecutableWorkshop
                 detectEncodingFromByteOrderMarks: true,
                 bufferSize: 1024,
                 leaveOpen: true);
+            string md5Source = reader.ReadToEnd();
+            string md5Target = File.ReadAllText(PackageMd5Path);
 
-            if (File.ReadAllText(PackageMd5Path) != reader.ReadToEnd())
+            if (md5Target != md5Source)
             {
                 using Stream? packageStream = EmbeddedResourceLoader.GetPackage(Assembly.GetExecutingAssembly());
                 using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
                 packageStream?.CopyTo(fileStream);
-                fileStream.Close();
 
                 ZipHelper.ExtractZipToDir(PackagePath, ProgramDirectory, true);
+                File.WriteAllText(PackageMd5Path, md5Source);
             }
         }
     }

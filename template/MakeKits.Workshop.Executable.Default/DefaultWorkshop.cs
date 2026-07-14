@@ -56,7 +56,6 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
 
         if (!Directory.Exists(ProgramDirectory)) Directory.CreateDirectory(ProgramDirectory);
 
-        // Extract the embedded package to the program directory
         if (!File.Exists(PackageMd5Path))
         {
             using Stream? md5Stream = EmbeddedResourceLoader.GetPackageMd5(Assembly.GetExecutingAssembly());
@@ -65,17 +64,23 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
             md5Stream?.CopyTo(fileStream);
         }
 
-        // Extract the embedded package to the program directory
         if (!File.Exists(PackagePath))
         {
-            using Stream? packageStream = EmbeddedResourceLoader.GetPackage(Assembly.GetExecutingAssembly());
-            using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
+            {
+                using Stream? packageStream = EmbeddedResourceLoader.GetPackage(Assembly.GetExecutingAssembly());
+                using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
-            packageStream?.CopyTo(fileStream);
-            fileStream.Close();
+                packageStream?.CopyTo(fileStream);
+            }
 
-            // Extract the package contents to the program directory
             ZipHelper.ExtractZipToDir(PackagePath, ProgramDirectory, true);
+
+            {
+                using Stream? md5Stream = EmbeddedResourceLoader.GetPackageMd5(Assembly.GetExecutingAssembly());
+                using FileStream fileStream = new(PackageMd5Path, FileMode.Create, FileAccess.Write, FileShare.Delete);
+
+                md5Stream?.CopyTo(fileStream);
+            }
         }
         else
         {
@@ -85,17 +90,18 @@ public sealed class DefaultWorkshop : ExecutableWorkshop
                 detectEncodingFromByteOrderMarks: true,
                 bufferSize: 1024,
                 leaveOpen: true);
+            string md5Source = reader.ReadToEnd();
+            string md5Target = File.ReadAllText(PackageMd5Path);
 
-            if (File.ReadAllText(PackageMd5Path) != reader.ReadToEnd())
+            if (md5Target != md5Source)
             {
                 using Stream? packageStream = EmbeddedResourceLoader.GetPackage(Assembly.GetExecutingAssembly());
                 using FileStream fileStream = new(PackagePath, FileMode.Create, FileAccess.Write, FileShare.Delete);
 
                 packageStream?.CopyTo(fileStream);
-                fileStream.Close();
 
-                // Extract the package contents to the program directory
                 ZipHelper.ExtractZipToDir(PackagePath, ProgramDirectory, true);
+                File.WriteAllText(PackageMd5Path, md5Source);
             }
         }
     }

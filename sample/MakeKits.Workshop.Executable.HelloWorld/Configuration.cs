@@ -22,5 +22,5 @@ public static partial class Configuration
 
     public static string LaunchType { get; set; } = $"{Executable.LaunchType.Process}";
 
-    public static string ExecName { get; set; } = "start.ps1";
+    public static string ExecName { get; set; } = "ModernWinver.exe";
 }

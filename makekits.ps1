@@ -7,7 +7,7 @@ if (-not (Test-Path -LiteralPath $pkg)) {
 }
 
 $versionDir = Get-ChildItem -LiteralPath $pkg -Directory |
-    Sort-Object Name -Descending |
+    Sort-Object { [version]$_.Name } -Descending |
     Select-Object -First 1
 
 if (-not $versionDir) {

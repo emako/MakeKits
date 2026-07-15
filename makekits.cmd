@@ -10,7 +10,7 @@
 )
 
 @set "MAKEKITS_TOOLS="
-@for /f "delims=" %%i in ('dir "%PKG%" /ad /b /on') do (
+@for /f "delims=" %%i in ('powershell -NoProfile -Command "Get-ChildItem -Path '%PKG%' -Directory | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1 -ExpandProperty Name"') do (
     @set "MAKEKITS_TOOLS=%PKG%\%%i"
 )
 

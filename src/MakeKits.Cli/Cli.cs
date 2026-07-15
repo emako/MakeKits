@@ -54,6 +54,10 @@ internal static class Cli
             {
                 InitExe(args);
             }
+            else if (args[1] == "con" || args[1] == "console")
+            {
+                InitCon(args);
+            }
         }
         else
         {
@@ -106,6 +110,30 @@ internal static class Cli
 
                 File.WriteAllText("makekits.json", JsonConvert.SerializeObject(config, Formatting.Indented));
                 Console.WriteLine($@"INF: File '{Environment.CurrentDirectory}\makekits.json' had been created.");
+            }
+        }
+
+        static void InitCon(string[] args)
+        {
+            _ = args;
+
+            if (File.Exists("makekits.json"))
+            {
+                Console.WriteLine($@"ERR: File '{Environment.CurrentDirectory}\makekits.json' already exists, please delete it firstly.");
+                Environment.Exit(-1);
+            }
+            else
+            {
+                Configuration config = new()
+                {
+                    MinimalVersion = Assembly.GetExecutingAssembly().GetName().Version!.ToString(3),
+                    Template = "${KitsDir}/template/console.7z",
+                    Guid = Guid.NewGuid().ToString().Trim('{', '}'),
+                    ExecName = "powershell.exe",
+                };
+
+                File.WriteAllText("makekits.json", JsonConvert.SerializeObject(config, Formatting.Indented));
+                Console.WriteLine($@"INF: File '{Environment.CurrentDirectory}\makekits.json' created.");
             }
         }
     }

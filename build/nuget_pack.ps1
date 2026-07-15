@@ -68,6 +68,13 @@ $templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Exe
 & ".\bin\7z.exe" a ".\template\executable.7z" "..\template\MakeKits.Workshop.Executable.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
 Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Executable.Default\.gitignore" -Force
 
+Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Console.Default\obj" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Console.Default\bin" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Console.Default\Resources" -ErrorAction SilentlyContinue
+$templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Console.Default\.gitignore"
+& ".\bin\7z.exe" a ".\template\console.7z" "..\template\MakeKits.Workshop.Console.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Console.Default\.gitignore" -Force
+
 ## Pack nuget tools
 
 & ".\bin\nuget.exe" pack nuget.nuspec

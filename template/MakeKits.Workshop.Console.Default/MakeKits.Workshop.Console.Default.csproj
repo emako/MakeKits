@@ -2,23 +2,27 @@
 
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
-        <RootNamespace>MakeKits.Workshop.Webview.HelloWorld</RootNamespace>
-        <AssemblyName>MakeKits.Workshop.Webview.HelloWorld</AssemblyName>
+        <RootNamespace>MakeKits.Workshop.Console.Default</RootNamespace>
+        <AssemblyName>MakeKits.Workshop.Console.Default</AssemblyName>
         <LangVersion>preview</LangVersion>
         <Version>0.0.10.0</Version>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>false</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\MakeKits.Workshop.Host\bin\x64\Debug\workshops\</OutputPath>
+        <OutputPath>..\..\sample\MakeKits.Workshop.Host\bin\x64\Debug\workshops\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
+        <UsePowerShell>true</UsePowerShell>
+        <NoWarn>$(NoWarn);NU1903;NU1902</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,18 +30,16 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="WPF-UI.Terminal" Version="1.0.37" />
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.csproj" />
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <ProjectReference Include="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.csproj" />
     </ItemGroup>
 
-    <Target Name="ReduceReleasePackaging" AfterTargets="Build">
-        <Delete Files="$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll')" ContinueOnError="true" />
-        <Delete Files="$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll')" ContinueOnError="true" />
-        <Delete Files="$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll')" ContinueOnError="true" />
-        <RemoveDir Directories="$(OutputPath)\runtimes\" Condition="Exists('$(OutputPath)\runtimes\')" ContinueOnError="true" />
-    </Target>
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.10.0" />
+    </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="Resources\**\*">

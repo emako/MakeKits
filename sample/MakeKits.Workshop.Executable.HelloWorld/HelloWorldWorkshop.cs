@@ -95,7 +95,7 @@ public sealed class HelloWorldWorkshop : ExecutableWorkshop
         }
     }
 
-    protected override WindowHostPanel CreatePanel(IWorkshopContext context)
+    protected override object CreatePanel(IWorkshopContext context)
     {
         if (!File.Exists(ProgramPath))
         {

@@ -11,6 +11,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,20 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="$(NuGetPackageRoot)\ci.microsoft.windows.console.conpty\1.22.250314001\runtimes\win10-x64\native\conpty.dll" Condition="'$(TargetFramework)' == 'net472' Or '$(TargetFramework)' == 'net48' Or '$(TargetFramework)' == 'net481'">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <DestinationFolder>$(OutDir)\</DestinationFolder>
+            <Link>conpty.dll</Link>
+        </Content>
+        <Content Include="$(NuGetPackageRoot)\ci.microsoft.windows.console.conpty\1.22.250314001\build\native\runtimes\x64\OpenConsole.exe">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <DestinationFolder>$(OutDir)\</DestinationFolder>
+            <Link>OpenConsole.exe</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\template\MakeKits.Workshop.Console.Default\MakeKits.Workshop.Console.Default.csproj" />
         <ProjectReference Include="..\..\template\MakeKits.Workshop.Executable.Default\MakeKits.Workshop.Executable.Default.csproj" />
         <ProjectReference Include="..\..\template\MakeKits.Workshop.Webview.Default\MakeKits.Workshop.Webview.Default.csproj" />
         <ProjectReference Include="..\MakeKits.Workshop.Executable.HelloWorld\MakeKits.Workshop.Executable.HelloWorld.csproj" />

@@ -8,7 +8,9 @@
     </Folder>
     <Folder Name="/sample/">
         <Project Path="sample/MakeKits.Workshop.Executable.HelloWorld/MakeKits.Workshop.Executable.HelloWorld.csproj" />
-        <Project Path="sample/MakeKits.Workshop.Host/MakeKits.Workshop.Host.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890" />
+        <Project Path="sample/MakeKits.Workshop.Host/MakeKits.Workshop.Host.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890">
+            <Platform Solution="*|x64" Project="x64" />
+        </Project>
         <Project Path="sample/MakeKits.Workshop.Webview.Debugger/MakeKits.Workshop.Webview.Debugger.csproj" />
         <Project Path="sample/MakeKits.Workshop.Webview.HelloWorld/MakeKits.Workshop.Webview.HelloWorld.csproj" Id="242906e4-8e7d-49ed-9254-c09f4b644cb9" />
         <Project Path="sample/MakeKits.Workshop.WPF.HelloWorld/MakeKits.Workshop.WPF.HelloWorld.csproj" />
@@ -21,6 +23,7 @@
         <Project Path="src/MakeKits.Workshop.WPF/MakeKits.Workshop.WPF.csproj" />
     </Folder>
     <Folder Name="/template/">
+        <Project Path="template/MakeKits.Workshop.Console.Default/MakeKits.Workshop.Console.Default.csproj" />
         <Project Path="template/MakeKits.Workshop.Executable.Default/MakeKits.Workshop.Executable.Default.csproj" />
         <Project Path="template/MakeKits.Workshop.Webview.Default/MakeKits.Workshop.Webview.Default.csproj" />
     </Folder>

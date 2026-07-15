@@ -18,7 +18,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..\sample\MakeKits.Workshop.Host\bin\Debug\workshops\</OutputPath>
+        <OutputPath>..\..\sample\MakeKits.Workshop.Host\x64\bin\Debug\workshops\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <UsePowerShell>true</UsePowerShell>

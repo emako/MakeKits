@@ -51,9 +51,9 @@ public abstract class ExecutableWorkshop : Workshop
     /// </summary>
     public virtual ProcessWindowPolling PWP { get; set; } = new();
 
-    protected WindowHostPanel? Panel { get; private set; }
+    protected object? Panel { get; set; }
 
-    protected abstract WindowHostPanel CreatePanel(IWorkshopContext context);
+    protected abstract object CreatePanel(IWorkshopContext context);
 
     protected virtual void ConfigureViewContext(IWorkshopContext context)
     {
@@ -64,7 +64,7 @@ public abstract class ExecutableWorkshop : Workshop
         context.ViewContext.PreferredHeight = 720;
     }
 
-    protected virtual void NavigatePanel(WindowHostPanel panel, IWorkshopContext context)
+    protected virtual void NavigatePanel(object panel, IWorkshopContext context)
     {
         context?.ViewContext?.ViewerContent = panel;
     }
@@ -116,7 +116,10 @@ public abstract class ExecutableWorkshop : Workshop
     /// <inheritdoc/>
     public override void Cleanup()
     {
-        Panel?.Dispose();
+        if (Panel is IDisposable disposablePanel)
+        {
+            disposablePanel.Dispose();
+        }
         Panel = null;
         PWP?.IsRunning = false;
         GC.SuppressFinalize(this);

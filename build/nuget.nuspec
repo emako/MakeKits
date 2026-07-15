@@ -23,6 +23,7 @@
     <file src=".\bin\nuget.exe" target="build\bin\nuget.exe" />
     <file src=".\template\webview.7z" target="build\template\webview.7z" />
     <file src=".\template\executable.7z" target="build\template\executable.7z" />
+    <file src=".\template\console.7z" target="build\template\console.7z" />
     <file src=".\makekits.exe" target="build\makekits.exe" />
   </files> 
 </package>

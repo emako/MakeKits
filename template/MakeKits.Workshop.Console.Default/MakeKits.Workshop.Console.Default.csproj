@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Console.Default</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Console.Default</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.10.0</Version>
+        <Version>0.0.11.0</Version>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>false</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -30,7 +30,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="WPF-UI.Terminal" Version="1.0.37" />
+        <PackageReference Include="WPF-UI.Terminal" Version="1.0.38" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
@@ -38,7 +38,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.10.0" />
+        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.11.0" />
     </ItemGroup>
 
     <ItemGroup>

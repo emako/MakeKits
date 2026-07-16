@@ -10,6 +10,7 @@ Write-Host @"
 "@
 
 dotnet restore --force --no-cache
+Remove-Item obj\ -Recurse -Force
 
 Write-Host "`nPress any key to exit..."
 [void][System.Console]::ReadKey($true)

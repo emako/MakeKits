@@ -89,7 +89,7 @@ internal static class SyntaxNodeExtensions
             return root.ReplaceNode(propertyNode, newProperty);
         }
 
-        Console.WriteLine($"[ERR] `{optionName}` property not found.");
+        Console.WriteLine($"[INF] Skipped property `{optionName}` not found from template.");
         return root;
     }
 

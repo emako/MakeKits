@@ -76,8 +76,15 @@ internal static class CSharpConfig
             root = root.ReplaceOptionWithString("ExecName", config.ExecName);
         }
 
-        root = root.ReplaceOptionWithInt32("ResizeOffsetWidth", config.ResizeOffsetWidth);
-        root = root.ReplaceOptionWithInt32("ResizeOffsetHeight", config.ResizeOffsetHeight);
+        if (config.ResizeOffsetWidth is not 0)
+        {
+            root = root.ReplaceOptionWithInt32("ResizeOffsetWidth", config.ResizeOffsetWidth);
+        }
+
+        if (config.ResizeOffsetHeight is not 0)
+        {
+            root = root.ReplaceOptionWithInt32("ResizeOffsetHeight", config.ResizeOffsetHeight);
+        }
 
         File.Delete(csPath);
         File.WriteAllText(csPath, root.ToString());

@@ -100,7 +100,7 @@ public sealed class Configuration
     /// The description of the workshop.
     /// </summary>
     [Category("Normal")]
-    public string Description { get; set; } = "I'm a perfect human.";
+    public string Description { get; set; } = "Initialized example.";
 
     /// <summary>
     /// The title of the workshop window.

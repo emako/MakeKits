@@ -83,6 +83,10 @@ internal static class Cli
                     MinimalVersion = Assembly.GetExecutingAssembly().GetName().Version!.ToString(3),
                     Template = "${KitsDir}/template/webview.7z",
                     Guid = Guid.NewGuid().ToString().Trim('{', '}'),
+                    LaunchType = null!, // Out of topic
+                    ExecName = null!, // Out of topic
+                    ResizeOffsetWidth = 0, // Out of topic
+                    ResizeOffsetHeight = 0, // Out of topic
                 };
 
                 File.WriteAllText("makekits.json", JsonConvert.SerializeObject(config, Formatting.Indented));
@@ -106,6 +110,8 @@ internal static class Cli
                     MinimalVersion = Assembly.GetExecutingAssembly().GetName().Version!.ToString(3),
                     Template = "${KitsDir}/template/executable.7z",
                     Guid = Guid.NewGuid().ToString().Trim('{', '}'),
+                    Resource = null!, // Out of topic
+                    ResourceDirectory = null!, // Out of topic
                 };
 
                 File.WriteAllText("makekits.json", JsonConvert.SerializeObject(config, Formatting.Indented));
@@ -129,7 +135,10 @@ internal static class Cli
                     MinimalVersion = Assembly.GetExecutingAssembly().GetName().Version!.ToString(3),
                     Template = "${KitsDir}/template/console.7z",
                     Guid = Guid.NewGuid().ToString().Trim('{', '}'),
+                    LaunchType = "Console",
                     ExecName = "powershell.exe",
+                    Resource = null!, // Out of topic
+                    ResourceDirectory = null!, // Out of topic
                 };
 
                 File.WriteAllText("makekits.json", JsonConvert.SerializeObject(config, Formatting.Indented));

@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Executable.HelloWorld</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Executable.HelloWorld</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.11.0</Version>
+        <Version>0.0.12.0</Version>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>

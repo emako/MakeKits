@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove=".\**" />
+        <EmbeddedResource Remove=".\**" />
+        <None Remove=".\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MakeKits.Tools" Version="0.0.12" />
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.12" />
+        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.12" />
+        <PackageReference Include="MakeKits.Workshop.Webview" Version="0.0.12" />
+        <PackageReference Include="MakeKits.Workshop.WPF" Version="0.0.12" />
+    </ItemGroup>
+
+</Project>

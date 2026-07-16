@@ -4,6 +4,7 @@
         <Platform Name="x64" />
     </Configurations>
     <Folder Name="/build/">
+        <File Path="build/nuget.csproj" />
         <File Path="build/nuget.nuspec" />
     </Folder>
     <Folder Name="/sample/">

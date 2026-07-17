@@ -12,20 +12,19 @@
         <Project Path="sample/MakeKits.Workshop.Host/MakeKits.Workshop.Host.csproj" Id="a1b2c3d4-e5f6-7890-abcd-ef1234567890">
             <Platform Solution="*|x64" Project="x64" />
         </Project>
-        <Project Path="sample/MakeKits.Workshop.Webview.Debugger/MakeKits.Workshop.Webview.Debugger.csproj" />
         <Project Path="sample/MakeKits.Workshop.Webview.HelloWorld/MakeKits.Workshop.Webview.HelloWorld.csproj" Id="242906e4-8e7d-49ed-9254-c09f4b644cb9" />
         <Project Path="sample/MakeKits.Workshop.WPF.HelloWorld/MakeKits.Workshop.WPF.HelloWorld.csproj" />
     </Folder>
     <Folder Name="/src/">
         <Project Path="src/MakeKits.Cli/MakeKits.Cli.csproj" Id="398113d0-f9fe-4803-b745-e6ae2b1a8e00" />
         <Project Path="src/MakeKits.Workshop.Abstractions/MakeKits.Workshop.Abstractions.csproj" />
-        <Project Path="src/MakeKits.Workshop.Executable/MakeKits.Workshop.Executable.csproj" Id="80c991a7-4a24-4946-967f-14c4930de112" />
-        <Project Path="src/MakeKits.Workshop.Webview/MakeKits.Workshop.Webview.csproj" Id="e24af173-5399-4018-8a95-9f734d7417ba" />
-        <Project Path="src/MakeKits.Workshop.WPF/MakeKits.Workshop.WPF.csproj" />
+        <Project Path="src/MakeKits.Workshop.Executable/MakeKits.Workshop.Executable.shproj" Id="3142af58-dfd9-42a0-b793-6b7588d666e5" />
+        <Project Path="src/MakeKits.Workshop.Webview/MakeKits.Workshop.Webview.shproj" Id="00f641cc-fe10-4c9f-b26b-4156b4638025" />
     </Folder>
     <Folder Name="/template/">
         <Project Path="template/MakeKits.Workshop.Console.Default/MakeKits.Workshop.Console.Default.csproj" />
         <Project Path="template/MakeKits.Workshop.Executable.Default/MakeKits.Workshop.Executable.Default.csproj" />
+        <Project Path="template/MakeKits.Workshop.Webview.Debugger/MakeKits.Workshop.Webview.Debugger.csproj" />
         <Project Path="template/MakeKits.Workshop.Webview.Default/MakeKits.Workshop.Webview.Default.csproj" />
     </Folder>
 </Solution>

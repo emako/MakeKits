@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace MakeKits.Workshop.Webview.HelloWorld.Host;
+namespace MakeKits.Workshop.Host;
 
 public partial class App : Application
 {

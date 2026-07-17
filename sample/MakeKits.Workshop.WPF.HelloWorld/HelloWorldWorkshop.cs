@@ -1,21 +1,33 @@
 namespace MakeKits.Workshop.WPF.HelloWorld;
 
 /// <inheritdoc/>
-public sealed class HelloWorldWorkshop : WebviewWorkshop
+public sealed class HelloWorldWorkshop : IWorkshop
 {
     /// <inheritdoc/>
-    public override IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();
+    public IWorkshopContext Context { get; set; } = new HelloWorldWorkshopContext();
 
     /// <inheritdoc/>
-    protected override object CreatePanel(IWorkshopContext context)
+    public IWorkshopDescriptor Descriptor => Context.Descriptor;
+
+    /// <inheritdoc/>
+    public void Init()
     {
-        HelloWorldWorkshopViewContext? viewContext = context.ViewContext as HelloWorldWorkshopViewContext;
-        return new HelloWorldWpfPanel(viewContext?.Theme ?? WorkshopTheme.System);
     }
 
     /// <inheritdoc/>
-    protected override void ConfigureViewContext(IWorkshopContext context)
+    public void Prepare(IWorkshopContext context)
     {
-        base.ConfigureViewContext(context);
+        Context = context;
+    }
+
+    /// <inheritdoc/>
+    public void View(IWorkshopContext context)
+    {
+        context.ViewContext?.ViewerContent = new HelloWorldWpfPanel(WorkshopTheme.System);
+    }
+
+    /// <inheritdoc/>
+    public void Cleanup()
+    {
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MakeKits.Workshop.Webview;
+namespace MakeKits.Workshop;
 
 public static class TypeExtensions
 {

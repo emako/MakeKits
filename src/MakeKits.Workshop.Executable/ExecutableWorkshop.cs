@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Windows.Controls;
 
@@ -72,7 +71,7 @@ public abstract class ExecutableWorkshop : Workshop
     protected virtual void FallbackPanel(string message, IWorkshopContext context)
     {
         // Initialize the panel with a simple message label
-        Label label = new()
+        System.Windows.Controls.Label label = new()
         {
             Content = message ?? "Error Occurred",
             HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center,

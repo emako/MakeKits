@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
@@ -21,15 +21,19 @@
         <ErrorReport>prompt</ErrorReport>
     </PropertyGroup>
 
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <ProjectReference Include="..\..\src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
+            <Project>{0D4566F1-A836-46E7-B79C-1303B30FC768}</Project>
+            <Private>False</Private>
+        </ProjectReference>
+    </ItemGroup>
+
     <ItemGroup>
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.14.0" Condition=" '$(Configuration)' == 'Release'" />
         <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\MakeKits.Workshop.WPF\MakeKits.Workshop.WPF.csproj" />
     </ItemGroup>
 
 </Project>

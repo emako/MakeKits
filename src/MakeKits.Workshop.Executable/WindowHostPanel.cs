@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms.Integration;
 
@@ -23,8 +22,8 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
             BackColor = System.Drawing.Color.Black,
         };
         Child = Container;
-        HorizontalAlignment = HorizontalAlignment.Stretch;
-        VerticalAlignment = VerticalAlignment.Stretch;
+        HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+        VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
 
         Container.HandleCreated += (_, _) => OnContainerHandleCreated();
         Container.Resize += (_, _) => OnContainerResized();

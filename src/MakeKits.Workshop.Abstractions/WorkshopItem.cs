@@ -1,4 +1,4 @@
-namespace MakeKits.Workshop.WPF;
+﻿namespace MakeKits.Workshop;
 
 /// <summary>
 /// Represents an abstract base implementation of <see cref="IWorkshopItem"/>

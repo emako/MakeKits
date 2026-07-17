@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MakeKits.Workshop.WPF;
+namespace MakeKits.Workshop.WPF.HelloWorld;
 
 /// <summary>
 /// A base class for objects that need to implement <see cref="INotifyPropertyChanged"/>.

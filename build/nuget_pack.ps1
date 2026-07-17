@@ -12,10 +12,7 @@ Write-Host @"
 # Nuget pack
 
 $projects = @(
-    "..\src\MakeKits.Workshop.Abstractions",
-    "..\src\MakeKits.Workshop.Executable",
-    "..\src\MakeKits.Workshop.Webview",
-    "..\src\MakeKits.Workshop.WPF"
+    "..\src\MakeKits.Workshop.Abstractions"
 )
 
 foreach ($proj in $projects) {
@@ -54,26 +51,53 @@ $templateGitIgnore = @"
 !.gitignore
 "@
 
+### Pack template\webview.7z
+
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Default\obj" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Default\bin" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Default\Resources" -ErrorAction SilentlyContinue
+New-Item "..\template\MakeKits.Workshop.Webview.Default\Shared" -ItemType Directory -Force | Out-Null
+Copy-Item "..\src\MakeKits.Workshop.Webview\*.cs" "..\template\MakeKits.Workshop.Webview.Default\Shared" -Force
 $templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Webview.Default\.gitignore"
 & ".\bin\7z.exe" a ".\template\webview.7z" "..\template\MakeKits.Workshop.Webview.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
 Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Default\.gitignore" -Force
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Default\Shared" -Recurse -Force
+
+### Pack template\webdbg.7z
+
+Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Debugger\obj" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Debugger\bin" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Webview.Debugger\Resources" -ErrorAction SilentlyContinue
+New-Item "..\template\MakeKits.Workshop.Webview.Debugger\Shared" -ItemType Directory -Force | Out-Null
+Copy-Item "..\src\MakeKits.Workshop.Webview\*.cs" "..\template\MakeKits.Workshop.Webview.Debugger\Shared" -Force
+$templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Webview.Debugger\.gitignore"
+& ".\bin\7z.exe" a ".\template\webdbg.7z" "..\template\MakeKits.Workshop.Webview.Debugger\*" -t7z -mx=5 -mf=BCJ2 -r -y
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Debugger\.gitignore" -Force
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Debugger\Shared" -Recurse -Force
+
+### Pack template\executable.7z
 
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\obj" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\bin" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\Resources" -ErrorAction SilentlyContinue
+New-Item "..\template\MakeKits.Workshop.Executable.Default\Shared" -ItemType Directory -Force | Out-Null
+Copy-Item "..\src\MakeKits.Workshop.Executable\*.cs" "..\template\MakeKits.Workshop.Executable.Default\Shared" -Force
 $templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Executable.Default\.gitignore"
 & ".\bin\7z.exe" a ".\template\executable.7z" "..\template\MakeKits.Workshop.Executable.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
 Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Executable.Default\.gitignore" -Force
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Executable.Default\Shared" -Recurse -Force
+
+### Pack template\console.7z
 
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Console.Default\obj" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Console.Default\bin" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Console.Default\Resources" -ErrorAction SilentlyContinue
+New-Item "..\template\MakeKits.Workshop.Console.Default\Shared" -ItemType Directory -Force | Out-Null
+Copy-Item "..\src\MakeKits.Workshop.Executable\*.cs" "..\template\MakeKits.Workshop.Console.Default\Shared" -Force
 $templateGitIgnore | Set-Content -LiteralPath "..\template\MakeKits.Workshop.Console.Default\.gitignore"
 & ".\bin\7z.exe" a ".\template\console.7z" "..\template\MakeKits.Workshop.Console.Default\*" -t7z -mx=5 -mf=BCJ2 -r -y
 Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Console.Default\.gitignore" -Force
+Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Console.Default\Shared" -Recurse -Force
 
 ## Pack nuget tools
 

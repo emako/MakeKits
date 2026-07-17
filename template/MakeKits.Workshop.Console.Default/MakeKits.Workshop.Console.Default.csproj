@@ -7,11 +7,12 @@
         <LangVersion>preview</LangVersion>
         <Version>0.0.14.0</Version>
         <UseWPF>true</UseWPF>
-        <UseWindowsForms>false</UseWindowsForms>
+        <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <DebugType>embedded</DebugType>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -21,24 +22,30 @@
         <OutputPath>..\..\sample\MakeKits.Workshop.Host\bin\x64\Debug\workshops\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
-        <UsePowerShell>true</UsePowerShell>
+        <UsePowerShell>false</UsePowerShell>
         <NoWarn>$(NoWarn);NU1903;NU1902</NoWarn>
     </PropertyGroup>
 
+    <Import Project="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.projitems" Label="Shared" />
+
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <ProjectReference Include="..\..\src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
+            <Project>{0D4566F1-A836-46E7-B79C-1303B30FC768}</Project>
+            <Private>False</Private>
+        </ProjectReference>
+    </ItemGroup>
+
     <ItemGroup>
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.14.0" Condition=" '$(Configuration)' == 'Release'" />
         <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="WPF-UI.Terminal" Version="1.0.38" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <ProjectReference Include="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.csproj" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.14.0" />
+        <PackageReference Include="System.IO.Compression" Version="4.1.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="System.Management.Automation" Version="6.1.2" Condition=" '$(UsePowerShell)' == 'true'" />
+        <PackageReference Include="WPF-UI.Terminal" Version="1.0.39" />
     </ItemGroup>
 
     <ItemGroup>

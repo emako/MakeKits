@@ -1,10 +1,10 @@
 namespace MakeKits.Workshop.WPF.HelloWorld;
 
-public sealed class HelloWorldWorkshopDescriptor : WorkshopDescriptor
+public sealed class HelloWorldWorkshopDescriptor : IWorkshopDescriptor
 {
-    public override string Name => Configuration.Name;
+    public string Name => Configuration.Name;
 
-    public override string? Author => Configuration.Author;
+    public string? Author => Configuration.Author;
 
-    public override string? Description => Configuration.Description;
+    public string? Description => Configuration.Description;
 }

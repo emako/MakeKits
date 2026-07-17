@@ -1,10 +1,10 @@
 ﻿using Microsoft.Terminal.Wpf;
 using System.ComponentModel;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf.Ui.Terminal;
 using Color = System.Windows.Media.Color;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace MakeKits.Workshop.Console.Default;
 

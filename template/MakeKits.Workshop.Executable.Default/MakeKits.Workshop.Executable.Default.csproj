@@ -12,33 +12,44 @@
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <DebugType>embedded</DebugType>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..\sample\MakeKits.Workshop.Host\x64\bin\Debug\workshops\</OutputPath>
+        <OutputPath>..\..\sample\MakeKits.Workshop.Host\bin\x64\Debug\workshops\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
-        <UsePowerShell>true</UsePowerShell>
+        <UsePowerShell>false</UsePowerShell>
         <NoWarn>$(NoWarn);NU1903;NU1902</NoWarn>
     </PropertyGroup>
 
+    <Import Project="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.projitems" Label="Shared" />
+
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <ProjectReference Include="..\..\src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
+            <Project>{0D4566F1-A836-46E7-B79C-1303B30FC768}</Project>
+            <Private>False</Private>
+        </ProjectReference>
+    </ItemGroup>
+
     <ItemGroup>
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.14.0" Condition=" '$(Configuration)' == 'Release'" />
         <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="System.IO.Compression" Version="4.1.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="System.Management.Automation" Version="6.1.2" Condition=" '$(UsePowerShell)' == 'true'" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <ProjectReference Include="..\..\src\MakeKits.Workshop.Executable\MakeKits.Workshop.Executable.csproj" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <PackageReference Include="MakeKits.Workshop.Executable" Version="0.0.14.0" />
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'net47' Or '$(TargetFramework)' == 'net471' Or '$(TargetFramework)' == 'net472' Or '$(TargetFramework)' == 'net48' Or '$(TargetFramework)' == 'net481'">
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="WindowsBase" />
     </ItemGroup>
 
     <ItemGroup>

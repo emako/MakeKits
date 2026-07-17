@@ -5,7 +5,7 @@
         <RootNamespace>MakeKits.Workshop.Webview.Debugger</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Webview.Debugger</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.14.0</Version>
+        <Version>0.0.15.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -21,7 +21,7 @@
         <ErrorReport>prompt</ErrorReport>
     </PropertyGroup>
 
-    <Import Project="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.projitems" Label="Shared" />
+    <Import Project="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.projitems" Label="Shared" Condition=" '$(Configuration)' == 'Release'" />
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <ProjectReference Include="..\..\src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">
@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.14.0" Condition=" '$(Configuration)' == 'Release'" />
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.15.0" Condition=" '$(Configuration)' == 'Release'" />
         <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

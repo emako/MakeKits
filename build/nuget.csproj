@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MakeKits.Tools" Version="0.0.15.0" />
-        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.15.0" />
+        <PackageReference Include="MakeKits.Tools" Version="0.0.16.0" />
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.16.0" />
     </ItemGroup>
 
 </Project>

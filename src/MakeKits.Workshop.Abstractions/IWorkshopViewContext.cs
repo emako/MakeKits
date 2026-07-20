@@ -17,6 +17,11 @@ public interface IWorkshopViewContext : INotifyPropertyChanged
     public object Source { get; set; }
 
     /// <summary>
+    /// Gets or sets the icon displayed in the workshop view or any associated UI elements.
+    /// </summary>
+    public object? Icon { get; set; }
+
+    /// <summary>
     /// Gets or sets the window title shown while the workshop is active.
     /// </summary>
     public string Title { get; set; }

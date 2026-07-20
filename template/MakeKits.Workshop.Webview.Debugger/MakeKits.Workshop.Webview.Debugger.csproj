@@ -21,7 +21,7 @@
         <ErrorReport>prompt</ErrorReport>
     </PropertyGroup>
 
-    <Import Project="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.projitems" Label="Shared" Condition=" '$(Configuration)' == 'Release'" />
+    <Import Project="..\..\src\MakeKits.Workshop.Webview\MakeKits.Workshop.Webview.projitems" Label="Shared" />
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <ProjectReference Include="..\..\src\MakeKits.Workshop.Abstractions\MakeKits.Workshop.Abstractions.csproj">

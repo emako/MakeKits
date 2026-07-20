@@ -211,12 +211,22 @@
                                VerticalAlignment="Stretch"
                                Background="#33334A"
                                DockPanel.Dock="Left" />
-                    <TextBlock x:Name="WorkshopTitleText"
-                               Margin="16,0,0,0"
+                    <StackPanel Margin="16,0,0,0"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Image x:Name="WorkshopIconImage"
+                               Width="16"
+                               Height="16"
+                               Margin="0,0,8,0"
                                VerticalAlignment="Center"
-                               FontSize="15"
-                               FontWeight="SemiBold"
-                               Foreground="White" />
+                               Stretch="Uniform"
+                               Visibility="Collapsed" />
+                        <TextBlock x:Name="WorkshopTitleText"
+                                   VerticalAlignment="Center"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="White" />
+                    </StackPanel>
                 </DockPanel>
             </Border>
 

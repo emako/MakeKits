@@ -4,6 +4,7 @@
 public abstract class WorkshopViewContext : WorkshopObject, IWorkshopViewContext
 {
     private object _source = null!;
+    private object? _icon;
     private string _title = null!;
     private object _viewerContent = null!;
     private bool _isImmersiveMode = false;
@@ -17,6 +18,13 @@ public abstract class WorkshopViewContext : WorkshopObject, IWorkshopViewContext
     {
         get => _source;
         set => SetProperty(ref _source, value);
+    }
+
+    /// <inheritdoc/>
+    public virtual object? Icon
+    {
+        get => _icon;
+        set => SetProperty(ref _icon, value);
     }
 
     /// <inheritdoc/>

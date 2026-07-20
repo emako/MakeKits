@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MakeKits.Workshop.Executable;
+﻿namespace MakeKits.Workshop.Executable;
 
 /// <inheritdoc/>
 public abstract class WorkshopContext : WorkshopObject, IWorkshopContext

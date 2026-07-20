@@ -3,6 +3,7 @@ namespace MakeKits.Workshop.WPF.HelloWorld;
 public sealed class HelloWorldWorkshopViewContext : WorkshopObject, IWorkshopViewContext
 {
     private object _source = null!;
+    private object? _icon;
     private string _title = null!;
     private object _viewerContent = null!;
     private bool _isImmersiveMode = false;
@@ -16,6 +17,13 @@ public sealed class HelloWorldWorkshopViewContext : WorkshopObject, IWorkshopVie
     {
         get => _source;
         set => SetProperty(ref _source, value);
+    }
+
+    /// <inheritdoc/>
+    public object? Icon
+    {
+        get => _icon;
+        set => SetProperty(ref _icon, value);
     }
 
     /// <inheritdoc/>

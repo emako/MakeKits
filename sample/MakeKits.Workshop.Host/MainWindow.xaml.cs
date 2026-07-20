@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace MakeKits.Workshop.Host;
@@ -148,6 +149,9 @@ public partial class MainWindow : Window
 
         WorkshopContentControl.Content = null;
         WorkshopTitleText.Text = string.Empty;
+        WorkshopIconImage.Source = null;
+        WorkshopIconImage.Visibility = Visibility.Collapsed;
+        Icon = null;
     }
 
     // -----------------------------------------------------------------
@@ -190,6 +194,10 @@ public partial class MainWindow : Window
                         WorkshopTitleText.Text = vc.Title;
                     break;
 
+                case nameof(IWorkshopViewContext.Icon):
+                    ApplyIcon(vc);
+                    break;
+
                 case nameof(IWorkshopViewContext.PreferredWidth):
                 case nameof(IWorkshopViewContext.PreferredHeight):
                     ApplyPreferredSize(vc);
@@ -208,7 +216,23 @@ public partial class MainWindow : Window
             WorkshopTitleText.Text = vc.Title;
 
         WorkshopContentControl.Content = vc.ViewerContent;
+        ApplyIcon(vc);
         ApplyPreferredSize(vc);
+    }
+
+    private void ApplyIcon(IWorkshopViewContext vc)
+    {
+        if (vc.Icon is ImageSource imageSource)
+        {
+            Icon = imageSource;
+            WorkshopIconImage.Source = imageSource;
+            WorkshopIconImage.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            WorkshopIconImage.Source = null;
+            WorkshopIconImage.Visibility = Visibility.Collapsed;
+        }
     }
 
     private void ApplyPreferredSize(IWorkshopViewContext vc)

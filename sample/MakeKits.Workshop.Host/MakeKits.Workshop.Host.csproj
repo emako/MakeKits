@@ -28,6 +28,7 @@
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="WPF-UI" Version="4.3.0" />
+        <PackageReference Include="WPF-UI.Terminal" Version="1.0.39" />
     </ItemGroup>
 
     <ItemGroup>

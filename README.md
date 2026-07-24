@@ -1,3 +1,7 @@
+![logo64](https://raw.githubusercontent.com/emako/MakeKits/refs/heads/master/branding/Titlebar.png)
+
+[![GitHub license](https://img.shields.io/github/license/emako/MakeKits)](https://github.com/lemutec/MicaSetup/blob/v2/LICENSE) [![NuGet](https://img.shields.io/nuget/v/MakeKits.Tools.svg)](https://nuget.org/packages/MicaSetup.Tools) [![Actions](https://github.com/emako/MakeKits/actions/workflows/library.nuget.yml/badge.svg)](https://github.com/lemutec/MicaSetup/actions/workflows/micasetup.yml)
+
 # MakeKits
 
 MakeKits is a .NET solution for building and loading `Workshop` modules. It includes the core abstraction layer, a Webview runtime, a CLI entry point, and runnable sample hosts and workshops.
@@ -52,5 +56,5 @@ Use `build/nuget_pack.ps1` to create NuGet packages.
 
 ## License
 
-[MIT](LICENSE).
+[MIT](LICENSE)
 

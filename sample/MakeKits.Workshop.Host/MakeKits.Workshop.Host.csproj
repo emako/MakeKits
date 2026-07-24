@@ -6,7 +6,7 @@
         <RootNamespace>MakeKits.Workshop.Host</RootNamespace>
         <AssemblyName>MakeKits.Workshop.Host</AssemblyName>
         <LangVersion>preview</LangVersion>
-        <Version>0.0.18.0</Version>
+        <Version>0.0.19.0</Version>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.18.0" Condition=" '$(Configuration)' == 'Release'" />
+        <PackageReference Include="MakeKits.Workshop.Abstractions" Version="0.0.19.0" Condition=" '$(Configuration)' == 'Release'" />
         <PackageReference Include="Costura.Fody" Version="6.0.0" Condition=" '$(Configuration)' == 'Release'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

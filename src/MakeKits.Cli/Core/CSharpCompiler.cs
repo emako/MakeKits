@@ -29,7 +29,7 @@ internal static class CSharpCompiler
         Console.OutputEncoding = Encoding.UTF8;
 
         string arguments =
-            $@"""{csproj}"" /t:Rebuild /p:Configuration=Release /p:ImportDirectoryBuildProps=false /p:RestoreUseStaticGraphEvaluation=false /restore";
+            $@"""{csproj}"" /t:Rebuild /p:Configuration=Release /p:ImportDirectoryBuildProps=false /p:RestoreUseStaticGraphEvaluation=false /restore /p:RestoreSources=""https://api.nuget.org/v3/index.json""";
 
         CliResult buildResult = msbuild
             .WithArguments(arguments)

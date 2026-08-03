@@ -57,8 +57,19 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         nint previousParent = User32.SetParent(externalHwnd, hostHwnd);
 
         uint style = User32.GetWindowLong(externalHwnd, User32.GWL_STYLE);
-        style &= ~(User32.WS_POPUP | User32.WS_CAPTION | User32.WS_THICKFRAME | User32.WS_MINIMIZEBOX | User32.WS_MAXIMIZEBOX | User32.WS_SYSMENU | User32.WS_MINIMIZE);
-        style |= User32.WS_CHILD | User32.WS_VISIBLE;
+        style &= ~(User32.WS_POPUP | User32.WS_CAPTION | User32.WS_THICKFRAME | User32.WS_MINIMIZEBOX | User32.WS_MAXIMIZEBOX | User32.WS_SYSMENU | User32.WS_MINIMIZE | User32.WS_DISABLED);
+        style |= User32.WS_VISIBLE;
+
+        // Intentionally keep WS_OVERLAPPED instead of adding WS_CHILD.
+        //
+        // This is a common legacy technique used by Chromium/CEF/Electron hosts.
+        // Although it does not follow the MSDN recommendation for SetParent, keeping the
+        // window as a top-level window internally often provides better compatibility,
+        // especially for focus, input, and message handling.
+#if false
+        style |= User32.WS_CHILD;
+#endif
+
         _ = User32.SetWindowLong(externalHwnd, User32.GWL_STYLE, style);
 
         uint exStyle = User32.GetWindowLong(externalHwnd, User32.GWL_EXSTYLE);
@@ -77,6 +88,9 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
         _ = User32.UpdateWindow(externalHwnd);
         _ = User32.InvalidateRect(externalHwnd, IntPtr.Zero, true);
+
+        _ = User32.SetForegroundWindow(hostHwnd);
+        _ = User32.SetFocus(externalHwnd);
 
         return previousParent;
     }
@@ -160,6 +174,13 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         [DllImport("user32.dll")]
         public static extern nint SetParent(nint hWndChild, nint hWndNewParent);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetForegroundWindow(nint hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern nint SetFocus(nint hWnd);
+
         [DllImport("user32.dll")]
         public static extern uint GetWindowLong(nint hWnd, int nIndex);
 
@@ -210,6 +231,7 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         public const int SW_SHOW = 5;
         public const uint WS_CHILD = 0x40000000;
         public const uint WS_VISIBLE = 0x10000000;
+        public const uint WS_DISABLED = 0x08000000;
         public const uint WS_MINIMIZE = 0x20000000;
         public const uint WS_POPUP = 0x80000000;
         public const uint WS_CAPTION = 0x00C00000;

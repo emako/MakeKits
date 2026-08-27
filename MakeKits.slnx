@@ -20,6 +20,8 @@
         <Project Path="src/MakeKits.Workshop.Abstractions/MakeKits.Workshop.Abstractions.csproj" />
         <Project Path="src/MakeKits.Workshop.Executable/MakeKits.Workshop.Executable.shproj" Id="3142af58-dfd9-42a0-b793-6b7588d666e5" />
         <Project Path="src/MakeKits.Workshop.Webview/MakeKits.Workshop.Webview.shproj" Id="00f641cc-fe10-4c9f-b26b-4156b4638025" />
+        <Project Path="src/WhatsShop.Cli/Abstractions/MakeKits.Workshop.Abstractions.Stub.csproj" />
+        <Project Path="src/WhatsShop.Cli/WhatsShop.Cli.csproj" />
     </Folder>
     <Folder Name="/template/">
         <Project Path="template/MakeKits.Workshop.Console.Default/MakeKits.Workshop.Console.Default.csproj" />

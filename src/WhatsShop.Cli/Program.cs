@@ -1,17 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
-namespace WhatsShop;
+﻿namespace WhatsShop;
 
 internal static class Program
 {
-    private static readonly JsonSerializerSettings JsonSettings = new()
-    {
-        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-        Formatting = Formatting.Indented,
-        NullValueHandling = NullValueHandling.Include,
-    };
-
     static int Main(string[] args)
     {
         if (args.Length != 1 || args[0] is "-h" or "--help" or "/?" or "-?")
@@ -29,7 +19,7 @@ internal static class Program
 
         if (WorkshopMetadataReader.TryRead(path) is WorkshopMetaInfo meta)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(meta, JsonSettings));
+            Console.WriteLine(JsonFormatting.SerializeFormatted(meta));
             return 0;
         }
         else

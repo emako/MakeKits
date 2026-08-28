@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net472</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -12,15 +12,59 @@
         <FileVersion>0.0.20.0</FileVersion>
         <Version>$(VersionPrefix)0.0.20.0</Version>
         <DebugType>embedded</DebugType>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <PublishAot>true</PublishAot>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <StripSymbols>true</StripSymbols>
+        <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+        <RuntimeIdentifiers>win-x64;linux-x64;linux-arm64</RuntimeIdentifiers>
+        <!-- Ubuntu x64/arm64 use the linux-* RIDs. -->
+        <PublishDir Condition="'$(RuntimeIdentifier)' != ''">$(MSBuildProjectDirectory)\bin\publish\$(RuntimeIdentifier)\</PublishDir>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="ICSharpCode.Decompiler" Version="9.1.0.7988" />
-        <PackageReference Include="Costura.Fody" Version="6.2.0" Condition="'$(Configuration)' == 'Release'">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        <!-- Keep decompiler surface intact under Native AOT trimming. -->
+        <TrimmerRootAssembly Include="ICSharpCode.Decompiler" />
     </ItemGroup>
+
+    <!--
+      Default multi-RID publish (Native AOT cannot cross-compile across OS):
+        Windows host  -> win-x64
+        Linux host    -> linux-x64, linux-arm64
+        Override:     -p:PublishRids=win-x64;linux-x64
+
+        Prefer:  dotnet build -c Release -t:PublishAll
+        (Avoid:  dotnet publish -t:PublishAll — that also runs a RID-less Publish.)
+    -->
+    <Target Name="PublishAll">
+        <PropertyGroup>
+            <_PublishConfiguration>$(Configuration)</_PublishConfiguration>
+            <_PublishConfiguration Condition="'$(_PublishConfiguration)' == ''">Release</_PublishConfiguration>
+        </PropertyGroup>
+
+        <ItemGroup Condition="'$(PublishRids)' != ''">
+            <_PublishRid Include="$(PublishRids)" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(PublishRids)' == '' And $([MSBuild]::IsOSPlatform('Windows'))">
+            <_PublishRid Include="win-x64" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(PublishRids)' == '' And $([MSBuild]::IsOSPlatform('Linux'))">
+            <_PublishRid Include="linux-x64" />
+            <_PublishRid Include="linux-arm64" />
+        </ItemGroup>
+
+        <Error
+            Condition="'@(_PublishRid)' == ''"
+            Text="No publish RIDs for this host. Set -p:PublishRids=... or run on Windows/Linux. Native AOT does not support cross-OS compilation." />
+
+        <Message
+            Importance="high"
+            Text="Publishing Native AOT for: @(_PublishRid)" />
+
+        <MSBuild
+            Projects="$(MSBuildProjectFullPath)"
+            Targets="Restore;Publish"
+            Properties="Configuration=$(_PublishConfiguration);RuntimeIdentifier=%(_PublishRid.Identity);SelfContained=true" />
+    </Target>
 
 </Project>

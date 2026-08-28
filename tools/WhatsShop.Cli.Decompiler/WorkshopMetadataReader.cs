@@ -9,23 +9,26 @@ namespace WhatsShop;
 /// <summary>
 /// Reads workshop metadata from a DLL via ICSharpCode.Decompiler (no Assembly.Load).
 /// </summary>
-internal static class WorkshopMetadataReader
+internal static partial class WorkshopMetadataReader
 {
     private const string IWorkshopFullName = "MakeKits.Workshop.IWorkshop";
     private const string IWorkshopDescriptorFullName = "MakeKits.Workshop.IWorkshopDescriptor";
     private const string WorkshopAttributeFullName = "MakeKits.Workshop.WorkshopAttribute";
 
-    private static readonly Regex PropertyInitializerRegex = new(
+    [GeneratedRegex(
         @"\b(?<name>Id|Name|Author|Description)\b\s*\{[^}]*\}\s*=\s*(?<value>null|""(?:\\.|[^""])*""|@""(?:""""|[^""])*"")",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        RegexOptions.CultureInvariant)]
+    private static partial Regex PropertyInitializerRegex();
 
-    private static readonly Regex ExpressionBodyStringRegex = new(
+    [GeneratedRegex(
         @"\b(?<name>Id|Name|Author|Description)\b\s*=>\s*(?<value>""(?:\\.|[^""])*""|@""(?:""""|[^""])*"")\s*;",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        RegexOptions.CultureInvariant)]
+    private static partial Regex ExpressionBodyStringRegex();
 
-    private static readonly Regex ExpressionBodyMemberRegex = new(
+    [GeneratedRegex(
         @"\b(?<name>Name|Author|Description)\b\s*=>\s*(?<type>[A-Za-z_][\w.]*)\.(?<member>Id|Name|Author|Description)\s*;",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        RegexOptions.CultureInvariant)]
+    private static partial Regex ExpressionBodyMemberRegex();
 
     public static WorkshopMetaInfo? TryRead(string libraryPath)
     {
@@ -310,7 +313,7 @@ internal static class WorkshopMetadataReader
 
     private static void MergeStringProperties(Dictionary<string, string?> values, string code)
     {
-        foreach (Match match in PropertyInitializerRegex.Matches(code))
+        foreach (Match match in PropertyInitializerRegex().Matches(code))
         {
             string name = match.Groups["name"].Value;
             string? decoded = DecodeCSharpStringOrNull(match.Groups["value"].Value);
@@ -320,7 +323,7 @@ internal static class WorkshopMetadataReader
             }
         }
 
-        foreach (Match match in ExpressionBodyStringRegex.Matches(code))
+        foreach (Match match in ExpressionBodyStringRegex().Matches(code))
         {
             string name = match.Groups["name"].Value;
             string? decoded = DecodeCSharpStringOrNull(match.Groups["value"].Value);
@@ -336,7 +339,7 @@ internal static class WorkshopMetadataReader
         string code,
         IReadOnlyDictionary<string, string?> configurationValues)
     {
-        foreach (Match match in ExpressionBodyMemberRegex.Matches(code))
+        foreach (Match match in ExpressionBodyMemberRegex().Matches(code))
         {
             string name = match.Groups["name"].Value;
             string member = match.Groups["member"].Value;

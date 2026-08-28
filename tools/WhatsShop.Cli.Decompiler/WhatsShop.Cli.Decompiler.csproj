@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net48</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
         <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -16,21 +16,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Abstractions\**" />
-      <EmbeddedResource Remove="Abstractions\**" />
-      <None Remove="Abstractions\**" />
-    </ItemGroup>
-
-    <ItemGroup>
+        <PackageReference Include="ICSharpCode.Decompiler" Version="9.1.0.7988" />
         <PackageReference Include="Costura.Fody" Version="6.2.0" Condition="'$(Configuration)' == 'Release'">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="EleCho.Json" Version="1.2.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="Abstractions\MakeKits.Workshop.Abstractions.Stub.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,20 +3,26 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Wpf.Ui.Violeta.Controls;
 
 namespace MakeKits.Workshop.Host;
 
-public partial class MainWindow : Window
+public partial class MainWindow : ShellWindow
 {
+    private const string DefaultTitle = "MakeKits Workshop";
+
     // The currently active workshop context; kept alive so PropertyChanged fires correctly.
     private IWorkshopContext? _activeContext;
 
     // The workshop item currently being shown.
     private IWorkshopItem? _activeItem;
 
+    private ImageSource? _defaultIcon;
+
     public MainWindow()
     {
         InitializeComponent();
+        _defaultIcon = Icon;
         Loaded += OnLoaded;
         Closed += OnClosed;
     }
@@ -29,6 +35,7 @@ public partial class MainWindow : Window
     {
         WorkshopManager.GetInstance();
         PopulateWorkshopList();
+        ShowListChrome();
     }
 
     private void OnClosed(object? sender, EventArgs e)
@@ -54,19 +61,19 @@ public partial class MainWindow : Window
         else
         {
             EmptyStatePanel.Visibility = Visibility.Collapsed;
-            WorkshopCountText.Text = $"({items.Count} plugin(s))";
+            WorkshopCountText.Text = $"{items.Count} plugin(s)";
         }
     }
 
     private void OnWorkshopCardClick(object sender, RoutedEventArgs e)
     {
-        if (sender is Button { Tag: IWorkshopItem item })
+        if (sender is FrameworkElement { Tag: IWorkshopItem item })
             OpenWorkshop(item);
     }
 
     private void OnWorkshopCardContextMenuOpening(object sender, ContextMenuEventArgs e)
     {
-        if (sender is not Button { Tag: IWorkshopItem item, ContextMenu: ContextMenu menu })
+        if (sender is not FrameworkElement { Tag: IWorkshopItem item, ContextMenu: ContextMenu menu })
             return;
 
         menu.Items.Clear();
@@ -83,12 +90,12 @@ public partial class MainWindow : Window
             try
             {
                 if (!runDirect())
-                    MessageBox.Show($"Failed to run {item.Name}.", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show($"Failed to run {item.Name}.", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"[MainWindow] Open in New Window error: {ex}");
-                MessageBox.Show($"Failed to run {item.Name}.\n\n{ex.Message}", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
+                System.Windows.MessageBox.Show($"Failed to run {item.Name}.\n\n{ex.Message}", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         };
         menu.Items.Add(openInNewWindowMenuItem);
@@ -124,7 +131,7 @@ public partial class MainWindow : Window
         IWorkshop? workshop = item.Workshop;
         if (workshop == null)
         {
-            MessageBox.Show($"Workshop {item.Name} was not loaded correctly.", "Cannot be opened", MessageBoxButton.OK, MessageBoxImage.Warning);
+            System.Windows.MessageBox.Show($"Workshop {item.Name} was not loaded correctly.", "Cannot be opened", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
 
@@ -137,6 +144,7 @@ public partial class MainWindow : Window
         // Navigate to the workshop page.
         ListPage.Visibility = Visibility.Collapsed;
         WorkshopPage.Visibility = Visibility.Visible;
+        ShowWorkshopChrome(item.Name);
 
         // Subscribe to context / view-context changes so we can react to title and content updates.
         if (_activeContext != null)
@@ -169,11 +177,12 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnBackClicked(object sender, RoutedEventArgs e)
+    private void OnTitleBarBackClick(object? sender, EventArgs e)
     {
         CleanupActiveWorkshop();
         WorkshopPage.Visibility = Visibility.Collapsed;
         ListPage.Visibility = Visibility.Visible;
+        ShowListChrome();
     }
 
     private void CleanupActiveWorkshop()
@@ -195,10 +204,23 @@ public partial class MainWindow : Window
         _activeItem = null;
 
         WorkshopContentControl.Content = null;
-        WorkshopTitleText.Text = string.Empty;
-        WorkshopIconImage.Source = null;
-        WorkshopIconImage.Visibility = Visibility.Collapsed;
-        Icon = null;
+    }
+
+    private void ShowListChrome()
+    {
+        Title = DefaultTitle;
+        Icon = _defaultIcon;
+        AppTitleBar.IsBackButtonEnabled = false;
+        AppTitleBar.BackButtonVisibility = Visibility.Collapsed;
+    }
+
+    private void ShowWorkshopChrome(string? title)
+    {
+        if (!string.IsNullOrWhiteSpace(title))
+            Title = title!;
+
+        AppTitleBar.IsBackButtonEnabled = true;
+        AppTitleBar.BackButtonVisibility = Visibility.Visible;
     }
 
     // -----------------------------------------------------------------
@@ -238,7 +260,7 @@ public partial class MainWindow : Window
 
                 case nameof(IWorkshopViewContext.Title):
                     if (!string.IsNullOrWhiteSpace(vc.Title))
-                        WorkshopTitleText.Text = vc.Title;
+                        Title = vc.Title;
                     break;
 
                 case nameof(IWorkshopViewContext.Icon):
@@ -260,7 +282,7 @@ public partial class MainWindow : Window
     private void ApplyViewContext(IWorkshopViewContext vc)
     {
         if (!string.IsNullOrWhiteSpace(vc.Title))
-            WorkshopTitleText.Text = vc.Title;
+            Title = vc.Title;
 
         WorkshopContentControl.Content = vc.ViewerContent;
         ApplyIcon(vc);
@@ -270,16 +292,9 @@ public partial class MainWindow : Window
     private void ApplyIcon(IWorkshopViewContext vc)
     {
         if (vc.Icon is ImageSource imageSource)
-        {
             Icon = imageSource;
-            WorkshopIconImage.Source = imageSource;
-            WorkshopIconImage.Visibility = Visibility.Visible;
-        }
         else
-        {
-            WorkshopIconImage.Source = null;
-            WorkshopIconImage.Visibility = Visibility.Collapsed;
-        }
+            Icon = _defaultIcon;
     }
 
     private void ApplyPreferredSize(IWorkshopViewContext vc)

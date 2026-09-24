@@ -44,7 +44,7 @@
             <DestinationFolder>$(OutDir)\</DestinationFolder>
             <Link>OpenConsole.exe</Link>
         </Content>
-        <Content Include="..\..\branding\Logo.ico" />
+        <Resource Include="..\..\branding\Logo.ico" Link="Resources\Logo.ico" />
     </ItemGroup>
 
     <ItemGroup>

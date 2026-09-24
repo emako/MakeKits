@@ -6,11 +6,15 @@ namespace MakeKits.Workshop.Host;
 internal sealed partial class MainWindowViewModel : ObservableObject
 {
     private readonly Action<IWorkshopItem> _openWorkshop;
+    private readonly Action<IWorkshopItem> _openWorkshopInContentWindow;
 
-    public MainWindowViewModel(Action<IWorkshopItem> openWorkshop)
+    public MainWindowViewModel(
+        Action<IWorkshopItem> openWorkshop,
+        Action<IWorkshopItem> openWorkshopInContentWindow)
     {
         Workshops = [];
         _openWorkshop = openWorkshop;
+        _openWorkshopInContentWindow = openWorkshopInContentWindow;
     }
 
     public ObservableCollection<WorkshopItemViewModel> Workshops { get; }
@@ -26,7 +30,7 @@ internal sealed partial class MainWindowViewModel : ObservableObject
         Workshops.Clear();
 
         foreach (IWorkshopItem item in items)
-            Workshops.Add(new WorkshopItemViewModel(item, _openWorkshop));
+            Workshops.Add(new WorkshopItemViewModel(item, _openWorkshop, _openWorkshopInContentWindow));
 
         OnPropertyChanged(nameof(IsEmpty));
         OnPropertyChanged(nameof(WorkshopCountText));

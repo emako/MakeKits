@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf.Ui.Violeta.Controls;
+using Wpf.Ui.Violeta.Win32;
 
 namespace MakeKits.Workshop.Host;
 
@@ -23,7 +24,7 @@ public partial class MainWindow : ShellWindow
 
     public MainWindow()
     {
-        _viewModel = new MainWindowViewModel(OpenWorkshop);
+        _viewModel = new MainWindowViewModel(OpenWorkshop, OpenWorkshopInContentWindow);
         DataContext = _viewModel;
 
         InitializeComponent();
@@ -103,6 +104,142 @@ public partial class MainWindow : ShellWindow
         {
             Debug.WriteLine($"[MainWindow] Workshop lifecycle error: {ex}");
             WorkshopContentControl.Content = CreateErrorPanel(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Opens web / console workshops in a separate <see cref="ContentWindow"/> hosting their panel.
+    /// </summary>
+    private void OpenWorkshopInContentWindow(IWorkshopItem item)
+    {
+        IWorkshop? workshop = item.Workshop;
+        if (workshop == null)
+        {
+            System.Windows.MessageBox.Show($"Workshop {item.Name} was not loaded correctly.", "Cannot be opened", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        IWorkshopContext? context = workshop.Context;
+        if (context == null)
+        {
+            System.Windows.MessageBox.Show($"Workshop {item.Name} has no context.", "Cannot be opened", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        WorkshopContentWindowControl control = new() { Title = item.Name };
+        ContentWindow window = ContentWindow.Create(control);
+        window.Owner = this;
+        window.Title = item.Name;
+        window.Width = 1280;
+        window.Height = 720;
+        window.MinimizeButtonVisibility = Visibility.Visible;
+        window.MaximizeButtonVisibility = Visibility.Visible;
+        window.ShowInTaskbar = true;
+        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        window.ResizeMode = ResizeMode.CanResize;
+
+        PropertyChangedEventHandler? viewContextHandler = null;
+        bool cleaned = false;
+
+        void CleanupWindow()
+        {
+            if (cleaned)
+                return;
+
+            cleaned = true;
+
+            context.PropertyChanged -= OnContentWindowContextPropertyChanged;
+
+            if (viewContextHandler != null && context.ViewContext != null)
+                context.ViewContext.PropertyChanged -= viewContextHandler;
+
+            try { workshop.Cleanup(); }
+            catch (Exception ex) { Debug.WriteLine($"[MainWindow] ContentWindow cleanup error: {ex}"); }
+        }
+
+        viewContextHandler = (_, e) =>
+        {
+            if (context.ViewContext is not IWorkshopViewContext vc)
+                return;
+
+            Dispatcher.Invoke(() => ApplyContentWindowViewContext(window, control, vc, e.PropertyName));
+        };
+
+        void OnContentWindowContextPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(IWorkshopContext.ViewContext))
+                return;
+
+            Dispatcher.Invoke(() =>
+            {
+                if (context.ViewContext == null)
+                    return;
+
+                context.ViewContext.Source = window;
+                context.ViewContext.PropertyChanged -= viewContextHandler;
+                context.ViewContext.PropertyChanged += viewContextHandler;
+                ApplyContentWindowViewContext(window, control, context.ViewContext, propertyName: null);
+            });
+        }
+
+        context.PropertyChanged += OnContentWindowContextPropertyChanged;
+
+        if (context.ViewContext != null)
+        {
+            context.ViewContext.Source = window;
+            context.ViewContext.PropertyChanged += viewContextHandler;
+        }
+
+        window.Closed += (_, _) => CleanupWindow();
+
+        try
+        {
+            workshop.Prepare(context);
+            workshop.View(context);
+
+            if (context.ViewContext != null)
+                ApplyContentWindowViewContext(window, control, context.ViewContext, propertyName: null);
+
+            window.Show();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MainWindow] ContentWindow workshop lifecycle error: {ex}");
+            CleanupWindow();
+            try { window.Close(); } catch { /* ignore */ }
+            System.Windows.MessageBox.Show($"Failed to open {item.Name}.\n\n{ex.Message}", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    private static void ApplyContentWindowViewContext(
+        ContentWindow window,
+        WorkshopContentWindowControl control,
+        IWorkshopViewContext vc,
+        string? propertyName)
+    {
+        bool applyAll = propertyName == null;
+
+        if (applyAll || propertyName == nameof(IWorkshopViewContext.Title))
+        {
+            if (!string.IsNullOrWhiteSpace(vc.Title))
+                window.Title = vc.Title;
+        }
+
+        if (applyAll || propertyName == nameof(IWorkshopViewContext.ViewerContent))
+            control.Content = vc.ViewerContent;
+
+        if (applyAll || propertyName is nameof(IWorkshopViewContext.PreferredWidth) or nameof(IWorkshopViewContext.PreferredHeight))
+        {
+            if (vc.PreferredWidth > 0)
+                window.Width = vc.PreferredWidth;
+            if (vc.PreferredHeight > 0)
+                window.Height = vc.PreferredHeight;
+        }
+
+        if (applyAll || propertyName == nameof(IWorkshopViewContext.Icon))
+        {
+            if (vc.Icon is ImageSource imageSource)
+                window.Icon = imageSource;
         }
     }
 

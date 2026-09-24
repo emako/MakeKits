@@ -11,6 +11,8 @@ public partial class MainWindow : ShellWindow
 {
     private const string DefaultTitle = "MakeKits Workshop";
 
+    private readonly MainWindowViewModel _viewModel;
+
     // The currently active workshop context; kept alive so PropertyChanged fires correctly.
     private IWorkshopContext? _activeContext;
 
@@ -21,6 +23,9 @@ public partial class MainWindow : ShellWindow
 
     public MainWindow()
     {
+        _viewModel = new MainWindowViewModel(OpenWorkshop);
+        DataContext = _viewModel;
+
         InitializeComponent();
         _defaultIcon = Icon;
         Loaded += OnLoaded;
@@ -34,89 +39,13 @@ public partial class MainWindow : ShellWindow
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         WorkshopManager.GetInstance();
-        PopulateWorkshopList();
+        _viewModel.LoadWorkshops(WorkshopManager.LoadedWorkshops);
         ShowListChrome();
     }
 
     private void OnClosed(object? sender, EventArgs e)
     {
         CleanupActiveWorkshop();
-    }
-
-    // -----------------------------------------------------------------
-    //  List page
-    // -----------------------------------------------------------------
-
-    private void PopulateWorkshopList()
-    {
-        IReadOnlyList<IWorkshopItem> items = WorkshopManager.LoadedWorkshops;
-
-        WorkshopList.ItemsSource = items;
-
-        if (items.Count == 0)
-        {
-            EmptyStatePanel.Visibility = Visibility.Visible;
-            WorkshopCountText.Text = string.Empty;
-        }
-        else
-        {
-            EmptyStatePanel.Visibility = Visibility.Collapsed;
-            WorkshopCountText.Text = $"{items.Count} plugin(s)";
-        }
-    }
-
-    private void OnWorkshopCardClick(object sender, RoutedEventArgs e)
-    {
-        if (sender is FrameworkElement { Tag: IWorkshopItem item })
-            OpenWorkshop(item);
-    }
-
-    private void OnWorkshopCardContextMenuOpening(object sender, ContextMenuEventArgs e)
-    {
-        if (sender is not FrameworkElement { Tag: IWorkshopItem item, ContextMenu: ContextMenu menu })
-            return;
-
-        menu.Items.Clear();
-
-        if (!TryGetOpenInNewWindowAction(item.Workshop?.Context, out Func<bool>? runDirect) || runDirect == null)
-        {
-            e.Handled = true;
-            return;
-        }
-
-        MenuItem openInNewWindowMenuItem = new() { Header = "Open in New Window" };
-        openInNewWindowMenuItem.Click += (_, _) =>
-        {
-            try
-            {
-                if (!runDirect())
-                    System.Windows.MessageBox.Show($"Failed to run {item.Name}.", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[MainWindow] Open in New Window error: {ex}");
-                System.Windows.MessageBox.Show($"Failed to run {item.Name}.\n\n{ex.Message}", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        };
-        menu.Items.Add(openInNewWindowMenuItem);
-    }
-
-    private static bool TryGetOpenInNewWindowAction(IWorkshopContext? context, out Func<bool>? runDirect)
-    {
-        runDirect = null;
-        if (context?.Properties == null)
-            return false;
-
-        if (!context.Properties.TryGetValue("OpenInNewWindowAction", out object? value))
-            return false;
-
-        if (value is Func<bool> func)
-        {
-            runDirect = func;
-            return true;
-        }
-
-        return false;
     }
 
     // -----------------------------------------------------------------

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Forms.Integration;
 
@@ -85,7 +86,13 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         _ = User32.ShowWindow(externalHwnd, User32.SW_HIDE);
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOWNORMAL);
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
-        _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
+
+        // Non-Chromium windows may need SW_MAXIMIZE after reparenting;
+        // Electron/Chromium (Chrome_WidgetWin_*) do not — MoveWindow is enough.
+        string className = User32.GetWindowClassName(externalHwnd);
+        if (ShouldMaximizeEmbeddedWindow(className))
+            _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
+
         _ = User32.UpdateWindow(externalHwnd);
         _ = User32.InvalidateRect(externalHwnd, IntPtr.Zero, true);
 
@@ -116,7 +123,23 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
         _ = User32.MoveWindow(externalHwnd, 0, 0, width + (int)offset.Width, height + (int)offset.Height, true);
 
         _ = User32.ShowWindow(externalHwnd, User32.SW_SHOW);
-        _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
+
+        string className = User32.GetWindowClassName(externalHwnd);
+        if (ShouldMaximizeEmbeddedWindow(className))
+            _ = User32.ShowWindow(externalHwnd, User32.SW_MAXIMIZE);
+    }
+
+    /// <summary>
+    /// Whether the embedded window should be maximized after show/resize.
+    /// Electron/Chromium windows must not be maximized; override to customize further.
+    /// </summary>
+    protected virtual bool ShouldMaximizeEmbeddedWindow(string className)
+    {
+        // Electron / Chromium: Chrome_WidgetWin_0, Chrome_WidgetWin_1, ... — skip maximize.
+        if (className.StartsWith("Chrome_WidgetWin", StringComparison.Ordinal))
+            return false;
+
+        return true;
     }
 
     protected virtual void ResolveHostPixelSize(
@@ -202,6 +225,22 @@ public abstract class WindowHostPanel : WindowsFormsHost, IDisposable
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(nint hWnd, int nCmdShow);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern int GetClassName(nint hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        /// <summary>
+        /// Returns the Win32 class name of <paramref name="hWnd"/>, or empty when unavailable.
+        /// </summary>
+        public static string GetWindowClassName(nint hWnd)
+        {
+            if (hWnd == 0)
+                return string.Empty;
+
+            var buffer = new StringBuilder(256);
+            int length = GetClassName(hWnd, buffer, buffer.Capacity);
+            return length > 0 ? buffer.ToString() : string.Empty;
+        }
 
         [DllImport("user32.dll")]
         public static extern bool UpdateWindow(nint hWnd);

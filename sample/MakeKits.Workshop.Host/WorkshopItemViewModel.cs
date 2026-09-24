@@ -53,7 +53,7 @@ internal sealed partial class WorkshopItemViewModel : ObservableObject
             return;
         }
 
-        if (!IsWebOrConsoleWorkshop())
+        if (!IsNonProcessWorkshop())
             return;
 
         try
@@ -68,7 +68,7 @@ internal sealed partial class WorkshopItemViewModel : ObservableObject
     }
 
     private bool CanOpenInNewWindow() =>
-        TryGetOpenInNewWindowAction(out _) || IsWebOrConsoleWorkshop();
+        TryGetOpenInNewWindowAction(out _) || IsNonProcessWorkshop();
 
     private bool TryGetOpenInNewWindowAction(out Func<bool>? runDirect)
     {
@@ -91,26 +91,21 @@ internal sealed partial class WorkshopItemViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Shared-project types are duplicated per workshop DLL, so detect by base type name.
+    /// Anything other than <c>LaunchType.Process</c> opens via ContentWindow
+    /// (Webview / Console / WPF / LaunchType.None, etc.).
+    /// Process workshops use <see cref="OpenInNewWindowActionKey"/> instead.
     /// </summary>
-    private bool IsWebOrConsoleWorkshop()
+    private bool IsNonProcessWorkshop()
     {
         IWorkshop? workshop = Item.Workshop;
         if (workshop == null)
             return false;
 
-        for (Type? type = workshop.GetType(); type != null; type = type.BaseType)
-        {
-            if (type.Name == "WebviewWorkshop")
-                return true;
+        object? launchType = workshop.GetType().GetProperty("LaunchType")?.GetValue(workshop);
+        if (launchType != null
+            && string.Equals(launchType.ToString(), "Process", StringComparison.Ordinal))
+            return false;
 
-            if (type.Name == "ExecutableWorkshop")
-            {
-                object? launchType = workshop.GetType().GetProperty("LaunchType")?.GetValue(workshop);
-                return string.Equals(launchType?.ToString(), "Console", StringComparison.Ordinal);
-            }
-        }
-
-        return false;
+        return true;
     }
 }

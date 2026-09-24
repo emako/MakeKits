@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using System.Windows.Controls;
+using System.IO;
 
 namespace MakeKits.Workshop.Executable;
 
@@ -80,6 +80,62 @@ public abstract class ExecutableWorkshop : Workshop
             FontWeight = System.Windows.FontWeights.Bold,
         };
         context?.ViewContext?.ViewerContent = label;
+    }
+
+    /// <summary>
+    /// Starts <see cref="ProgramPath"/> (or PowerShell for <c>.ps1</c>).
+    /// When <paramref name="embed"/> is true, launcher windows match the hosted-embed path;
+    /// when false, the process owns its own windows (no SetParent).
+    /// </summary>
+    protected virtual Process? StartProgramProcess(bool embed)
+    {
+        if (string.IsNullOrWhiteSpace(ProgramPath))
+            throw new InvalidOperationException("ProgramPath is not set.");
+
+        bool isScript = ProgramPath.EndsWith(".ps1", StringComparison.OrdinalIgnoreCase);
+
+        if (isScript)
+        {
+            if (!File.Exists(ProgramPath))
+                throw new FileNotFoundException("The executable file was not found.", ProgramPath);
+
+            ProcessStartInfo scriptInfo = new()
+            {
+                FileName = "powershell.exe",
+                Arguments = $"-ExecutionPolicy Bypass -File \"{ProgramPath}\"",
+                WorkingDirectory = ProgramDirectory,
+                CreateNoWindow = embed,
+                UseShellExecute = false,
+                WindowStyle = embed ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
+            };
+            return Process.Start(scriptInfo);
+        }
+
+        string fileName = File.Exists(ProgramPath) ? ProgramPath : ExecName;
+        if (string.IsNullOrWhiteSpace(fileName))
+            throw new FileNotFoundException("The executable file was not found.", ProgramPath);
+
+        ProcessStartInfo processStartInfo = new()
+        {
+            FileName = fileName,
+            WorkingDirectory = Directory.Exists(ProgramDirectory) ? ProgramDirectory : null,
+            CreateNoWindow = false,
+            UseShellExecute = true,
+            WindowStyle = ProcessWindowStyle.Normal,
+            Arguments = null,
+        };
+        return Process.Start(processStartInfo);
+    }
+
+    /// <summary>
+    /// Enumerates <c>*.exe</c> under <see cref="ProgramDirectory"/> for window polling.
+    /// </summary>
+    protected virtual string[] EnumerateProgramExecutables()
+    {
+        if (string.IsNullOrWhiteSpace(ProgramDirectory) || !Directory.Exists(ProgramDirectory))
+            return [];
+
+        return [.. Directory.EnumerateFiles(ProgramDirectory, "*.exe", SearchOption.AllDirectories)];
     }
 
     /// <inheritdoc/>

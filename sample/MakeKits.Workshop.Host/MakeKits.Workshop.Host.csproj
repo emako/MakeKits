@@ -12,6 +12,7 @@
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Platforms>AnyCPU;x64</Platforms>
+        <ApplicationIcon>..\..\branding\Logo.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
@@ -28,6 +29,7 @@
             <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="WPF-UI" Version="4.3.0" />
+		<PackageReference Include="WPF-UI.Violeta" Version="4.3.0.15" />
         <PackageReference Include="WPF-UI.Terminal" Version="1.0.39" />
     </ItemGroup>
 
@@ -42,6 +44,7 @@
             <DestinationFolder>$(OutDir)\</DestinationFolder>
             <Link>OpenConsole.exe</Link>
         </Content>
+        <Content Include="..\..\branding\Logo.ico" />
     </ItemGroup>
 
     <ItemGroup>

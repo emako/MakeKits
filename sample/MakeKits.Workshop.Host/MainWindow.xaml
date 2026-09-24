@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MakeKits Workshop"
         Width="1280"
-        Height="720"
-        Background="#F0F0F5">
+        Height="720">
 
     <Window.Resources>
 
@@ -119,8 +118,12 @@
                                         Height="140"
                                         Margin="8"
                                         Click="OnWorkshopCardClick"
+                                        ContextMenuOpening="OnWorkshopCardContextMenuOpening"
                                         Style="{StaticResource CardButtonStyle}"
                                         Tag="{Binding}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu />
+                                    </Button.ContextMenu>
                                     <Grid Margin="16,14,16,14">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />

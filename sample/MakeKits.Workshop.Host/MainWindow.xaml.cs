@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace MakeKits.Workshop.Host;
 
@@ -63,6 +62,54 @@ public partial class MainWindow : Window
     {
         if (sender is Button { Tag: IWorkshopItem item })
             OpenWorkshop(item);
+    }
+
+    private void OnWorkshopCardContextMenuOpening(object sender, ContextMenuEventArgs e)
+    {
+        if (sender is not Button { Tag: IWorkshopItem item, ContextMenu: ContextMenu menu })
+            return;
+
+        menu.Items.Clear();
+
+        if (!TryGetOpenInNewWindowAction(item.Workshop?.Context, out Func<bool>? runDirect) || runDirect == null)
+        {
+            e.Handled = true;
+            return;
+        }
+
+        MenuItem openInNewWindowMenuItem = new() { Header = "Open in New Window" };
+        openInNewWindowMenuItem.Click += (_, _) =>
+        {
+            try
+            {
+                if (!runDirect())
+                    MessageBox.Show($"Failed to run {item.Name}.", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[MainWindow] Open in New Window error: {ex}");
+                MessageBox.Show($"Failed to run {item.Name}.\n\n{ex.Message}", "Open in New Window", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        };
+        menu.Items.Add(openInNewWindowMenuItem);
+    }
+
+    private static bool TryGetOpenInNewWindowAction(IWorkshopContext? context, out Func<bool>? runDirect)
+    {
+        runDirect = null;
+        if (context?.Properties == null)
+            return false;
+
+        if (!context.Properties.TryGetValue("OpenInNewWindowAction", out object? value))
+            return false;
+
+        if (value is Func<bool> func)
+        {
+            runDirect = func;
+            return true;
+        }
+
+        return false;
     }
 
     // -----------------------------------------------------------------

@@ -36,4 +36,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <Target Name="ReduceReleasePackaging" AfterTargets="Build">
+        <Delete Files="$(OutputPath)\MakeKits.Workshop.Abstractions.dll" Condition="Exists('$(OutputPath)\MakeKits.Workshop.Abstractions.dll')" ContinueOnError="true" />
+    </Target>
+
 </Project>

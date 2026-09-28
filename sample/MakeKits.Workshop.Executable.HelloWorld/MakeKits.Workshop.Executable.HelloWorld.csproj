@@ -44,6 +44,10 @@
         </PackageReference>
     </ItemGroup>
 
+    <Target Name="ReduceReleasePackaging" AfterTargets="Build">
+        <Delete Files="$(OutputPath)\MakeKits.Workshop.Abstractions.dll" Condition="Exists('$(OutputPath)\MakeKits.Workshop.Abstractions.dll')" ContinueOnError="true" />
+    </Target>
+
     <ItemGroup>
         <EmbeddedResource Include="Resources\**\*">
             <LogicalName>/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>

@@ -45,6 +45,11 @@
     </ItemGroup>
 
     <Target Name="ReduceReleasePackaging" AfterTargets="Build">
+        <Delete Files="$(OutputPath)\MakeKits.Workshop.Abstractions.dll" Condition="Exists('$(OutputPath)\MakeKits.Workshop.Abstractions.dll')" ContinueOnError="true" />
+        <Delete Files="$(OutputPath)\Microsoft.Web.WebView2.Core.dll" Condition="Exists('$(OutputPath)\Microsoft.Web.WebView2.Core.dll')" ContinueOnError="true" />
+        <Delete Files="$(OutputPath)\Microsoft.Web.WebView2.Wpf.dll" Condition="Exists('$(OutputPath)\Microsoft.Web.WebView2.Wpf.dll')" ContinueOnError="true" />
+        <Delete Files="$(OutputPath)\Microsoft.Web.WebView2.WinForms.dll" Condition="Exists('$(OutputPath)\Microsoft.Web.WebView2.WinForms.dll')" ContinueOnError="true" />
+        <Delete Files="$(OutputPath)\WebView2Loader.dll" Condition="Exists('$(OutputPath)\WebView2Loader.dll')" ContinueOnError="true" />
         <Delete Files="$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-arm64\native\WebView2Loader.dll')" ContinueOnError="true" />
         <Delete Files="$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x64\native\WebView2Loader.dll')" ContinueOnError="true" />
         <Delete Files="$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll" Condition="Exists('$(OutputPath)\runtimes\win-x86\native\WebView2Loader.dll')" ContinueOnError="true" />

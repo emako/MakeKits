@@ -79,6 +79,20 @@ Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Debugger\.gitign
 Remove-Item -LiteralPath "..\template\MakeKits.Workshop.Webview.Debugger\Shared" -Recurse -Force
 git checkout -- "..\template\MakeKits.Workshop.Webview.Debugger\MakeKits.Workshop.Webview.Debugger.csproj"
 
+### Build MakeKits.Workshop.Webview.Debugger.dll
+
+$debuggerProject = "..\template\MakeKits.Workshop.Webview.Debugger\MakeKits.Workshop.Webview.Debugger.csproj"
+$debuggerOut = ".\obj\webview-debugger"
+Remove-Item -Recurse -Force $debuggerOut -ErrorAction SilentlyContinue
+Write-Host "Building MakeKits.Workshop.Webview.Debugger..."
+dotnet restore $debuggerProject /p:Configuration=Release --source $PSScriptRoot --source https://api.nuget.org/v3/index.json
+if ($LASTEXITCODE -ne 0) { throw "Failed to restore MakeKits.Workshop.Webview.Debugger." }
+dotnet build $debuggerProject -c Release --no-restore -o $debuggerOut
+if ($LASTEXITCODE -ne 0) { throw "Failed to build MakeKits.Workshop.Webview.Debugger." }
+Copy-Item -Force (Join-Path $debuggerOut "MakeKits.Workshop.Webview.Debugger.dll") ".\MakeKits.Workshop.Webview.Debugger.dll"
+Remove-Item -Recurse -Force $debuggerOut
+Write-Host "Output: $PSScriptRoot\MakeKits.Workshop.Webview.Debugger.dll"
+
 ### Pack template\executable.7z
 
 Remove-Item -Recurse -Force "..\template\MakeKits.Workshop.Executable.Default\obj" -ErrorAction SilentlyContinue

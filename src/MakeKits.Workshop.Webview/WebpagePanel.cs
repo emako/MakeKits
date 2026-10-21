@@ -86,7 +86,7 @@ public class WebpagePanel : UserControl, IDisposable
         _webView = new WebView2()
         {
             CreationProperties = creationProperties,
-            DefaultBackgroundColor = System.Drawing.Color.Transparent,
+            DefaultBackgroundColor = GetThemeBackgroundColor(),
         };
 
         _webView.NavigationStarting += Webview_NavigationStarting;
@@ -104,6 +104,21 @@ public class WebpagePanel : UserControl, IDisposable
         Theme == WorkshopTheme.None ? WorkshopTheme.System : Theme;
 
     /// <summary>
+    /// Returns the background color matching the effective theme.
+    /// </summary>
+    protected virtual System.Drawing.Color GetThemeBackgroundColor()
+    {
+        return EffectiveTheme switch
+        {
+            WorkshopTheme.Dark => System.Drawing.Color.FromArgb(255, 32, 32, 32),
+            WorkshopTheme.Light => System.Drawing.Color.White,
+            WorkshopTheme.System or _ => OSThemeHelper.AppsUseDarkTheme()
+                ? System.Drawing.Color.FromArgb(255, 32, 32, 32)
+                : System.Drawing.Color.White,
+        };
+    }
+
+    /// <summary>
     /// Returns whether the effective theme is dark.
     /// </summary>
     protected virtual bool ShouldUseDarkMode()
@@ -117,17 +132,20 @@ public class WebpagePanel : UserControl, IDisposable
     }
 
     /// <summary>
-    /// Applies the current theme to the WebView2 control.
-    /// The control background stays transparent so host content shows through; only the color scheme follows the theme.
+    /// Applies the current theme to the WebView2 control and the panel background.
     /// Safe to call before and after CoreWebView2 initialization.
     /// </summary>
     protected virtual void ApplyTheme()
     {
-        Background = Brushes.Transparent;
+        // Set the panel background to match the theme so there is no white flash
+        // during the brief moment before the WebView2 renders content.
+        System.Drawing.Color bgColor = GetThemeBackgroundColor();
+        Background = new SolidColorBrush(Color.FromArgb(
+            bgColor.A, bgColor.R, bgColor.G, bgColor.B));
 
         if (_webView != null)
         {
-            _webView.DefaultBackgroundColor = System.Drawing.Color.Transparent;
+            _webView.DefaultBackgroundColor = bgColor;
 
             // Once the CoreWebView2 is initialized we can set the preferred color scheme
             // so that WebView2's own UI (context menus, dialogs, etc.) matches the theme.
@@ -174,7 +192,8 @@ public class WebpagePanel : UserControl, IDisposable
 
     protected virtual void WebView_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
-        // Navigation used to reset the control to white. Keep it transparent instead.
+        // Re-apply the theme background after navigation so it stays consistent
+        // with the configured theme instead of always resetting to white.
         ApplyTheme();
     }
 
